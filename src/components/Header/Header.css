@@ -4,6 +4,7 @@
     top: 0;
     background: white;
     border-bottom: 1px solid lightgrey;
+    z-index: 999;
 }
 .app-header-nav,
 .app-header-nav-ul {

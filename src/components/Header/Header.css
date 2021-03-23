@@ -1,0 +1,31 @@
+.app-header {
+    background: #e2e2e2;
+    border-bottom: 1px solid #8c8c8c;
+}
+.app-header-nav,
+.app-header-nav-ul {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-header-nav-ul {
+    list-style: none;
+}
+
+.nav-logo-image {
+    max-height: 70px;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.app-header-nav-ul a {
+    text-decoration: none;
+    margin: 5px 15px;
+    background: white;
+    color: #515151;
+    padding: 5px 15px;
+    border-radius: 5px;
+}

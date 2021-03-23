@@ -1,6 +1,9 @@
 .app-header {
-    background: #e2e2e2;
-    border-bottom: 1px solid #8c8c8c;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background: white;
+    border-bottom: 1px solid lightgrey;
 }
 .app-header-nav,
 .app-header-nav-ul {
@@ -27,5 +30,10 @@
     background: white;
     color: #515151;
     padding: 5px 15px;
+    border: 1px solid lightgrey;
     border-radius: 5px;
+}
+
+.app-header-nav-ul a:hover {
+    background: #f1f1f1;
 }

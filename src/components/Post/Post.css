@@ -1,0 +1,30 @@
+.post-container {
+    background: white;
+    max-width: 600px;
+    margin: 0 auto 40px auto;
+    border: 1px solid lightgrey;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+}
+
+.post-header-username {
+    margin-left: 10px;
+}
+
+.post-image img {
+    object-fit: contain;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    border-top: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
+}
+
+.post-content-text {
+    font-weight: normal;
+    margin: 10px;
+}

@@ -3,6 +3,7 @@ import Header from "./components/Header/Header";
 import Newsfeed from "./components/NewsFeed/NewsFeed";
 import {useEffect, useState} from "react";
 import {db} from "./firebase";
+import SignUpModal from "./components/Modals/SignUpModal/SignUpModal";
 
 function App() {
     const [posts, setPosts] = useState([]);
@@ -18,6 +19,8 @@ function App() {
 
     return (
         <div className="app-wrapper">
+
+            <SignUpModal />
 
             <Header/>
 

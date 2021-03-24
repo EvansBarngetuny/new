@@ -1,8 +1,14 @@
+import AuthenticationModal from "../../Modals/AuthenticationModal/AuthenticationModal";
+
 function HeaderNavigationUl() {
     return (
         <ul className="app-header-nav-ul">
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Sign Up</a></li>
+            <li>
+                <AuthenticationModal formType="signUp" btnText="Sign Up"/>
+            </li>
+            <li>
+                <AuthenticationModal formType="login" btnText="Login"/>
+            </li>
 
             <style jsx>{`
               .app-header-nav-ul {

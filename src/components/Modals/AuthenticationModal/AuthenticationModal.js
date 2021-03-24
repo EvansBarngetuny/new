@@ -1,8 +1,9 @@
 import {Button, makeStyles, Modal} from "@material-ui/core";
 import {useState} from "react";
 import SignUpForm from "../../Forms/SignUpForm";
+import LoginForm from "../../Forms/LoginForm";
 
-const SignUpModal = () => {
+const AuthenticationModal = ({formType = 'signUp', btnText}) => {
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle());
     const [open, setOpen] = useState(false);
@@ -14,10 +15,14 @@ const SignUpModal = () => {
                 onClose={() => setOpen(false)}
             >
                 <div style={modalStyle} className={classes.paper}>
-                    <SignUpForm/>
+                    {
+                        formType === 'login'
+                            ? (<LoginForm callback={setOpen} />)
+                            : (<SignUpForm callback={setOpen} />)
+                    }
                 </div>
             < /Modal>
-            <Button onClick={() => setOpen(true)}>Sign Up</Button>
+            <Button onClick={() => setOpen(true)}>{btnText}</Button>
         </>
     );
 }
@@ -45,4 +50,4 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default SignUpModal;
+export default AuthenticationModal;

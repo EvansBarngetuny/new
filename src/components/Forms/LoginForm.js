@@ -2,7 +2,7 @@ import {Button, Input} from "@material-ui/core";
 import {useEffect, useState} from "react";
 import {auth} from "../../firebase";
 
-const SignUpForm = ({callback}) => {
+const LoginForm = ({callback}) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -22,30 +22,21 @@ const SignUpForm = ({callback}) => {
         };
     }, [user, username]);
 
-    function signUp(ev) {
+    function login(ev) {
         ev.preventDefault();
 
-        auth.createUserWithEmailAndPassword(email, password)
-            .then((authUser) => {
-                callback(false);
-                return authUser.user.updateProfile({
-                    displayName: username
-                });
-            })
-            .catch(error => alert(error.message));
+        auth.signInWithEmailAndPassword(email, password)
+            .then(() => callback(false))
+            .catch(err => {
+                console.log(err)
+                alert(err.message)
+            });
 
     }
 
     return(
-        <form onSubmit={signUp} className="sign-in-form">
-            <h5>To create an account, please, fill in all fields</h5>
-            <Input
-                type="text"
-                placeholder="username"
-                value={username}
-                required
-                onChange={(e) => setUsername(e.target.value)}
-            />
+        <form onSubmit={login} className="login-form">
+            <h5>Please fill in your credentials to login</h5>
             <Input
                 type="text"
                 placeholder="email"
@@ -60,10 +51,10 @@ const SignUpForm = ({callback}) => {
                 required
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <Button type="submit" >Sign Up</Button>
+            <Button type="submit" >Login</Button>
 
             <style jsx>{`
-              .sign-in-form {
+              .login-form {
                 display: flex;
                 flex-flow: column wrap;
                 margin: 10px auto;
@@ -77,4 +68,4 @@ const SignUpForm = ({callback}) => {
     );
 }
 
-export default SignUpForm;
+export default LoginForm;

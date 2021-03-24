@@ -9,6 +9,15 @@ function HeaderNavigation() {
 
             <HeaderNavigationUl/>
 
+            <style jsx>{`
+              .app-header-nav {
+                display: flex;
+                flex-flow: row wrap;
+                justify-content: space-between;
+                align-items: center;
+              }
+            `}
+            </style>
         </nav>
     );
 }

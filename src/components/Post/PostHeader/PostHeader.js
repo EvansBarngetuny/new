@@ -9,6 +9,18 @@ const PostHeader = () => {
                 src=""
             />
             <h3 className="post-header-username">username</h3>
+
+            <style jsx>{`
+              .post-header {
+                display: flex;
+                align-items: center;
+                padding: 5px 10px;
+              }
+              .post-header-username {
+                margin-left: 10px;
+              }
+            `}
+            </style>
         </article>
     );
 }

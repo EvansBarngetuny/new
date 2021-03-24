@@ -7,15 +7,25 @@ import PostAddComment from "./PostAddComment/PostAddComment";
 const Post = () => {
     return (
         <section className="post-container">
-            <PostHeader />
+            <PostHeader/>
 
-            <PostImage />
+            <PostImage/>
 
-            <PostContent />
+            <PostContent/>
 
-            <PostCommentsSection />
+            <PostCommentsSection/>
 
-            <PostAddComment />
+            <PostAddComment/>
+
+            <style jsx>{`
+              .post-container {
+                background: white;
+                max-width: 600px;
+                margin: 0 auto 40px auto;
+                border: 1px solid lightgrey;
+              }
+            `}
+            </style>
         </section>
     );
 }

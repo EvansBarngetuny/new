@@ -4,14 +4,14 @@ import PostContent from "./PostContent/PostContent";
 import PostCommentsSection from "./PostCommentsSection/PostCommentsSection";
 import PostAddComment from "./PostAddComment/PostAddComment";
 
-const Post = () => {
+const Post = ({post}) => {
     return (
         <section className="post-container">
-            <PostHeader/>
+            <PostHeader username={post.username} profilePic={post.profilePic}/>
 
-            <PostImage/>
+            <PostImage imageURL={post.imageURL}/>
 
-            <PostContent/>
+            <PostContent username={post.username} caption={post.caption}/>
 
             <PostCommentsSection/>
 

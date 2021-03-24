@@ -1,8 +1,11 @@
-const PostContent = () => {
+const PostContent = ({
+    username,
+    caption
+}) => {
     return (
         <article className="post-content">
             <p className="post-content-text">
-                <strong>username</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, porro!
+                <strong>{username}</strong> {caption}
             </p>
 
             <style jsx>{`

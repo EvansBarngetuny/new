@@ -1,7 +1,7 @@
-const PostImage = () => {
+const PostImage = ({imageURL}) => {
     return (
         <article className="post-image">
-            <img src="https://miro.medium.com/max/1404/0*ZeJO8KPaD-tfK2oK.jpeg" alt="post-img"/>
+            <img src={imageURL} alt="post-img"/>
 
             <style jsx>{`
               .post-image img {

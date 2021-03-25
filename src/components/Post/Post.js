@@ -4,10 +4,11 @@ import PostContent from "./PostContent/PostContent";
 import PostCommentsSection from "./PostCommentsSection/PostCommentsSection";
 import PostAddComment from "./PostAddComment/PostAddComment";
 import {useEffect, useState} from "react";
-import {db} from "../../firebase";
+import {auth, db} from "../../firebase";
 
 const Post = ({post, postID}) => {
     const [comments, setComments] = useState([]);
+    const user = auth.currentUser;
 
     useEffect(() => {
        if (postID) {
@@ -34,7 +35,9 @@ const Post = ({post, postID}) => {
 
             <PostCommentsSection comments={comments} />
 
-            <PostAddComment postID={postID}/>
+            {
+                user && (<PostAddComment postID={postID} />)
+            }
 
             <style jsx>{`
               .post-container {

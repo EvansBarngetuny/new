@@ -21,16 +21,19 @@ const LoginForm = ({callback}) => {
 
     }
 
-    return(
+    return (
         <form onSubmit={login} className="login-form">
-            <h5>Please fill in your credentials to login</h5>
+            <img src="/react-a-gram-logo.webp" className="nav-logo-image" alt="logo"/>
+            <h5>Please enter your credentials to login</h5>
+            <label htmlFor="">Your email*</label>
             <Input
                 type="text"
-                placeholder="email"
+                placeholder="example@email.com"
                 value={email}
                 required
                 onChange={(e) => setEmail(e.target.value)}
             />
+            <label htmlFor="">Your password*</label>
             <Input
                 type="password"
                 placeholder="password"
@@ -38,7 +41,7 @@ const LoginForm = ({callback}) => {
                 required
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <Button type="submit" >Login</Button>
+            <Button type="submit">Login</Button>
 
             <style jsx>{`
               .login-form {
@@ -48,6 +51,15 @@ const LoginForm = ({callback}) => {
                 align-items: center;
                 justify-content: center;
                 max-width: 400px;
+              }
+
+              .login-form input {
+                margin: 5px 0 0 0;
+              }
+
+              .login-form label,
+              .login-form button {
+                margin-top: 20px;
               }
             `}
             </style>

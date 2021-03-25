@@ -22,9 +22,11 @@ const SignUpForm = ({callback}) => {
 
     }
 
-    return(
+    return (
         <form onSubmit={signUp} className="sign-in-form">
+            <img src="/react-a-gram-logo.webp" className="nav-logo-image" alt="logo"/>
             <h5>To create an account, please, fill in all fields</h5>
+            <label htmlFor="">Your username*</label>
             <Input
                 type="text"
                 placeholder="username"
@@ -32,13 +34,15 @@ const SignUpForm = ({callback}) => {
                 required
                 onChange={(e) => setUsername(e.target.value)}
             />
+            <label htmlFor="">Your email*</label>
             <Input
                 type="text"
-                placeholder="email"
+                placeholder="example@email.com"
                 value={email}
                 required
                 onChange={(e) => setEmail(e.target.value)}
             />
+            <label htmlFor="">Your password*</label>
             <Input
                 type="password"
                 placeholder="password"
@@ -46,7 +50,7 @@ const SignUpForm = ({callback}) => {
                 required
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <Button type="submit" >Sign Up</Button>
+            <Button type="submit">Sign Up</Button>
 
             <style jsx>{`
               .sign-in-form {
@@ -55,7 +59,16 @@ const SignUpForm = ({callback}) => {
                 margin: 10px auto;
                 align-items: center;
                 justify-content: center;
-                max-width: 350px;
+                max-width: 400px;
+              }
+
+              .sign-in-form input {
+                margin: 5px 0 0 0;
+              }
+
+              .sign-in-form label,
+              .sign-in-form button {
+                margin-top: 20px;
               }
             `}
             </style>

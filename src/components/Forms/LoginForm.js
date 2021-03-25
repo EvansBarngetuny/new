@@ -1,32 +1,19 @@
 import {Button, Input} from "@material-ui/core";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {auth} from "../../firebase";
 
 const LoginForm = ({callback}) => {
-    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [user, setUser] = useState(null);
-
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((authUser) => {
-            if (authUser) {
-                setUser(authUser);
-            } else {
-                setUser(null);
-            }
-        });
-
-        return () => {
-            unsubscribe()
-        };
-    }, [user, username]);
+    const closeModal = callback.bind(null, false);
 
     function login(ev) {
         ev.preventDefault();
 
         auth.signInWithEmailAndPassword(email, password)
-            .then(() => callback(false))
+            .then(() => {
+                closeModal();
+            })
             .catch(err => {
                 console.log(err)
                 alert(err.message)
@@ -60,7 +47,7 @@ const LoginForm = ({callback}) => {
                 margin: 10px auto;
                 align-items: center;
                 justify-content: center;
-                max-width: 350px;
+                max-width: 400px;
               }
             `}
             </style>

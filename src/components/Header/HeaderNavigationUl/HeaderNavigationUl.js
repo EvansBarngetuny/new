@@ -1,14 +1,48 @@
 import AuthenticationModal from "../../Modals/AuthenticationModal/AuthenticationModal";
+import {useEffect, useState} from "react";
+import {auth} from "../../../firebase";
+import {Button} from "@material-ui/core";
 
 function HeaderNavigationUl() {
+    const [currentUser, setCurrentUser] = useState(null);
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((authUser) => {
+            if (authUser) {
+                setCurrentUser(authUser);
+            } else {
+                setCurrentUser(null);
+            }
+        });
+
+        return () => {
+            unsubscribe()
+        };
+    }, [currentUser]);
+
+    const onLogout = () => {
+        auth.signOut()
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+    }
     return (
         <ul className="app-header-nav-ul">
-            <li>
-                <AuthenticationModal formType="signUp" btnText="Sign Up"/>
-            </li>
-            <li>
-                <AuthenticationModal formType="login" btnText="Login"/>
-            </li>
+            {
+                currentUser
+                    ? (
+                        <>
+                            <li className="header-nav-welcome-msg">Welcome, {currentUser.displayName}</li>
+                            <li><Button onClick={onLogout}>Logout</Button></li>
+                        </>
+                        )
+                    : (
+                        <>
+                            <li><AuthenticationModal formType="signUp" btnText="Sign Up"/></li>
+                            <li><AuthenticationModal formType="login" btnText="Login"/></li>
+                        </>
+                        )
+            }
+
 
             <style jsx>{`
               .app-header-nav-ul {
@@ -17,20 +51,14 @@ function HeaderNavigationUl() {
                 justify-content: space-between;
                 align-items: center;
               }
+
               .app-header-nav-ul {
                 list-style: none;
               }
-              .app-header-nav-ul a {
-                text-decoration: none;
-                margin: 5px 15px;
-                background: white;
-                color: #515151;
-                padding: 5px 15px;
-                border: 1px solid lightgrey;
-                border-radius: 5px;
-              }
-              .app-header-nav-ul a:hover {
-                background: #f1f1f1;
+              
+              .header-nav-welcome-msg {
+                font-family: Roboto, sans-serif;
+                margin-right: 15px;
               }
             `}
             </style>

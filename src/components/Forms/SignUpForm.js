@@ -1,33 +1,19 @@
 import {Button, Input} from "@material-ui/core";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {auth} from "../../firebase";
 
 const SignUpForm = ({callback}) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [user, setUser] = useState(null);
-
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((authUser) => {
-            if (authUser) {
-                setUser(authUser);
-            } else {
-                setUser(null);
-            }
-        });
-
-        return () => {
-            unsubscribe()
-        };
-    }, [user, username]);
+    const closeModal = callback.bind(null, false);
 
     function signUp(ev) {
         ev.preventDefault();
 
         auth.createUserWithEmailAndPassword(email, password)
             .then((authUser) => {
-                callback(false);
+                closeModal();
                 return authUser.user.updateProfile({
                     displayName: username
                 });

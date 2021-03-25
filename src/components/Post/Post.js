@@ -3,8 +3,27 @@ import PostImage from "./PostImage/PostImage";
 import PostContent from "./PostContent/PostContent";
 import PostCommentsSection from "./PostCommentsSection/PostCommentsSection";
 import PostAddComment from "./PostAddComment/PostAddComment";
+import {useEffect, useState} from "react";
+import {db} from "../../firebase";
 
-const Post = ({post}) => {
+const Post = ({post, postID}) => {
+    const [comments, setComments] = useState([]);
+
+    useEffect(() => {
+       if (postID) {
+           db.collection('posts')
+               .doc(postID)
+               .collection('comments')
+               .orderBy('timestamp', 'asc')
+               .onSnapshot((snapshot => {
+                   setComments(snapshot.docs.map(doc => ({
+                       id: doc.id,
+                       comment: doc.data()
+                   })));
+               }));
+       }
+
+    }, [postID]);
     return (
         <section className="post-container">
             <PostHeader username={post.username} profilePic={post.profilePic}/>
@@ -13,9 +32,9 @@ const Post = ({post}) => {
 
             <PostContent username={post.username} caption={post.caption}/>
 
-            <PostCommentsSection/>
+            <PostCommentsSection comments={comments} />
 
-            <PostAddComment/>
+            <PostAddComment postID={postID}/>
 
             <style jsx>{`
               .post-container {

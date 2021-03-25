@@ -5,13 +5,12 @@ const PostContent = ({
     return (
         <article className="post-content">
             <p className="post-content-text">
-                <strong>{username}</strong> {caption}
-            </p>
+                <strong>{username}</strong> {caption}</p>
 
             <style jsx>{`
               .post-content-text {
                 font-weight: normal;
-                margin: 10px;
+                margin: 5px 10px;
               }
             `}
             </style>

@@ -3,7 +3,7 @@ import {useState} from "react";
 import {db, storage} from "../../../firebase";
 import firebase from "firebase";
 
-const CreateNewPostHandler = ({username}) => {
+const CreateNewPostHandler = ({username, closeHandler}) => {
     const [image, setImage] = useState(null);
     const [caption, setCaption] = useState('');
     const [progress, setProgress] = useState(0);
@@ -57,6 +57,9 @@ const CreateNewPostHandler = ({username}) => {
                         setProgress(0);
                         setCaption('');
                         setImage(null);
+
+                        // close the window
+                        closeHandler();
                     });
             }
         )

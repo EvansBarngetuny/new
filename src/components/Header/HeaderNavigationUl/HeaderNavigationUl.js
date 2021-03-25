@@ -14,18 +14,14 @@ function HeaderNavigationUl({currentUser}) {
         <ul className="app-header-nav-ul">
             {
                 currentUser
-                    ? (
-                        <>
-                            <li className="header-nav-welcome-msg">Welcome, {currentUser.displayName}</li>
-                            <li><Button onClick={onLogout}>Logout</Button></li>
-                        </>
-                        )
-                    : (
-                        <>
-                            <li><AuthenticationModal formType="signUp" btnText="Sign Up"/></li>
-                            <li><AuthenticationModal formType="login" btnText="Login"/></li>
-                        </>
-                        )
+                    ? (<>
+                        <li className="header-nav-welcome-msg">Welcome, {currentUser.displayName}</li>
+                        <li><Button onClick={onLogout}>Logout</Button></li>
+                    </>)
+                    : (<>
+                        <li><AuthenticationModal formType="signUp" btnText="Sign Up"/></li>
+                        <li><AuthenticationModal formType="login" btnText="Login"/></li>
+                    </>)
             }
 
             <style jsx>{`
@@ -39,7 +35,7 @@ function HeaderNavigationUl({currentUser}) {
               .app-header-nav-ul {
                 list-style: none;
               }
-              
+
               .header-nav-welcome-msg {
                 font-family: Roboto, sans-serif;
                 margin-right: 15px;

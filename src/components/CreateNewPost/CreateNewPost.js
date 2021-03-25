@@ -10,7 +10,12 @@ const CreateNewPost = ({username}) => {
         <div className="image-uploader-container">
 
             {
-                isOpen ? (<CreateNewPostHandler username={username}/>) : null
+                isOpen
+                    ? (<CreateNewPostHandler
+                        username={username}
+                        closeHandler={setIsOpen.bind(null, false)}
+                    />)
+                    : null
             }
 
             <article className="create-post-btn">
@@ -19,7 +24,7 @@ const CreateNewPost = ({username}) => {
 
             <style jsx>{`
               .image-uploader-container {
-              box-sizing: border-box;
+                box-sizing: border-box;
                 display: flex;
                 flex-flow: column wrap;
                 margin: 10px auto;

@@ -1,16 +1,24 @@
-const PostCommentsSection = () => {
+const PostCommentsSection = ({comments}) => {
     return (
         <article className="post-comment-section">
-            <p className="post-content-text">
-                <strong>
-                    other.user
-                </strong>
-                <span> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi
-                    deleniti dignissimos distinctio eaque eius hic maiores repellendus
-                    sapiente voluptas? Asperiores aspernatur consequuntur fugit mollitia nisi
-                    quasi quidem reprehenderit voluptatem voluptates.
-                    </span>
-            </p>
+            {
+                comments.map(c => {
+                    return(
+                        <p key={c.id} className="post-content-text">
+                            <strong>{c.comment.username}</strong>
+                            <span> {c.comment.content}</span>
+                        </p>
+                    );
+                })
+            }
+
+            <style jsx>{`
+              .post-comment-section {
+                margin: 15px 0;
+              }
+              
+            `}
+            </style>
         </article>
     );
 }

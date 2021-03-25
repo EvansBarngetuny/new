@@ -73,7 +73,7 @@ const CreateNewPost = ({username}) => {
             <Input id="file-upload" type="file" onChange={onChangeHandler}/>
             <label htmlFor="caption-input">Please enter a caption</label>
             <Input id="caption-input"
-                   type="text" placeholder="Your caption.."
+                   type="text" placeholder="Your caption..."
                    value={caption} onChange={ev => setCaption(ev.target.value)}
             />
             <Button onClick={handleUpload}>Upload</Button>
@@ -98,6 +98,10 @@ const CreateNewPost = ({username}) => {
 
               .image-uploader-container label {
                 margin: 15px 0 5px 0;
+              }
+              
+              #progressBar {
+                width: 100%;
               }
 
               #file-upload {

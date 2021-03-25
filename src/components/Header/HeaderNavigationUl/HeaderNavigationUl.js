@@ -1,30 +1,15 @@
 import AuthenticationModal from "../../Modals/AuthenticationModal/AuthenticationModal";
-import {useEffect, useState} from "react";
 import {auth} from "../../../firebase";
 import {Button} from "@material-ui/core";
 
-function HeaderNavigationUl() {
-    const [currentUser, setCurrentUser] = useState(null);
-
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((authUser) => {
-            if (authUser) {
-                setCurrentUser(authUser);
-            } else {
-                setCurrentUser(null);
-            }
-        });
-
-        return () => {
-            unsubscribe()
-        };
-    }, [currentUser]);
+function HeaderNavigationUl({currentUser}) {
 
     const onLogout = () => {
         auth.signOut()
             .then(res => console.log(res))
             .catch(err => console.log(err))
     }
+
     return (
         <ul className="app-header-nav-ul">
             {
@@ -42,7 +27,6 @@ function HeaderNavigationUl() {
                         </>
                         )
             }
-
 
             <style jsx>{`
               .app-header-nav-ul {

@@ -4,8 +4,8 @@ import {db, storage} from "../../firebase";
 import firebase from "firebase";
 
 const CreateNewPost = ({username}) => {
-    const [image, setImage] = useState();
-    const [caption, setCaption] = useState();
+    const [image, setImage] = useState(null);
+    const [caption, setCaption] = useState('');
     const [progress, setProgress] = useState(0);
 
     const onChangeHandler = (ev) => {
@@ -17,6 +17,8 @@ const CreateNewPost = ({username}) => {
     const handleUpload = () => {
         if (!image) {
             return alert('Please select an image!');
+        } else if (!image.type.includes('image/')){
+            return alert('Only files of type image are allowed!');
         }
 
         const uploadTask = storage.ref(`images/${image.name}`).put(image);
@@ -48,8 +50,10 @@ const CreateNewPost = ({username}) => {
                             imageURL: url,
                             username: username
                         })
-                            .then(res => console.log(res));
+                            .then(res => console.log(res))
+                            .catch(err => console.log(err));
 
+                        // reset the values
                         setProgress(0);
                         setCaption('');
                         setImage(null);
@@ -65,10 +69,11 @@ const CreateNewPost = ({username}) => {
             <progress id="progressBar" value={progress} max="100"/>
             <label htmlFor="file-upload" >Please select an image to upload</label>
             <label htmlFor="file-upload" className="custom-file-upload">SELECT AN IMAGE</label>
+            <span>{image ? image.name : ''}</span>
             <Input id="file-upload" type="file" onChange={onChangeHandler}/>
             <label htmlFor="caption-input">Please enter a caption</label>
             <Input id="caption-input"
-                   type="text" placeholder="Enter a caption.."
+                   type="text" placeholder="Your caption.."
                    value={caption} onChange={ev => setCaption(ev.target.value)}
             />
             <Button onClick={handleUpload}>Upload</Button>

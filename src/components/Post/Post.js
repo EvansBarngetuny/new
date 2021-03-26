@@ -9,7 +9,7 @@ import AppCtx from "../../context/AppCtx";
 
 const Post = ({post, postID}) => {
     const [comments, setComments] = useState([]);
-    const [openEditSection, setOpenEditSection] = useState(false);
+
     const currentUser = useContext(AppCtx);
 
     useEffect(() => {
@@ -33,14 +33,21 @@ const Post = ({post, postID}) => {
             .catch(err => console.log(err))
     }
 
-    const toggleEditPost = () => {
-        setOpenEditSection(!openEditSection)
-    }
 
-    const editPost = (newCaption) => {
+    const editPost = (newCaption, toggleEditPost) => {
         db.collection('posts')
             .doc(postID)
-            .update({caption: newCaption})
+            .update({content: newCaption})
+            .then(() => toggleEditPost())
+            .catch(err => console.log(err))
+    }
+
+    const editComment = (newCaption, toggleEditPost, commentID) => {
+        db.collection('posts')
+            .doc(postID)
+            .collection('comments')
+            .doc(commentID)
+            .update({content: newCaption})
             .then(() => toggleEditPost())
             .catch(err => console.log(err))
     }
@@ -48,7 +55,7 @@ const Post = ({post, postID}) => {
     return (
         <section className="post-container">
             <PostHeader
-                postedBy={post.username}
+                postedBy={post.postedBy}
                 profilePic={post.profilePic}
                 onDelete={deletePost}
                 isOwner={currentUser && currentUser.uid === post.ownerID}
@@ -57,19 +64,24 @@ const Post = ({post, postID}) => {
             <PostImage imageURL={post.imageURL}/>
 
             <PostContent
-                postedBy={post.username}
-                caption={post.caption}
-                isEditOpen={openEditSection}
-                onEdit={toggleEditPost}
+                postedBy={post.postedBy}
+                content={post.content}
                 onSave={editPost}
-                onCancel={toggleEditPost}
+                isOwner={currentUser && currentUser.uid === post.ownerID}
             />
 
-            <PostCommentsSection comments={comments} />
+            <PostCommentsSection
+                comments={comments}
+                onSave={editComment}
+                currentUser={currentUser}
+            />
 
             {
                 currentUser && (
-                    <PostAddComment username={currentUser.displayName} postID={postID} />
+                    <PostAddComment
+                        postedBy={currentUser.displayName}
+                        ownerID={currentUser.uid}
+                        postID={postID} />
                     )
             }
 
@@ -79,6 +91,7 @@ const Post = ({post, postID}) => {
                 max-width: 600px;
                 margin: 0 auto 40px auto;
                 border: 1px solid lightgrey;
+                border-radius: 5px;
                 box-shadow: 0 0 5px 0.5px #0000003b;
               }
             `}

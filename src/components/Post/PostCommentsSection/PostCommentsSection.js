@@ -1,13 +1,19 @@
-const PostCommentsSection = ({comments}) => {
+import PostContent from "../PostContent/PostContent";
+
+const PostCommentsSection = (props) => {
     return (
         <article className="post-comment-section">
             {
-                comments.map(c => {
+                props.comments.map(c => {
                     return(
-                        <p key={c.id} className="post-content-text">
-                            <strong>{c.comment.username}</strong>
-                            <span> {c.comment.content}</span>
-                        </p>
+                        <PostContent
+                            key={c.id}
+                            postedBy={c.comment.postedBy}
+                            content={c.comment.content}
+                            onSave={props.onSave}
+                            isOwner={props.currentUser && props.currentUser.uid === c.comment.ownerID}
+                            commentID={c.id}
+                        />
                     );
                 })
             }
@@ -16,7 +22,6 @@ const PostCommentsSection = ({comments}) => {
               .post-comment-section {
                 margin: 15px 0 20px 0;
               }
-              
             `}
             </style>
         </article>

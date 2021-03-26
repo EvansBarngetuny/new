@@ -45,6 +45,7 @@ const PostHeader = (
                 border: none;
                 cursor: pointer;
                 padding: 1px 3px;
+                outline: none;
               }
               .post-header-username {
                 margin-left: 10px;

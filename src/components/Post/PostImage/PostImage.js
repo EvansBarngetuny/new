@@ -8,7 +8,7 @@ const PostImage = ({imageURL}) => {
                 object-fit: contain;
                 width: 100%;
                 display: block;
-                margin: 0 auto;
+                margin: 0 auto 15px auto;
                 border-top: 1px solid lightgrey;
                 border-bottom: 1px solid lightgrey;
               }

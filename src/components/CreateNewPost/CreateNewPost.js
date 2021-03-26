@@ -29,6 +29,7 @@ const CreateNewPost = () => {
                 margin: 10px auto;
                 justify-content: center;
                 border: 1px solid lightgray;
+                border-radius: 5px;
                 max-width: 600px;
                 padding: 10px 20px;
                 text-align: center;

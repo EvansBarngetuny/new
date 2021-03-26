@@ -3,7 +3,7 @@ import {useState} from "react";
 import {db} from "../../../firebase";
 import firebase from "firebase";
 
-const PostAddComment = ({postID, username}) => {
+const PostAddComment = ({postID, postedBy, ownerID}) => {
     const [comment, setComment] = useState('');
 
     const postComment = (ev) => {
@@ -18,7 +18,8 @@ const PostAddComment = ({postID, username}) => {
             .collection("comments")
             .add({
                 content: comment,
-                username: username,
+                postedBy: postedBy,
+                ownerID: ownerID,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             })
             .catch(err => console.log(err));
@@ -45,6 +46,7 @@ const PostAddComment = ({postID, username}) => {
                 align-items: center;
                 flex-flow: row wrap;
                 border-top: 1px solid lightgray;
+                border-radius: 5px;
               }
               
               .post-add-comments-input {

@@ -10,25 +10,37 @@ import AppCtx from "../../context/AppCtx";
 const Post = ({post, postID}) => {
     const [comments, setComments] = useState([]);
     const currentUser = useContext(AppCtx);
+    //const isOwner = currentUser && currentUser.uid === post.ownerID;
 
     useEffect(() => {
-       if (postID) {
-           db.collection('posts')
-               .doc(postID)
-               .collection('comments')
-               .orderBy('timestamp', 'asc')
-               .onSnapshot((snapshot => {
-                   setComments(snapshot.docs.map(doc => ({
-                       id: doc.id,
-                       comment: doc.data()
-                   })));
-               }));
-       }
+       db.collection('posts')
+           .doc(postID)
+           .collection('comments')
+           .orderBy('timestamp', 'asc')
+           .onSnapshot((snapshot => {
+               setComments(snapshot.docs.map(doc => ({
+                   id: doc.id,
+                   comment: doc.data()
+               })));
+           }));
 
     }, [postID]);
+
+    const deletePost = () => {
+        db.collection('posts')
+            .doc(postID)
+            .delete()
+            .catch(err => console.log(err))
+    }
+
     return (
         <section className="post-container">
-            <PostHeader postedBy={post.username} profilePic={post.profilePic}/>
+            <PostHeader
+                postedBy={post.username}
+                profilePic={post.profilePic}
+                onClickHandler={deletePost}
+                displayDelete={currentUser && currentUser.uid === post.ownerID}
+            />
 
             <PostImage imageURL={post.imageURL}/>
 

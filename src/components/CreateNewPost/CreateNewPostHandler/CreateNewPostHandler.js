@@ -45,14 +45,15 @@ const CreateNewPostHandler = ({closeHandler}) => {
                     .child(image.name)
                     .getDownloadURL()
                     .then(url => {
-                        // post the image in the DB
+                        // get the image url and create new post in the DB
                         db.collection("posts").add({
                             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                             caption: caption,
                             imageURL: url,
-                            username: currentUser.displayName
+                            username: currentUser.displayName,
+                            ownerID: currentUser.uid
                         })
-                            .then(res => console.log(res))
+                            .then((() => console.log('ready')))
                             .catch(err => console.log(err));
 
                         // reset the values

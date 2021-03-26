@@ -14,8 +14,8 @@ const Newsfeed = () => {
                     id: doc.id,
                     post: doc.data()
                 })));
-            })
-    }, [posts])
+            });
+    }, [])
 
     return (
         <div className="newsfeed-container">

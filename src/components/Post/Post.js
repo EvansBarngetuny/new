@@ -13,16 +13,16 @@ const Post = ({post, postID}) => {
     const currentUser = useContext(AppCtx);
 
     useEffect(() => {
-       db.collection('posts')
-           .doc(postID)
-           .collection('comments')
-           .orderBy('timestamp', 'asc')
-           .onSnapshot((snapshot => {
-               setComments(snapshot.docs.map(doc => ({
-                   id: doc.id,
-                   comment: doc.data()
-               })));
-           }));
+        db.collection('posts')
+            .doc(postID)
+            .collection('comments')
+            .orderBy('timestamp', 'asc')
+            .onSnapshot((snapshot => {
+                setComments(snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    comment: doc.data()
+                })));
+            }));
 
     }, [postID]);
 
@@ -68,6 +68,16 @@ const Post = ({post, postID}) => {
             .catch(err => console.log(err))
     }
 
+    const deleteComment = (toggleEditPost, commentID) => {
+        db.collection('posts')
+            .doc(postID)
+            .collection('comments')
+            .doc(commentID)
+            .delete()
+            .then(() => toggleEditPost())
+            .catch(err => console.log(err));
+    }
+
     return (
         <section className="post-container">
             <PostHeader
@@ -89,6 +99,7 @@ const Post = ({post, postID}) => {
             <PostCommentsSection
                 comments={comments}
                 onSave={editComment}
+                onDelete={deleteComment}
                 currentUser={currentUser}
             />
 
@@ -97,8 +108,9 @@ const Post = ({post, postID}) => {
                     <PostAddComment
                         postedBy={currentUser.displayName}
                         ownerID={currentUser.uid}
-                        postID={postID} />
-                    )
+                        postID={postID}
+                    />
+                )
             }
 
             <style jsx>{`

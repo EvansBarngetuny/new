@@ -1,4 +1,5 @@
 import PostContent from "../PostContent/PostContent";
+import {Button} from "@material-ui/core";
 
 const PostCommentsSection = (props) => {
     return (
@@ -11,6 +12,7 @@ const PostCommentsSection = (props) => {
                             postedBy={c.comment.postedBy}
                             content={c.comment.content}
                             onSave={props.onSave}
+                            onDelete={props.onDelete}
                             isOwner={props.currentUser && props.currentUser.uid === c.comment.ownerID}
                             commentID={c.id}
                         />

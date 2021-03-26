@@ -2,7 +2,7 @@ import {useState} from "react";
 import {Button} from "@material-ui/core";
 
 const PostContent = (props) => {
-    const [editContent, setEditContent] = useState(props.content);
+    const [newContent, setNewContent] = useState(props.content);
     const [openEditSection, setOpenEditSection] = useState(false);
 
     const toggleEditSection = () => {
@@ -21,22 +21,36 @@ const PostContent = (props) => {
                         <label className="edit-field-label" htmlFor="">Here you can edit the content</label>
                         <textarea
                             className="post-content-textarea"
-                            value={editContent}
-                            onChange={(e) => setEditContent(e.target.value)}
+                            value={newContent}
+                            onChange={(e) => setNewContent(e.target.value)}
                         />
                         <div>
-                            <Button onClick={() => props.onSave(editContent, toggleEditSection, props.commentID)}
+                            <Button onClick={() => props.onSave(newContent, toggleEditSection, props.commentID)}
                                     className="post-content-edit-button"
                                     title="Save your caption"
                             >
                                 Save
                             </Button>
-                            <Button onClick={() => setOpenEditSection(!openEditSection)}
+
+                            <Button onClick={() => toggleEditSection()}
                                     className="post-content-edit-button"
                                     title="Close edit"
                             >
                                 Cancel
                             </Button>
+
+                            {
+                                props.onDelete && (
+                                    <Button
+                                        onClick={() => props.onDelete(toggleEditSection, props.commentID)}
+                                        className="post-content-delete-button"
+                                        title="Delete your comment"
+                                    >
+                                        Delete Comment
+                                    </Button>
+                                )
+                            }
+
                         </div>
                     </div>
                 )
@@ -44,9 +58,10 @@ const PostContent = (props) => {
 
             {
                 props.isOwner && (
-                    <button onClick={() => setOpenEditSection(!openEditSection)} className="post-content-btn" title="Edit your caption"><img
+                    <button onClick={() => setOpenEditSection(!openEditSection)} className="post-content-btn"
+                            title="Edit your caption"><img
                         src="/edit-icon.svg"
-                        alt="delete-icon"
+                        alt="edit-icon"
                         height="15"
                         width="15"
                     />
@@ -94,6 +109,7 @@ const PostContent = (props) => {
                 cursor: pointer;
                 padding: 1px 3px;
               }
+
               .post-content-edit-button {
                 text-align: right;
               }

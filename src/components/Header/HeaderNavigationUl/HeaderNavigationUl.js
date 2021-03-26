@@ -1,8 +1,11 @@
 import AuthenticationModal from "../../Modals/AuthenticationModal/AuthenticationModal";
 import {auth} from "../../../firebase";
 import {Button} from "@material-ui/core";
+import {useContext} from "react";
+import AppCtx from "../../../context/AppCtx";
 
-function HeaderNavigationUl({currentUser}) {
+function HeaderNavigationUl() {
+    const currentUser = useContext(AppCtx);
 
     const onLogout = () => {
         auth.signOut()

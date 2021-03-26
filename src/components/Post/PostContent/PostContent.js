@@ -1,11 +1,9 @@
-const PostContent = ({
-    username,
-    caption
-}) => {
+const PostContent = ({postedBy, caption}) => {
     return (
         <article className="post-content">
             <p className="post-content-text">
-                <strong>{username}</strong> {caption}</p>
+                <strong>{postedBy}</strong> {caption}
+            </p>
 
             <style jsx>{`
               .post-content-text {

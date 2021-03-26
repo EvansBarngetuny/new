@@ -5,6 +5,7 @@ import CreateNewPost from "./components/CreateNewPost/CreateNewPost";
 import CreateNewPostGuest from "./components/CreateNewPost/CreateNewPostGuest";
 import {useEffect, useState} from "react";
 import {auth} from "./firebase";
+import {AppCtxProvider} from "./context/AppCtx";
 
 function App() {
     const [currentUser, setCurrentUser] = useState(null);
@@ -26,16 +27,17 @@ function App() {
     return (
         <div className="app-wrapper">
 
-            <Header currentUser={currentUser} />
+            <AppCtxProvider value={currentUser} >
+            <Header />
 
             {
                 currentUser
-                    ? (<CreateNewPost username={currentUser.displayName}/>)
+                    ? (<CreateNewPost />)
                     : (<CreateNewPostGuest />)
             }
 
             <Newsfeed />
-
+            </AppCtxProvider>
         </div>
     );
 }

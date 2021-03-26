@@ -1,12 +1,14 @@
 import {Button, Input} from "@material-ui/core";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {db, storage} from "../../../firebase";
 import firebase from "firebase";
+import AppCtx from "../../../context/AppCtx";
 
-const CreateNewPostHandler = ({username, closeHandler}) => {
+const CreateNewPostHandler = ({closeHandler}) => {
     const [image, setImage] = useState(null);
     const [caption, setCaption] = useState('');
     const [progress, setProgress] = useState(0);
+    const currentUser = useContext(AppCtx);
 
     const onChangeHandler = (ev) => {
         if (ev.target.files[0]) {
@@ -48,7 +50,7 @@ const CreateNewPostHandler = ({username, closeHandler}) => {
                             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                             caption: caption,
                             imageURL: url,
-                            username: username
+                            username: currentUser.displayName
                         })
                             .then(res => console.log(res))
                             .catch(err => console.log(err));

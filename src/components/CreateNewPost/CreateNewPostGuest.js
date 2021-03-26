@@ -15,6 +15,7 @@ const CreateNewPostGuest = () => {
                 margin: 10px auto 30px auto;
                 padding: 12px;
                 border: 1px solid lightgrey;
+                box-shadow: 0 0 5px 0.5px #0000003b;
               }
             `}
             </style>

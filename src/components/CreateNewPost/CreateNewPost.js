@@ -2,7 +2,7 @@ import CreateNewPostHandler from "./CreateNewPostHandler/CreateNewPostHandler";
 import {Button} from "@material-ui/core";
 import {useState} from "react";
 
-const CreateNewPost = ({username}) => {
+const CreateNewPost = () => {
     const [isOpen, setIsOpen] = useState(false);
     const btnText = isOpen ? 'Cancel' : 'Create new post';
 
@@ -10,12 +10,11 @@ const CreateNewPost = ({username}) => {
         <div className="image-uploader-container">
 
             {
-                isOpen
-                    ? (<CreateNewPostHandler
-                        username={username}
+                isOpen && (
+                    <CreateNewPostHandler
                         closeHandler={setIsOpen.bind(null, false)}
-                    />)
-                    : null
+                    />
+                )
             }
 
             <article className="create-post-btn">
@@ -34,6 +33,7 @@ const CreateNewPost = ({username}) => {
                 padding: 10px 20px;
                 text-align: center;
                 background: white;
+                box-shadow: 0 0 5px 0.5px #0000003b;
               }
             `}
             </style>

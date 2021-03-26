@@ -1,14 +1,14 @@
 import Avatar from '@material-ui/core/Avatar';
 
-const PostHeader = ({username, profilePic}) => {
+const PostHeader = ({postedBy, profilePic}) => {
     return (
         <article className="post-header">
             <Avatar
                 className="post-header-avatar"
-                alt={username}
+                alt={postedBy}
                 src={profilePic || ''}
             />
-            <h3 className="post-header-username">{username}</h3>
+            <h3 className="post-header-username">{postedBy}</h3>
 
             <style jsx>{`
               .post-header {

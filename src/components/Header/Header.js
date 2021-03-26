@@ -1,14 +1,15 @@
 import HeaderNavigationLogo from "./HeaderNavigationLogo/HeaderNavigationLogo";
 import HeaderNavigationUl from "./HeaderNavigationUl/HeaderNavigationUl";
 
-const Header = ({currentUser}) => {
+const Header = () => {
+
     return (
         <header className="app-header">
             <nav className="app-header-nav">
 
                 <HeaderNavigationLogo/>
 
-                <HeaderNavigationUl currentUser={currentUser} />
+                <HeaderNavigationUl />
 
             </nav>
 

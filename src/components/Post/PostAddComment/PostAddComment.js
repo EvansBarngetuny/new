@@ -1,11 +1,10 @@
 import {Button, Input} from "@material-ui/core";
 import {useState} from "react";
-import {auth, db} from "../../../firebase";
+import {db} from "../../../firebase";
 import firebase from "firebase";
 
-const PostAddComment = ({postID}) => {
+const PostAddComment = ({postID, username}) => {
     const [comment, setComment] = useState('');
-    const username = auth.currentUser.displayName;
 
     const postComment = (ev) => {
         ev.preventDefault();

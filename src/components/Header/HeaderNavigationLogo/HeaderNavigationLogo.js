@@ -8,7 +8,7 @@ function HeaderNavigationLogo() {
             <style jsx>{`
               .nav-logo-image {
                 max-height: 70px;
-                width: 100%;
+                height: 100%;
                 object-fit: contain;
                 display: block;
               }

@@ -25,7 +25,7 @@ const LoginForm = ({callback}) => {
         <form onSubmit={login} className="login-form">
             <img src="/react-a-gram-logo.webp" className="nav-logo-image" alt="logo"/>
             <h5>Please enter your credentials to login</h5>
-            <label htmlFor="">Your email*</label>
+            <label htmlFor="">Email*</label>
             <Input
                 type="text"
                 placeholder="example@email.com"
@@ -33,7 +33,7 @@ const LoginForm = ({callback}) => {
                 required
                 onChange={(e) => setEmail(e.target.value)}
             />
-            <label htmlFor="">Your password*</label>
+            <label htmlFor="">Password*</label>
             <Input
                 type="password"
                 placeholder="password"

@@ -11,7 +11,6 @@ const Post = ({post, postID}) => {
     const [comments, setComments] = useState([]);
     const [openEditSection, setOpenEditSection] = useState(false);
     const currentUser = useContext(AppCtx);
-    //const isOwner = currentUser && currentUser.uid === post.ownerID;
 
     useEffect(() => {
        db.collection('posts')
@@ -38,13 +37,20 @@ const Post = ({post, postID}) => {
         setOpenEditSection(!openEditSection)
     }
 
+    const editPost = (newCaption) => {
+        db.collection('posts')
+            .doc(postID)
+            .update({caption: newCaption})
+            .then(() => toggleEditPost())
+            .catch(err => console.log(err))
+    }
+
     return (
         <section className="post-container">
             <PostHeader
                 postedBy={post.username}
                 profilePic={post.profilePic}
                 onDelete={deletePost}
-                onEdit={toggleEditPost}
                 isOwner={currentUser && currentUser.uid === post.ownerID}
             />
 
@@ -54,13 +60,17 @@ const Post = ({post, postID}) => {
                 postedBy={post.username}
                 caption={post.caption}
                 isEditOpen={openEditSection}
+                onEdit={toggleEditPost}
+                onSave={editPost}
                 onCancel={toggleEditPost}
             />
 
             <PostCommentsSection comments={comments} />
 
             {
-                currentUser && (<PostAddComment username={currentUser.displayName} postID={postID} />)
+                currentUser && (
+                    <PostAddComment username={currentUser.displayName} postID={postID} />
+                    )
             }
 
             <style jsx>{`

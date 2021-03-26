@@ -26,7 +26,7 @@ const SignUpForm = ({callback}) => {
         <form onSubmit={signUp} className="sign-in-form">
             <img src="/react-a-gram-logo.webp" className="nav-logo-image" alt="logo"/>
             <h5>To create an account, please, fill in all fields</h5>
-            <label htmlFor="">Your username*</label>
+            <label htmlFor="">Username*</label>
             <Input
                 type="text"
                 placeholder="username"
@@ -34,7 +34,7 @@ const SignUpForm = ({callback}) => {
                 required
                 onChange={(e) => setUsername(e.target.value)}
             />
-            <label htmlFor="">Your email*</label>
+            <label htmlFor="">Email*</label>
             <Input
                 type="text"
                 placeholder="example@email.com"
@@ -42,7 +42,7 @@ const SignUpForm = ({callback}) => {
                 required
                 onChange={(e) => setEmail(e.target.value)}
             />
-            <label htmlFor="">Your password*</label>
+            <label htmlFor="">Password*</label>
             <Input
                 type="password"
                 placeholder="password"

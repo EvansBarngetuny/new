@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {Button} from "@material-ui/core";
 
-const PostContent = ({postedBy, caption, isEditOpen, onCancel}) => {
+const PostContent = ({postedBy, caption, isEditOpen, onEdit, onSave, onCancel}) => {
     const [editCaption, setEditCaption] = useState(caption);
 
     return (
@@ -20,14 +20,25 @@ const PostContent = ({postedBy, caption, isEditOpen, onCancel}) => {
                             onChange={(e) => setEditCaption(e.target.value)}
                         />
                         <div>
-                            <Button className="post-content-edit-button">Save</Button>
-                            <Button onClick={onCancel} className="post-content-edit-button">Cancel</Button>
+                            <Button onClick={() => onSave(editCaption)} className="post-content-edit-button" title="Save your caption">Save</Button>
+                            <Button onClick={onCancel} className="post-content-edit-button" title="Close edit">Cancel</Button>
                         </div>
                     </div>
                 )
             }
 
+            <button onClick={onEdit} className="post-content-btn" title="Edit your caption"><img
+                src="/edit-icon.svg"
+                alt="delete-icon"
+                height="15"
+                width="15"
+            />
+            </button>
+
             <style jsx>{`
+              .post-content {
+                position: relative;
+              }
               .post-content-text {
                 font-weight: normal;
                 margin: 10px 10px;
@@ -39,17 +50,22 @@ const PostContent = ({postedBy, caption, isEditOpen, onCancel}) => {
                 margin: 10px 10px 5px 0;
                 border: 1px solid lightgray;
               }
-
-              .edit-field-label {
-              }
-
+              
               .edit-field {
-                padding: 5px 5px 5px 0;
+                padding: 5px;
                 border-top: 1px solid lightgray;
                 border-bottom: 1px solid lightgray;
+                border-left: 1px solid lightgray;
               }
 
-              .post-content-edit-button {
+              .post-content-btn {
+                position: absolute;
+                top: 0;
+                right: 15px;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                padding: 1px 3px;
               }
             `}
             </style>

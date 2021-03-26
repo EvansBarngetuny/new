@@ -6,7 +6,7 @@ const PostHeader = (
         profilePic,
         onDelete,
         onEdit,
-        displayDelete
+        isOwner
     }
 ) => {
     return (
@@ -19,7 +19,7 @@ const PostHeader = (
             <h3 className="post-header-username">{postedBy}</h3>
 
             {
-                displayDelete && (
+                isOwner && (
                     <>
                         <button onClick={onDelete} className="post-header-btn delete"><img
                             src="/delete-icon.svg"
@@ -46,7 +46,6 @@ const PostHeader = (
                 padding: 5px 10px;
                 position: relative;
               }
-
               .post-header-btn {
                 position: absolute;
                 right: 15px;
@@ -55,11 +54,9 @@ const PostHeader = (
                 cursor: pointer;
                 padding: 1px 3px;
               }
-
               .post-header-btn.edit {
                 right: 55px;
               }
-
               .post-header-username {
                 margin-left: 10px;
               }

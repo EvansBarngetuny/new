@@ -9,6 +9,7 @@ import AppCtx from "../../context/AppCtx";
 
 const Post = ({post, postID}) => {
     const [comments, setComments] = useState([]);
+    const [openEditSection, setOpenEditSection] = useState(false);
     const currentUser = useContext(AppCtx);
     //const isOwner = currentUser && currentUser.uid === post.ownerID;
 
@@ -33,8 +34,8 @@ const Post = ({post, postID}) => {
             .catch(err => console.log(err))
     }
 
-    const editPost = () => {
-        console.log(postID)
+    const toggleEditPost = () => {
+        setOpenEditSection(!openEditSection)
     }
 
     return (
@@ -43,13 +44,18 @@ const Post = ({post, postID}) => {
                 postedBy={post.username}
                 profilePic={post.profilePic}
                 onDelete={deletePost}
-                onEdit={editPost}
-                displayDelete={currentUser && currentUser.uid === post.ownerID}
+                onEdit={toggleEditPost}
+                isOwner={currentUser && currentUser.uid === post.ownerID}
             />
 
             <PostImage imageURL={post.imageURL}/>
 
-            <PostContent postedBy={post.username} caption={post.caption}/>
+            <PostContent
+                postedBy={post.username}
+                caption={post.caption}
+                isEditOpen={openEditSection}
+                onCancel={toggleEditPost}
+            />
 
             <PostCommentsSection comments={comments} />
 

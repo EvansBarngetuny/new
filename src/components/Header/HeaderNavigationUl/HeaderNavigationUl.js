@@ -1,8 +1,10 @@
-import AuthenticationModal from "../../Modals/AuthenticationModal/AuthenticationModal";
+import ModalContainer from "../../Modals/ModalContainer/ModalContainer";
 import {auth} from "../../../firebase";
 import {Button} from "@material-ui/core";
 import {useContext} from "react";
 import AppCtx from "../../../context/AppCtx";
+import SignUpForm from "../../Forms/SignUpForm";
+import LoginForm from "../../Forms/LoginForm";
 
 function HeaderNavigationUl() {
     const currentUser = useContext(AppCtx);
@@ -18,13 +20,23 @@ function HeaderNavigationUl() {
             {
                 currentUser
                     ? (<>
-                        <li className="header-nav-welcome-msg">Welcome, {currentUser.displayName}</li>
-                        <li><Button onClick={onLogout}>Logout</Button></li>
-                    </>)
+                            <li className="header-nav-welcome-msg">Welcome, {currentUser.displayName}</li>
+                            <li><Button onClick={onLogout}>Logout</Button></li>
+                        </>
+                    )
                     : (<>
-                        <li><AuthenticationModal formType="signUp" btnText="Sign Up"/></li>
-                        <li><AuthenticationModal formType="login" btnText="Login"/></li>
-                    </>)
+                            <li>
+                                <ModalContainer btnText="Sign Up">
+                                    <SignUpForm/>
+                                </ModalContainer>
+                            </li>
+                            <li>
+                                <ModalContainer btnText="Login">
+                                    <LoginForm/>
+                                </ModalContainer>
+                            </li>
+                        </>
+                    )
             }
 
             <style jsx>{`

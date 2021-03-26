@@ -33,12 +33,17 @@ const Post = ({post, postID}) => {
             .catch(err => console.log(err))
     }
 
+    const editPost = () => {
+        console.log(postID)
+    }
+
     return (
         <section className="post-container">
             <PostHeader
                 postedBy={post.username}
                 profilePic={post.profilePic}
-                onClickHandler={deletePost}
+                onDelete={deletePost}
+                onEdit={editPost}
                 displayDelete={currentUser && currentUser.uid === post.ownerID}
             />
 

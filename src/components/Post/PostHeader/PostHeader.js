@@ -1,11 +1,14 @@
 import Avatar from '@material-ui/core/Avatar';
 
-const PostHeader = ({
-    postedBy,
-    profilePic,
-    onClickHandler,
-    displayDelete
-}) => {
+const PostHeader = (
+    {
+        postedBy,
+        profilePic,
+        onDelete,
+        onEdit,
+        displayDelete
+    }
+) => {
     return (
         <article className="post-header">
             <Avatar
@@ -17,13 +20,22 @@ const PostHeader = ({
 
             {
                 displayDelete && (
-                    <button onClick={onClickHandler} className="post-header-delBtn"><img
-                        src="/delete-icon.svg"
-                        alt="delete-icon"
-                        height="15"
-                        width="15"
-                    />
-                    </button>
+                    <>
+                        <button onClick={onDelete} className="post-header-btn delete"><img
+                            src="/delete-icon.svg"
+                            alt="delete-icon"
+                            height="15"
+                            width="15"
+                        />
+                        </button>
+                        <button onClick={onEdit} className="post-header-btn edit"><img
+                            src="/edit-icon.svg"
+                            alt="delete-icon"
+                            height="15"
+                            width="15"
+                        />
+                        </button>
+                    </>
                 )
             }
 
@@ -35,12 +47,17 @@ const PostHeader = ({
                 position: relative;
               }
 
-              .post-header-delBtn {
+              .post-header-btn {
                 position: absolute;
                 right: 15px;
-                background: white;
+                background: transparent;
                 border: none;
                 cursor: pointer;
+                padding: 1px 3px;
+              }
+
+              .post-header-btn.edit {
+                right: 55px;
               }
 
               .post-header-username {

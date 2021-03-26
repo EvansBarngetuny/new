@@ -30,7 +30,23 @@ const Post = ({post, postID}) => {
         db.collection('posts')
             .doc(postID)
             .delete()
-            .catch(err => console.log(err))
+            .catch(err => console.log(err));
+
+        //need to manually iterate through the sub-collection 'comments'
+        // and delete every item in order to remove the collection
+        clearCollection()
+
+        function clearCollection() {
+            const ref = db.collection('posts')
+                .doc(postID)
+                .collection('comments');
+
+            ref.onSnapshot((snapshot) => {
+                snapshot.docs.forEach((doc) => {
+                    ref.doc(doc.id).delete()
+                })
+            })
+        }
     }
 
 

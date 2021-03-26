@@ -94,6 +94,9 @@ const PostContent = (props) => {
                 cursor: pointer;
                 padding: 1px 3px;
               }
+              .post-content-edit-button {
+                text-align: right;
+              }
             `}
             </style>
         </article>

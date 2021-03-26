@@ -48,9 +48,9 @@ const CreateNewPostHandler = ({closeHandler}) => {
                         // get the image url and create new post in the DB
                         db.collection("posts").add({
                             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                            caption: caption,
+                            content: caption,
                             imageURL: url,
-                            username: currentUser.displayName,
+                            postedBy: currentUser.displayName,
                             ownerID: currentUser.uid
                         })
                             .then((() => console.log('ready')))

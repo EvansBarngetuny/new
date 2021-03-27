@@ -42,7 +42,7 @@ const PostContent = (props) => {
                             {
                                 props.onDelete && (
                                     <Button
-                                        onClick={() => props.onDelete(toggleEditSection, props.commentID)}
+                                        onClick={() => props.onDelete(props.commentID)}
                                         className="post-content-delete-button"
                                         title="Delete your comment"
                                     >

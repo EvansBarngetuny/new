@@ -13,7 +13,7 @@ const Post = ({post, postID}) => {
     const {currentUser} = useContext(AppCtx);
 
     useEffect(() => {
-        db.collection('posts')
+        const unsubscribe = db.collection('posts')
             .doc(postID)
             .collection('comments')
             .orderBy('timestamp', 'asc')
@@ -24,6 +24,9 @@ const Post = ({post, postID}) => {
                 })));
             }));
 
+        return(
+            unsubscribe
+        )
     }, [postID]);
 
     const deletePost = () => {
@@ -34,6 +37,7 @@ const Post = ({post, postID}) => {
 
         //need to manually iterate through the sub-collection 'comments'
         //and delete every item in order to remove the entire collection
+        //otherwise it remains there despite even after the post is deleted
         clearCollection()
 
         function clearCollection() {
@@ -73,7 +77,6 @@ const Post = ({post, postID}) => {
             .collection('comments')
             .doc(commentID)
             .delete()
-            .then(() => toggleEditPost())
             .catch(err => console.log(err));
     }
 

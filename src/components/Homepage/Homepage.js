@@ -8,7 +8,7 @@ const Homepage = () => {
     const {currentUser} = useContext(AppCtx);
 
     return (
-        <main className="homepage-container">
+        <main className={'homepage-container' + (currentUser ? ' logged-user' : '')}>
 
             {
                 currentUser
@@ -19,13 +19,12 @@ const Homepage = () => {
             <Newsfeed />
 
             <style jsx>{`
-              .homepage-container {
-                margin-left: 17rem;
+              .homepage-container.logged-user {
+                margin-left: 16rem;
               }
               
             `}
             </style>
-
         </main>
     );
 }

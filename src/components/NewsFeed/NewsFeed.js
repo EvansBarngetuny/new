@@ -7,7 +7,7 @@ const Newsfeed = () => {
 
     useEffect(() => {
         // listens for a change in the db and adds the new entries to the state each time it's fired
-        db.collection('posts')
+        const unsubscribe = db.collection('posts')
             .orderBy('timestamp', 'desc')
             .onSnapshot(snapshot => {
                 setPosts(snapshot.docs.map(doc => ({
@@ -15,7 +15,11 @@ const Newsfeed = () => {
                     post: doc.data()
                 })));
             });
-    }, [])
+
+        return(
+            unsubscribe
+        )
+    }, []);
 
     return (
         <div className="newsfeed-container">

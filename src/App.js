@@ -6,6 +6,7 @@ import {auth} from "./firebase";
 import {AppCtxProvider} from "./context/AppCtx";
 import Homepage from "./components/Homepage/Homepage";
 import Dashboard from "./components/Dashboard/Dashboard";
+import MyPublications from "./components/MyPublications/MyPublications";
 
 function App() {
     const [currentUser, setCurrentUser] = useState(null);
@@ -35,11 +36,14 @@ function App() {
 
                 <Header/>
 
-                <Dashboard/>
+                {
+                    currentUser && (<Dashboard/>)
+                }
 
                 <Switch>
                     <Route path="/" exact component={Homepage}/>
-                    <Route path="/test" >
+                    <Route path="/my-publications" component={MyPublications}/>
+                    <Route path="/test">
                         <div style={{textAlign: "center"}}>
                             <h1>This is a test page</h1>
                         </div>

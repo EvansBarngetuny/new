@@ -17,7 +17,7 @@ const Header = () => {
               .app-header {
                 position: -webkit-sticky;
                 position: sticky;
-                padding: 0 20px;
+                padding: 0 25px;
                 top: 0;
                 background: white;
                 border-bottom: 1px solid lightgrey;

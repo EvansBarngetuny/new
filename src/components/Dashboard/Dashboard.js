@@ -17,10 +17,21 @@ const Dashboard = () => {
                 <Link className="dashboard-header-link" to="/test">Your profile</Link>
             </article>
 
+            <article className="dashboard-body">
+                <ul className="dashboard-body-nav-ul">
+                    <li>
+                        <Link className="dashboard-body-link" to="/my-publications">My publications</Link>
+                    </li>
+                    <li>
+                        <Link className="dashboard-body-link" to="/test">My favourites</Link>
+                    </li>
+                </ul>
+            </article>
+
             <style jsx>{`
               .side-dashboard {
                 background: white;
-                width: 290px;
+                width: 250px;
                 height: 500px;
                 border-right: 1px solid lightgray;
                 border-left: 1px solid lightgray;
@@ -28,12 +39,13 @@ const Dashboard = () => {
                 position: fixed;
                 top: 70px;
                 margin-left: 0;
-                text-align: center;
               }
-              
+
               .dashboard-header {
                 border-bottom: 1px solid lightgray;
                 padding: 15px;
+                text-align: center;
+
               }
 
               .dashboard-avatar {
@@ -42,11 +54,30 @@ const Dashboard = () => {
                 margin: 0 auto 10px auto;
               }
 
-              .dashboard-header-link {
-                text-align: center;
-                text-decoration: none;
-                color: rgba(0, 0, 0, 0.87);;
+              .dashboard-body {
+                padding: 10px;
               }
+              
+              .dashboard-body-nav-ul {
+                margin: 0;
+                padding: 0;
+              }
+              
+              .dashboard-body-nav-ul li {
+                list-style: none;
+                margin: 5px 0;
+                padding-left: 15px;
+              }
+              
+              .dashboard-body-link {
+              }
+
+              .side-dashboard a {
+                text-decoration: none;
+                margin: 10px 0;
+                color: rgba(0, 0, 0, 0.87);
+              }
+
             `}
             </style>
         </aside>

@@ -1,5 +1,4 @@
 import PostContent from "../PostContent/PostContent";
-import {Button} from "@material-ui/core";
 
 const PostCommentsSection = (props) => {
     return (

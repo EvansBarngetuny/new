@@ -11,7 +11,6 @@ function HeaderNavigationUl() {
 
     const onLogout = () => {
         auth.signOut()
-            .then(res => console.log(res))
             .catch(err => console.log(err))
     }
 

@@ -33,7 +33,7 @@ const Post = ({post, postID}) => {
             .catch(err => console.log(err));
 
         //need to manually iterate through the sub-collection 'comments'
-        // and delete every item in order to remove the collection
+        //and delete every item in order to remove the entire collection
         clearCollection()
 
         function clearCollection() {
@@ -48,7 +48,6 @@ const Post = ({post, postID}) => {
             })
         }
     }
-
 
     const editPost = (newCaption, toggleEditPost) => {
         db.collection('posts')
@@ -122,6 +121,7 @@ const Post = ({post, postID}) => {
                 border-radius: 5px;
                 box-shadow: 0 0 5px 0.5px #0000003b;
               }
+              
             `}
             </style>
         </section>

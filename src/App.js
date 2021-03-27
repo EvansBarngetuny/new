@@ -1,11 +1,9 @@
 import './App.css';
 import Header from "./components/Header/Header";
-import Newsfeed from "./components/NewsFeed/NewsFeed";
-import CreateNewPost from "./components/CreateNewPost/CreateNewPost";
-import CreateNewPostGuest from "./components/CreateNewPost/CreateNewPostGuest";
 import {useEffect, useState} from "react";
 import {auth} from "./firebase";
 import {AppCtxProvider} from "./context/AppCtx";
+import Homepage from "./components/Homepage/Homepage";
 
 function App() {
     const [currentUser, setCurrentUser] = useState(null);
@@ -30,13 +28,8 @@ function App() {
             <AppCtxProvider value={currentUser} >
             <Header />
 
-            {
-                currentUser
-                    ? (<CreateNewPost />)
-                    : (<CreateNewPostGuest />)
-            }
+            <Homepage />
 
-            <Newsfeed />
             </AppCtxProvider>
         </div>
     );

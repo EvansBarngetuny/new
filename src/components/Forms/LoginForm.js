@@ -11,13 +11,8 @@ const LoginForm = ({callback}) => {
         ev.preventDefault();
 
         auth.signInWithEmailAndPassword(email, password)
-            .then(() => {
-                closeModal();
-            })
-            .catch(err => {
-                console.log(err)
-                alert(err.message)
-            });
+            .then(() => closeModal())
+            .catch(err => console.log(err));
 
     }
 

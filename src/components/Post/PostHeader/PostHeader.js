@@ -14,7 +14,9 @@ const PostHeader = (
                 className="post-header-avatar"
                 alt={postedBy}
                 src={profilePic || ''}
-            />
+            >
+                {postedBy[0].toUpperCase()}
+            </Avatar>
             <h3 className="post-header-username">{postedBy}</h3>
 
             {

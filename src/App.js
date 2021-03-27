@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {auth} from "./firebase";
 import {AppCtxProvider} from "./context/AppCtx";
 import Homepage from "./components/Homepage/Homepage";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 function App() {
     const [currentUser, setCurrentUser] = useState(null);
@@ -30,7 +31,11 @@ function App() {
 
             <Homepage />
 
+            <Dashboard />
+
             </AppCtxProvider>
+
+
         </div>
     );
 }

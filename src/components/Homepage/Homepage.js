@@ -5,7 +5,7 @@ import AppCtx from "../../context/AppCtx";
 import {useContext} from "react";
 
 const Homepage = () => {
-    const currentUser = useContext(AppCtx);
+    const {currentUser} = useContext(AppCtx);
 
     return (
         <main className="homepage-container">

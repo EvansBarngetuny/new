@@ -8,7 +8,7 @@ const CreateNewPostHandler = ({closeHandler}) => {
     const [image, setImage] = useState(null);
     const [caption, setCaption] = useState('');
     const [progress, setProgress] = useState(0);
-    const currentUser = useContext(AppCtx);
+    const {currentUser} = useContext(AppCtx);
 
     const onChangeHandler = (ev) => {
         if (ev.target.files[0]) {

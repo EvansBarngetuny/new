@@ -10,7 +10,7 @@ import AppCtx from "../../context/AppCtx";
 const Post = ({post, postID}) => {
     const [comments, setComments] = useState([]);
 
-    const currentUser = useContext(AppCtx);
+    const {currentUser} = useContext(AppCtx);
 
     useEffect(() => {
         db.collection('posts')

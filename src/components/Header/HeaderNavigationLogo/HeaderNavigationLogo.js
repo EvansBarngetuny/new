@@ -1,9 +1,11 @@
+import {Link} from "react-router-dom";
+
 function HeaderNavigationLogo() {
     return (
         <article className="header-nav-logo">
-            <a href="#">
+            <Link to="/">
                 <img src="/react-a-gram-logo.webp" className="nav-logo-image" alt="logo"/>
-            </a>
+            </Link>
 
             <style jsx>{`
               .nav-logo-image {

@@ -7,7 +7,7 @@ import SignUpForm from "../../Forms/SignUpForm";
 import LoginForm from "../../Forms/LoginForm";
 
 function HeaderNavigationUl() {
-    const currentUser = useContext(AppCtx);
+    const {currentUser} = useContext(AppCtx);
 
     const onLogout = () => {
         auth.signOut()

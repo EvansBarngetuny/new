@@ -23,7 +23,7 @@ const PostHeader = (
                 isOwner && (
                     <>
                         <button onClick={onDelete} className="post-header-btn delete" title="Delete this post"><img
-                            src="/delete-icon.svg"
+                            src="delete-icon.svg"
                             alt="delete-icon"
                             height="15"
                             width="15"

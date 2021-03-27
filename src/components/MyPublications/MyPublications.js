@@ -30,22 +30,21 @@ const MyPublications = () => {
 
     return (
         <div className="my-publications-container">
-            <>
-                {
-                    !currentUser && <Redirect to="/"/>
-                }
-                {
-                    posts.map(p => <Post key={p.id} postID={p.id} post={p.post}/>)
-                }
 
-                <style jsx>{`
-                  .my-publications-container {
-                    margin-left: 16rem;
-                  }
+            {
+                currentUser
+                    ? (posts.map(p => <Post key={p.id} postID={p.id} post={p.post}/>))
+                    : (<Redirect to="/"/>)
+            }
 
-                `}
-                </style>
-            </>
+            <style jsx>{`
+              .my-publications-container {
+                margin-left: 16rem;
+              }
+
+            `}
+            </style>
+
         </div>
     );
 }

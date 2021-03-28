@@ -20,19 +20,25 @@ const Newsfeed = () => {
                 })));
             });
 
-        setIsLoading(false);
 
         return(
             unsubscribe
         )
     }, []);
 
+    useEffect(() => {
+
+        setIsLoading(false)
+
+    }, [posts])
+
     return (
         <div className="newsfeed-container">
             {
-                isLoading
-                ? <Spinner />
-                : posts.map(p => <Post key={p.id} postID={p.id} post={p.post}/>)
+                isLoading && <Spinner />
+            }
+            {
+                posts.map(p => <Post key={p.id} postID={p.id} post={p.post}/>)
             }
         </div>
     );

@@ -7,7 +7,7 @@ function HeaderNavigationLogo() {
                 <img src="/react-a-gram-logo.webp" className="nav-logo-image" alt="logo"/>
             </Link>
 
-            <style jsx>{`
+            <style jsx >{`
               .nav-logo-image {
                 max-height: 70px;
                 height: 100%;

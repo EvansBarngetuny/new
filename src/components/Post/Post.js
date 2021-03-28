@@ -71,7 +71,7 @@ const Post = ({post, postID}) => {
             .catch(err => console.log(err))
     }
 
-    const deleteComment = (toggleEditPost, commentID) => {
+    const deleteComment = (commentID) => {
         db.collection('posts')
             .doc(postID)
             .collection('comments')

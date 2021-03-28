@@ -20,26 +20,19 @@ const MyPublications = () => {
             .where('ownerID', '==', userID)
             .orderBy('timestamp', 'desc')
             .onSnapshot(snapshot => {
+                setIsLoading(false)
                 setPosts(snapshot.docs.map(doc => ({
                     id: doc.id,
                     post: doc.data()
                 })));
             });
 
-        return (
-            unsubscribe
-        )
-    }, [userID]);
-
-    useEffect(() => {
-        if (posts.length > 0) {
-            setTimeout(() => {
-                setIsLoading(false)
-                console.log(posts.length * 50)
-            }, posts.length * 50);
+        return () => {
+            unsubscribe()
         }
 
-    }, [posts])
+    }, [userID]);
+
 
     return (
         <div className="my-publications-container">
@@ -49,7 +42,7 @@ const MyPublications = () => {
 
             {
                 currentUser
-                    ? (posts.map(p => <Post key={p.id} postID={p.id} post={p.post}/>))
+                    ? posts.length > 0 ?(posts.map(p => <Post key={p.id} postID={p.id} post={p.post}/>)) : (<h1>No publications</h1>)
                     : (<Redirect to="/"/>)
             }
 

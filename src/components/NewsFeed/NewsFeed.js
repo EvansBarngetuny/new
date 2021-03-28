@@ -13,6 +13,7 @@ const Newsfeed = () => {
         const unsubscribe = db.collection('posts')
             .orderBy('timestamp', 'desc')
             .onSnapshot(snapshot => {
+                setIsLoading(false);
                 setPosts(snapshot.docs.map(doc => ({
                     id: doc.id,
                     post: doc.data()
@@ -20,20 +21,12 @@ const Newsfeed = () => {
             });
 
 
-        return(
-            unsubscribe
-        )
+        return() => {
+            unsubscribe()
+        }
+
     }, []);
 
-    useEffect(() => {
-       if (posts.length > 0) {
-           setTimeout(() => {
-               setIsLoading(false)
-               console.log(posts.length * 50)
-           }, posts.length * 50);
-       }
-
-    }, [posts])
 
     return (
         <div className="newsfeed-container">

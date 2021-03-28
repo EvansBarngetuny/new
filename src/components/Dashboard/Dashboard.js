@@ -33,7 +33,7 @@ const Dashboard = () => {
                         <NavLink className="dashboard-body-link" to="/my-publications">MY PUBLICATIONS</NavLink>
                     </li>
                     <li>
-                        <NavLink className="dashboard-body-link" to="/test">MY FAVOURITES</NavLink>
+                        <NavLink className="dashboard-body-link" to="/my-favourites">MY FAVOURITES</NavLink>
                     </li>
                 </ul>
             </article>

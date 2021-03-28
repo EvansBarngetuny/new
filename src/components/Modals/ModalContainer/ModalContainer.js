@@ -1,5 +1,5 @@
 import {Button, makeStyles, Modal} from "@material-ui/core";
-import {cloneElement, useState} from "react";
+import {useState} from "react";
 
 const ModalContainer = (props) => {
     const classes = useStyles();
@@ -14,7 +14,7 @@ const ModalContainer = (props) => {
             >
                 <div style={modalStyle} className={classes.paper}>
 
-                    {cloneElement(props.children, {callback: setOpen})}
+                    {props.children}
 
                 </div>
             < /Modal>

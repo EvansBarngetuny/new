@@ -50,7 +50,6 @@ function App() {
                     </Route>
                 </Switch>
 
-
             </AppCtxProvider>
 
         </div>

@@ -26,12 +26,12 @@ function HeaderNavigationUl() {
                     : (<>
                             <li>
                                 <ModalContainer btnText="Sign Up">
-                                    <SignUpForm/>
+                                    <SignUpForm />
                                 </ModalContainer>
                             </li>
                             <li>
                                 <ModalContainer btnText="Login">
-                                    <LoginForm/>
+                                    <LoginForm />
                                 </ModalContainer>
                             </li>
                         </>

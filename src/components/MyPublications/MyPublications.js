@@ -36,6 +36,8 @@ const MyPublications = () => {
 
     return (
         <div className="my-publications-container">
+            <h1>This is a list of all the posts you've published</h1>
+
             {
                 isLoading && <Spinner />
             }

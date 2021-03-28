@@ -38,7 +38,7 @@ function HeaderNavigationUl() {
                     )
             }
 
-            <style jsx>{`
+            <style jsx="true" >{`
               .app-header-nav-ul {
                 display: flex;
                 flex-flow: row wrap;

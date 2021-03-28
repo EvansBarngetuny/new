@@ -1,6 +1,4 @@
 import CreateNewPostHandler from "./CreateNewPostHandler/CreateNewPostHandler";
-import {Button} from "@material-ui/core";
-import {useState} from "react";
 
 const CreateNewPost = () => {
 

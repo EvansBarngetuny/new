@@ -1,5 +1,5 @@
 import Avatar from "@material-ui/core/Avatar";
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import ModalContainer from "../Modals/ModalContainer/ModalContainer";
 import CreateNewPost from "../CreateNewPost/CreateNewPost";
 
@@ -16,7 +16,7 @@ const Dashboard = () => {
                 >
                 </Avatar>
 
-                <Link className="dashboard-header-link" to="/test">YOUR PROFILE</Link>
+                <NavLink className="dashboard-header-link" to="/test">YOUR PROFILE</NavLink>
             </article>
 
             <article className="dashboard-body">
@@ -27,10 +27,13 @@ const Dashboard = () => {
                         </ModalContainer>
                     </li>
                     <li>
-                        <Link className="dashboard-body-link" to="/my-publications">MY PUBLICATIONS</Link>
+                        <NavLink className="dashboard-body-link" to="/" exact >HOME</NavLink>
                     </li>
                     <li>
-                        <Link className="dashboard-body-link" to="/test">MY FAVOURITES</Link>
+                        <NavLink className="dashboard-body-link" to="/my-publications">MY PUBLICATIONS</NavLink>
+                    </li>
+                    <li>
+                        <NavLink className="dashboard-body-link" to="/test">MY FAVOURITES</NavLink>
                     </li>
                 </ul>
             </article>
@@ -64,19 +67,20 @@ const Dashboard = () => {
               .dashboard-body {
                 padding: 10px;
               }
-              
+
               .dashboard-body-nav-ul {
                 margin: 0;
                 padding: 0;
               }
-              
+
               .dashboard-body-nav-ul li {
                 list-style: none;
                 margin: 5px 0;
                 padding-left: 5px;
               }
-              
-              .dashboard-body-link {
+
+              .active {
+                background: #ececec;
               }
 
               .side-dashboard a {

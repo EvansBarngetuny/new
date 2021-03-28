@@ -1,5 +1,7 @@
 import Avatar from "@material-ui/core/Avatar";
 import {Link} from "react-router-dom";
+import ModalContainer from "../Modals/ModalContainer/ModalContainer";
+import CreateNewPost from "../CreateNewPost/CreateNewPost";
 
 const Dashboard = () => {
 
@@ -14,16 +16,21 @@ const Dashboard = () => {
                 >
                 </Avatar>
 
-                <Link className="dashboard-header-link" to="/test">Your profile</Link>
+                <Link className="dashboard-header-link" to="/test">YOUR PROFILE</Link>
             </article>
 
             <article className="dashboard-body">
                 <ul className="dashboard-body-nav-ul">
                     <li>
-                        <Link className="dashboard-body-link" to="/my-publications">My publications</Link>
+                        <ModalContainer btnText="Create new post" >
+                            <CreateNewPost />
+                        </ModalContainer>
                     </li>
                     <li>
-                        <Link className="dashboard-body-link" to="/test">My favourites</Link>
+                        <Link className="dashboard-body-link" to="/my-publications">MY PUBLICATIONS</Link>
+                    </li>
+                    <li>
+                        <Link className="dashboard-body-link" to="/test">MY FAVOURITES</Link>
                     </li>
                 </ul>
             </article>
@@ -66,7 +73,7 @@ const Dashboard = () => {
               .dashboard-body-nav-ul li {
                 list-style: none;
                 margin: 5px 0;
-                padding-left: 15px;
+                padding-left: 5px;
               }
               
               .dashboard-body-link {
@@ -76,6 +83,9 @@ const Dashboard = () => {
                 text-decoration: none;
                 margin: 10px 0;
                 color: rgba(0, 0, 0, 0.87);
+                font-size: 14px;
+                font-weight: 500;
+                padding: 6px 8px;
               }
 
             `}

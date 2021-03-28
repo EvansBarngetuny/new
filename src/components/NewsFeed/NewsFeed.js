@@ -5,12 +5,11 @@ import Spinner from "../../common/components/Spinner/Spinner";
 
 const Newsfeed = () => {
     const [posts, setPosts] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         // listens for a change in the db and adds the new entries to the state each time it's fired
-        setIsLoading(true);
-
+        setIsLoading(true)
         const unsubscribe = db.collection('posts')
             .orderBy('timestamp', 'desc')
             .onSnapshot(snapshot => {
@@ -27,8 +26,12 @@ const Newsfeed = () => {
     }, []);
 
     useEffect(() => {
-
-        setIsLoading(false)
+       if (posts.length > 0) {
+           setTimeout(() => {
+               setIsLoading(false)
+               console.log(posts.length * 50)
+           }, posts.length * 50);
+       }
 
     }, [posts])
 

@@ -12,7 +12,7 @@ const Homepage = () => {
 
             {
                 currentUser
-                    ? (<CreateNewPost />)
+                    ? (null)
                     : (<CreateNewPostGuest />)
             }
 

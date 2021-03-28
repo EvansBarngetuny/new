@@ -5,11 +5,12 @@ import firebase from "firebase";
 import AppCtx from "../../../context/AppCtx";
 import Spinner from "../../../common/components/Spinner/Spinner";
 
-const CreateNewPostHandler = ({closeHandler}) => {
+const CreateNewPostHandler = () => {
     const [image, setImage] = useState(null);
     const [caption, setCaption] = useState('');
     const [progress, setProgress] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+    const ctx = useContext(AppCtx);
 
     const {currentUser} = useContext(AppCtx);
 
@@ -57,7 +58,10 @@ const CreateNewPostHandler = ({closeHandler}) => {
                             postedBy: currentUser.displayName,
                             ownerID: currentUser.uid
                         })
-                            .then()
+                            .then(() => {
+                                setIsLoading(false)
+                                ctx.closeModal()
+                            })
                             .catch(err => console.log(err));
 
                         // reset the values
@@ -66,7 +70,6 @@ const CreateNewPostHandler = ({closeHandler}) => {
                         setImage(null);
 
                         // close the window
-                        closeHandler();
                     });
             }
         )
@@ -91,6 +94,7 @@ const CreateNewPostHandler = ({closeHandler}) => {
                                value={caption} onChange={ev => setCaption(ev.target.value)}
                         />
                         <Button onClick={handleUpload}>Upload</Button>
+                        <Button onClick={() => alert('Unimplemented feature')}>Cancel</Button>
 
                         <style jsx>{`
                           .image-uploader-container input {

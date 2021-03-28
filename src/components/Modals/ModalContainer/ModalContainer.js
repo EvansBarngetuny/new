@@ -1,10 +1,15 @@
 import {Button, makeStyles, Modal} from "@material-ui/core";
-import {useState} from "react";
+import {useContext, useState} from "react";
+import AppCtx from "../../../context/AppCtx";
 
 const ModalContainer = (props) => {
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle());
     const [open, setOpen] = useState(false);
+    const ctx = useContext(AppCtx);
+    ctx['closeModal'] = () => {
+        setOpen(false)
+    };
 
     return (
         <>
@@ -37,7 +42,7 @@ function getModalStyle() {
 const useStyles = makeStyles((theme) => ({
     paper: {
         position: 'absolute',
-        width: 400,
+        width: 500,
         backgroundColor: theme.palette.background.paper,
         borderRadius: '7px',
         border: '1px solid lightgrey',

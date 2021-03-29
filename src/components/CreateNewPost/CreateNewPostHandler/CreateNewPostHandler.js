@@ -57,7 +57,8 @@ const CreateNewPostHandler = () => {
                             imageURL: url,
                             postedBy: currentUser.displayName,
                             ownerID: currentUser.uid,
-                            likes: []
+                            likes: [],
+                            inFavourites: []
                         })
                             .then(() => {
                                 setIsLoading(false)

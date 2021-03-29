@@ -11,6 +11,7 @@ import admin from "firebase";
 
 const Post = ({post, postID}) => {
     const [isLiked, setIsLiked] = useState(false)
+    const [isFavourite, setIsFavourite] = useState(false)
     const [likesCount, setLikesCount] = useState(0)
     const [comments, setComments] = useState([]);
     const {currentUser} = useContext(AppCtx);
@@ -24,6 +25,22 @@ const Post = ({post, postID}) => {
                     setIsLiked(postLikes.includes(currentUser.uid));
                 }
                 setLikesCount(postLikes.length);
+            })
+
+        return () => {
+            unsubscribe()
+        }
+
+    }, [])
+
+    useEffect(() => {
+        const unsubscribe = db.collection('posts')
+            .doc(postID)
+            .onSnapshot(snapshot => {
+                const postLikes = snapshot.data().inFavourites;
+                if (currentUser) {
+                    setIsFavourite(postLikes.includes(currentUser.uid));
+                }
             })
 
         return () => {
@@ -101,6 +118,24 @@ const Post = ({post, postID}) => {
             .catch(err => console.log(err));
     }
 
+    const addToFavourites = () => {
+        db.collection('posts')
+            .doc(postID)
+            .update({
+                inFavourites: admin.firestore.FieldValue.arrayUnion(currentUser.uid)
+            })
+            .then(() => console.log('liked'))
+    }
+
+    const removeFromFavourites = () => {
+        db.collection('posts')
+            .doc(postID)
+            .update({
+                inFavourites: admin.firestore.FieldValue.arrayRemove(currentUser.uid)
+            })
+            .then(() => console.log('liked'))
+    }
+
     const likePost = () => {
         db.collection('posts')
             .doc(postID)
@@ -138,6 +173,9 @@ const Post = ({post, postID}) => {
                             onUnLike={unlikePost}
                             onLike={likePost}
                             likesCount={likesCount}
+                            isFavourite={isFavourite}
+                            onAddToFavourites={addToFavourites}
+                            onRemoveFromFavourites={removeFromFavourites}
                         />
                     )
                     : (
@@ -179,9 +217,6 @@ const Post = ({post, postID}) => {
                 border: 1px solid lightgrey;
                 border-radius: 5px;
                 box-shadow: 0 0 5px 0.5px #0000003b;
-              }
-              .post-like-section-reacts {
-                margin-left: 10px;
               }
 
             `}

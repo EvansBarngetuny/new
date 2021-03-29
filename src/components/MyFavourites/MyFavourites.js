@@ -7,14 +7,13 @@ import Post from "../Post/Post";
 
 const MyFavourites = () => {
     const [favouritePosts, setFavouritePosts] = useState([]);
-    const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const {currentUser} = useContext(AppCtx);
 
     const userID = currentUser ? currentUser.uid : '';
 
-    useEffect(() => {
+   /* useEffect(() => {
         setIsLoading(true);
         const unsubscribe = db.collection('users')
             .doc(userID)
@@ -32,9 +31,29 @@ const MyFavourites = () => {
             unsubscribe()
         }
 
-    }, [userID]);
+    }, [userID]);*/
 
     useEffect(() => {
+        setIsLoading(true);
+        const unsubscribe = db.collection('posts')
+            .where('inFavourites', 'array-contains', userID)
+            .orderBy('timestamp', 'asc')
+            .onSnapshot((snapshot => {
+                setIsLoading(false);
+                setFavouritePosts(snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    post: doc.data()
+                })));
+
+            }));
+
+        return () => {
+            unsubscribe()
+        }
+
+    }, [userID]);
+
+    /*useEffect(() => {
         favouritePosts.forEach(fav => {
             db.collection('posts')
                 .doc(fav.postID)
@@ -48,12 +67,12 @@ const MyFavourites = () => {
                 }))
         })
 
-    }, [favouritePosts])
+    }, [favouritePosts])*/
 
 
     return (
         <div className="my-favourites-container">
-            <h1>Here are all the posts you've added to favourites</h1>
+            <h1>Here are all the posts you've saved to favourites</h1>
 
             {
                 isLoading && <Spinner />
@@ -61,7 +80,9 @@ const MyFavourites = () => {
 
             {
                 currentUser
-                    ? posts.length > 0 ?(posts.map(p => <Post key={p.id} postID={p.id} post={p.post}/>)) : (<h1>No publications yet</h1>)
+                    ? favouritePosts.length > 0
+                        ?(favouritePosts.map(p => <Post key={p.id} postID={p.id} post={p.post}/>))
+                        : (<div className="no-posts-container"><h1>No publications yet</h1></div>)
                     : (<Redirect to="/"/>)
             }
 
@@ -73,8 +94,10 @@ const MyFavourites = () => {
 
             <style jsx>{`
               .my-favourites-container {
-                text-align: center;
                 margin-left: 16rem;
+              }
+              .no-posts-container {
+               text-align: center;
               }
 
             `}

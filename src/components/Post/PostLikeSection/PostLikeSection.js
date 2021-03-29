@@ -1,8 +1,15 @@
 import {useContext} from "react";
 import AppCtx from "../../../context/AppCtx";
 
-const PostLikeSection = ({isLiked, onLike, onUnLike, likesCount}) => {
-    const currentUser = useContext(AppCtx)
+const PostLikeSection = ({
+        isLiked,
+        onLike,
+        onUnLike,
+        likesCount,
+        isFavourite,
+        onAddToFavourites,
+        onRemoveFromFavourites
+    }) => {
 
     return (
         <article className="post-like-section">
@@ -13,13 +20,16 @@ const PostLikeSection = ({isLiked, onLike, onUnLike, likesCount}) => {
             <div>
                 {
                     isLiked
-                        ? (<button onClick={onUnLike} className="post-like-section-react-btn">Unlike</button>)
-                        : (<button onClick={onLike} className="post-like-section-react-btn" >Like</button>)
+                        ? (<button onClick={onUnLike} className="post-like-section-react-btn">UnReact</button>)
+                        : (<button onClick={onLike} className="post-like-section-react-btn" >React</button>)
                 }
 
-                <button className="post-like-section-addFavourite-btn">
-                    Add to Favourites
-                </button>
+                {
+                    isFavourite
+                        ? (<button onClick={onRemoveFromFavourites} className="post-like-section-addFavourite-btn">Remove from Favourites</button>)
+                        : (<button onClick={onAddToFavourites} className="post-like-section-addFavourite-btn">Save to Favourites</button>)
+                }
+
             </div>
 
             <style jsx="true">{`

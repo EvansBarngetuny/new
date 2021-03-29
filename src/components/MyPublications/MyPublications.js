@@ -50,7 +50,6 @@ const MyPublications = () => {
 
             <style jsx="true">{`
               .my-publications-container {
-                text-align: center;
                 margin-left: 16rem;
               }
 

@@ -179,7 +179,7 @@ const Post = ({post, postID}) => {
                         />
                     )
                     : (
-                        <span className="post-like-section-reacts">
+                        <span className="like-counter">
                             <strong>{likesCount} {'react' + (likesCount === 1 ? '' : 's')}</strong>
                         </span>
                     )
@@ -217,6 +217,9 @@ const Post = ({post, postID}) => {
                 border: 1px solid lightgrey;
                 border-radius: 5px;
                 box-shadow: 0 0 5px 0.5px #0000003b;
+              }
+              .like-counter {
+                margin-left: 10px;
               }
 
             `}

@@ -1,4 +1,3 @@
-import CreateNewPost from "../CreateNewPost/CreateNewPost";
 import CreateNewPostGuest from "../CreateNewPost/CreateNewPostGuest";
 import Newsfeed from "../NewsFeed/NewsFeed";
 import AppCtx from "../../context/AppCtx";

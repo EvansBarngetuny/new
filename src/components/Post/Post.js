@@ -6,11 +6,31 @@ import PostAddComment from "./PostAddComment/PostAddComment";
 import {useContext, useEffect, useState} from "react";
 import {db} from "../../firebase";
 import AppCtx from "../../context/AppCtx";
+import PostLikeSection from "./PostLikeSection/PostLikeSection";
+import admin from "firebase";
 
 const Post = ({post, postID}) => {
+    const [isLiked, setIsLiked] = useState(false)
+    const [likesCount, setLikesCount] = useState(0)
     const [comments, setComments] = useState([]);
-
     const {currentUser} = useContext(AppCtx);
+
+    useEffect(() => {
+        const unsubscribe = db.collection('posts')
+            .doc(postID)
+            .onSnapshot(snapshot => {
+                const postLikes = snapshot.data().likes;
+                if (currentUser) {
+                    setIsLiked(postLikes.includes(currentUser.uid));
+                }
+                setLikesCount(postLikes.length);
+            })
+
+        return () => {
+            unsubscribe()
+        }
+
+    }, [])
 
     useEffect(() => {
         const unsubscribe = db.collection('posts')
@@ -24,9 +44,10 @@ const Post = ({post, postID}) => {
                 })));
             }));
 
-        return(
-            unsubscribe
-        )
+        return () => {
+            unsubscribe()
+        }
+
     }, [postID]);
 
     const deletePost = () => {
@@ -80,6 +101,24 @@ const Post = ({post, postID}) => {
             .catch(err => console.log(err));
     }
 
+    const likePost = () => {
+        db.collection('posts')
+            .doc(postID)
+            .update({
+                likes: admin.firestore.FieldValue.arrayUnion(currentUser.uid)
+            })
+            .then(() => console.log('liked'))
+    }
+
+    const unlikePost = () => {
+        db.collection('posts')
+            .doc(postID)
+            .update({
+                likes: admin.firestore.FieldValue.arrayRemove(currentUser.uid)
+            })
+            .then(() => console.log('unliked'))
+    }
+
     return (
         <section className="post-container">
             <PostHeader
@@ -90,6 +129,23 @@ const Post = ({post, postID}) => {
             />
 
             <PostImage imageURL={post.imageURL}/>
+
+            {
+                currentUser
+                    ? (
+                        <PostLikeSection
+                            isLiked={isLiked}
+                            onUnLike={unlikePost}
+                            onLike={likePost}
+                            likesCount={likesCount}
+                        />
+                    )
+                    : (
+                        <span className="post-like-section-reacts">
+                            <strong>{likesCount} {'react' + (likesCount === 1 ? '' : 's')}</strong>
+                        </span>
+                    )
+            }
 
             <PostContent
                 postedBy={post.postedBy}
@@ -124,7 +180,10 @@ const Post = ({post, postID}) => {
                 border-radius: 5px;
                 box-shadow: 0 0 5px 0.5px #0000003b;
               }
-              
+              .post-like-section-reacts {
+                margin-left: 10px;
+              }
+
             `}
             </style>
         </section>

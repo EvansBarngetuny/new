@@ -21,7 +21,7 @@ const Newsfeed = () => {
             });
 
 
-        return() => {
+        return () => {
             unsubscribe()
         }
 

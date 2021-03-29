@@ -44,12 +44,13 @@ const MyPublications = () => {
 
             {
                 currentUser
-                    ? posts.length > 0 ?(posts.map(p => <Post key={p.id} postID={p.id} post={p.post}/>)) : (<h1>No publications</h1>)
+                    ? posts.length > 0 ?(posts.map(p => <Post key={p.id} postID={p.id} post={p.post}/>)) : (<h1>No publications yet</h1>)
                     : (<Redirect to="/"/>)
             }
 
-            <style jsx>{`
+            <style jsx="true">{`
               .my-publications-container {
+                text-align: center;
                 margin-left: 16rem;
               }
 

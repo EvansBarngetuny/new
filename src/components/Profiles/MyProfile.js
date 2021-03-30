@@ -7,26 +7,28 @@ import {db, storage} from "../../firebase";
 const MyProfile = () => {
     const [image, setImage] = useState(null);
     const [progress, setProgress] = useState(0);
-    const [profilePic, setProfilePic] = useState('');
     const [isUploadOpen, setIsUploadOpen] = useState(false);
     const {currentUser} = useContext(AppCtx)
-    const userID = currentUser.uid;
 
-    useEffect(() => {
+    /*useEffect(() => {
         //setIsLoading(true);
         const unsubscribe = db.collection('users')
             .doc(userID)
             .onSnapshot((snapshot => {
                 //setIsLoading(false);
-                const {profilePic} = snapshot.data();
-                setProfilePic(profilePic)
+                if (userID) {
+                    const {profilePic} = snapshot.data();
+                    console.log(currentUser)
+                    setProfilePic(profilePic)
+                }
             }));
 
         return () => {
             unsubscribe()
         }
 
-    }, [userID]);
+    }, [userID]);*/
+
 
     const onChangeHandler = (ev) => {
         if (ev.target.files[0]) {
@@ -66,11 +68,9 @@ const MyProfile = () => {
                     .then(url => {
                         console.log(url)
                         // get the image url and create new post in the DB
-                        db.collection("users")
-                            .doc(userID)
-                            .update({
-                                profilePic: url
-                            })
+                        currentUser.updateProfile({
+                            photoURL: url
+                        })
                             .then(() => {
                                 setIsUploadOpen(false);
                             })
@@ -80,6 +80,7 @@ const MyProfile = () => {
                         setProgress(0);
                         setImage(null);
 
+
                         // close the window
                     });
             }
@@ -88,52 +89,58 @@ const MyProfile = () => {
 
 
     return (
-        <div className="my-profile-container">
-            <h1>Welcome to your profile, {currentUser.displayName}</h1>
+        <>
+            {
+                currentUser
+                    ? (<div className="my-profile-container">
+                        <h1>Welcome to your profile, {currentUser.displayName}</h1>
 
-            <section className="my-profile-avatar">
-                <Avatar
-                    className="my-profile-avatar"
-                    alt=""
-                    src={profilePic}
-                >
-                </Avatar>
-                {
-                    isUploadOpen && (
-                        <article>
-                            <label htmlFor="progressBar">Progress:</label>
-                            <progress id="progressBar" value={progress} max="100"/>
-                            <input type="file" onChange={onChangeHandler}/>
-                            <button onClick={handleUpload}>Upload</button>
-                        </article>
-                    )
-                }
-                <button onClick={() => setIsUploadOpen(!isUploadOpen)}>
-                    {
-                        isUploadOpen ? 'Cancel' : 'Change your profile pic'
-                    }
-                </button>
-            </section>
+                        <section className="my-profile-avatar">
+                            <Avatar
+                                className="my-profile-avatar"
+                                alt=""
+                                src={currentUser.photoURL}
+                            >
+                            </Avatar>
+                            {
+                                isUploadOpen && (
+                                    <article>
+                                        <label htmlFor="progressBar">Progress:</label>
+                                        <progress id="progressBar" value={progress} max="100"/>
+                                        <input type="file" onChange={onChangeHandler}/>
+                                        <button onClick={handleUpload}>Upload</button>
+                                    </article>
+                                )
+                            }
+                            <button onClick={() => setIsUploadOpen(!isUploadOpen)}>
+                                {
+                                    isUploadOpen ? 'Cancel' : 'Change your profile pic'
+                                }
+                            </button>
+                        </section>
 
-            <section className="my-profile-favourite-posts">
-                <h3>Here are your last 5 publication</h3>
-                <Link to="/my-publications">See all publications</Link>
+                        <section className="my-profile-favourite-posts">
+                            <h3>Here are your last 5 publication</h3>
+                            <Link to="/my-publications">See all publications</Link>
 
-            </section>
+                        </section>
 
-            <section className="my-profile-favourite-posts">
-                <h3>Here are your last 5 saved posts</h3>
-                <Link to="/my-favourites">See all favourites</Link>
-            </section>
+                        <section className="my-profile-favourite-posts">
+                            <h3>Here are your last 5 saved posts</h3>
+                            <Link to="/my-favourites">See all favourites</Link>
+                        </section>
 
-            <style jsx={true}>{`
-              .my-profile-container {
-                margin-left: 16rem;
-              }
+                        <style jsx={true}>{`
+                          .my-profile-container {
+                            margin-left: 16rem;
+                          }
 
-            `}
-            </style>
-        </div>
+                        `}
+                        </style>
+                    </div>)
+                    : (<h1>You need to be logged in to see this page!</h1>)
+            }
+        </>
     );
 }
 

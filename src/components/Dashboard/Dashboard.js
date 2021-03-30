@@ -3,29 +3,10 @@ import {NavLink} from "react-router-dom";
 import ModalContainer from "../Modals/ModalContainer/ModalContainer";
 import CreateNewPost from "../CreateNewPost/CreateNewPost";
 import {useContext, useEffect, useState} from "react";
-import {db} from "../../firebase";
 import AppCtx from "../../context/AppCtx";
 
 const Dashboard = () => {
-    const [profilePic, setProfilePic] = useState('');
     const {currentUser} = useContext(AppCtx)
-    const userID = currentUser && currentUser.uid;
-
-    useEffect(() => {
-        //setIsLoading(true);
-        const unsubscribe = db.collection('users')
-            .doc(userID)
-            .onSnapshot((snapshot => {
-                //setIsLoading(false);
-                const {profilePic} = snapshot.data();
-                setProfilePic(profilePic)
-            }));
-
-        return () => {
-            unsubscribe()
-        }
-
-    }, [userID]);
 
     return (
         <aside className="side-dashboard">
@@ -34,7 +15,7 @@ const Dashboard = () => {
                 <Avatar
                     className="dashboard-avatar"
                     alt=""
-                    src={profilePic}
+                    src={currentUser.photoURL}
                 >
                 </Avatar>
 

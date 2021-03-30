@@ -10,14 +10,12 @@ const Homepage = () => {
         <main className={'homepage-container' + (currentUser ? ' logged-user' : '')}>
 
             {
-                currentUser
-                    ? (null)
-                    : (<CreateNewPostGuest />)
+                !currentUser && (<CreateNewPostGuest />)
             }
 
             <Newsfeed />
 
-            <style jsx>{`
+            <style jsx={true}>{`
               .homepage-container.logged-user {
                 margin-left: 16rem;
               }

@@ -8,6 +8,7 @@ import Homepage from "./components/Homepage/Homepage";
 import Dashboard from "./components/Dashboard/Dashboard";
 import MyPublications from "./components/MyPublications/MyPublications";
 import MyFavourites from "./components/MyFavourites/MyFavourites";
+import MyProfile from "./components/Profiles/MyProfile";
 
 function App() {
     const [currentUser, setCurrentUser] = useState(null);
@@ -45,6 +46,7 @@ function App() {
                     <Route path="/" exact component={Homepage}/>
                     <Route path="/my-publications" component={MyPublications}/>
                     <Route path="/my-favourites" component={MyFavourites}/>
+                    <Route path="/my-profile" component={MyProfile}/>
                     <Route path="/test">
                         <div style={{textAlign: "center"}}>
                             <h1>This is a test page</h1>

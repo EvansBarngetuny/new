@@ -8,6 +8,7 @@ import {db} from "../../firebase";
 import AppCtx from "../../context/AppCtx";
 import PostLikeSection from "./PostLikeSection/PostLikeSection";
 import admin from "firebase";
+import LikeCounter from "../../common/components/LikeCounter/LikeCounter";
 
 const Post = ({post, postID}) => {
     const [isLiked, setIsLiked] = useState(false)
@@ -178,11 +179,7 @@ const Post = ({post, postID}) => {
                             onRemoveFromFavourites={removeFromFavourites}
                         />
                     )
-                    : (
-                        <span className="like-counter">
-                            <strong>{likesCount} {'react' + (likesCount === 1 ? '' : 's')}</strong>
-                        </span>
-                    )
+                    : (<LikeCounter likesCount={likesCount} text="react"/> )
             }
 
             <PostContent
@@ -209,7 +206,7 @@ const Post = ({post, postID}) => {
                 )
             }
 
-            <style jsx>{`
+            <style jsx="true">{`
               .post-container {
                 background: white;
                 max-width: 600px;

@@ -1,3 +1,5 @@
+import LikeCounter from "../../../common/components/LikeCounter/LikeCounter";
+
 const PostLikeSection = ({
    isLiked,
    onLike,
@@ -10,9 +12,7 @@ const PostLikeSection = ({
 
     return (
         <article className="post-like-section">
-            <span className="post-like-section-reacts">
-                <strong>{likesCount} {'react' + (likesCount === 1 ? '' : 's')}</strong>
-            </span>
+            <LikeCounter likesCount={likesCount} text={"react"}/>
 
             <div>
                 {
@@ -54,7 +54,6 @@ const PostLikeSection = ({
                 display: flex;
                 flex-flow: row wrap;
                 align-items: center;
-                margin-left: 10px;
               }
 
               .post-like-section-button {

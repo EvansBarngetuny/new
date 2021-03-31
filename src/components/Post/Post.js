@@ -4,7 +4,7 @@ import PostContent from "./PostContent/PostContent";
 import PostCommentsSection from "./PostCommentsSection/PostCommentsSection";
 import PostAddComment from "./PostAddComment/PostAddComment";
 import {useContext, useEffect, useState} from "react";
-import {db} from "../../firebase";
+import {auth, db} from "../../firebase";
 import AppCtx from "../../context/AppCtx";
 import PostLikeSection from "./PostLikeSection/PostLikeSection";
 import admin from "firebase";
@@ -17,6 +17,20 @@ const Post = ({post, postID}) => {
     const [comments, setComments] = useState([]);
     const {currentUser} = useContext(AppCtx);
 
+    /*useEffect(() => {
+        admin
+            .auth()
+            .getUser(post.ownerID)
+            .then((userRecord) => {
+                // See the UserRecord reference doc for the contents of userRecord.
+                console.log(userRecord)
+                console.log(`Successfully fetched user data:  ${userRecord.toJSON()}`);
+            })
+            .catch((error) => {
+                console.log('Error fetching user data:', error);
+            });
+
+    })*/
     useEffect(() => {
         const unsubscribe = db.collection('posts')
             .doc(postID)
@@ -179,7 +193,7 @@ const Post = ({post, postID}) => {
                             onRemoveFromFavourites={removeFromFavourites}
                         />
                     )
-                    : (<LikeCounter likesCount={likesCount} text="react"/> )
+                    : (<LikeCounter likesCount={likesCount} text="react"/>)
             }
 
             <PostContent
@@ -215,6 +229,7 @@ const Post = ({post, postID}) => {
                 border-radius: 5px;
                 box-shadow: 0 0 5px 0.5px #0000003b;
               }
+
               .like-counter {
                 margin-left: 10px;
               }

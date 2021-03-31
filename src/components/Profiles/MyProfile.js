@@ -93,9 +93,10 @@ const MyProfile = () => {
             {
                 currentUser
                     ? (<div className="my-profile-container">
-                        <h1>Welcome to your profile, {currentUser.displayName}</h1>
+                        <h1 className="my-profile-header">My profile</h1>
 
-                        <section className="my-profile-avatar">
+                        <section className="my-profile-avatar-section">
+                            <p><strong>{currentUser.displayName}</strong></p>
                             <Avatar
                                 className="my-profile-avatar"
                                 alt=""
@@ -104,7 +105,7 @@ const MyProfile = () => {
                             </Avatar>
                             {
                                 isUploadOpen && (
-                                    <article>
+                                    <article className="image-uploader-section">
                                         <label htmlFor="progressBar">Progress:</label>
                                         <progress id="progressBar" value={progress} max="100"/>
                                         <input type="file" onChange={onChangeHandler}/>
@@ -114,9 +115,11 @@ const MyProfile = () => {
                             }
                             <button onClick={() => setIsUploadOpen(!isUploadOpen)}>
                                 {
-                                    isUploadOpen ? 'Cancel' : 'Change your profile pic'
+                                    isUploadOpen ? 'Cancel' : 'Update your profile pic'
                                 }
                             </button>
+                            <h4>Description</h4>
+                            <p className="profile-description">Here is my description</p>
                         </section>
 
                         <section className="my-profile-favourite-posts">
@@ -132,7 +135,36 @@ const MyProfile = () => {
 
                         <style jsx={true}>{`
                           .my-profile-container {
+                            background: white;
+                            border-left: 1px solid lightgray;
+                            border-right: 1px solid lightgray;
+                            border-bottom: 1px solid lightgray;
+                            padding: 20px;
                             margin-left: 16rem;
+                          }
+
+                          .my-profile-avatar-section {
+                            display: flex;
+                            flex-flow: column wrap;
+                            justify-content: center;
+                            align-items: center;
+                            border: 1px solid lightgray;
+                            border-radius: 5px;
+                            padding: 10px 20px;
+                          }
+                          .image-uploader-section {
+                            display: flex;
+                            flex-flow: column wrap;
+                            justify-content: center;
+                            align-items: center;
+                          }
+                          .my-profile-header {
+                            margin-top: 0;
+                          }
+                          .my-profile-avatar {
+                            height: 100px;
+                            width: 100px;
+                            margin: 0 20px 20px 20px;
                           }
 
                         `}

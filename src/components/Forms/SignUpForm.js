@@ -1,6 +1,6 @@
 import {Button, Input} from "@material-ui/core";
-import {useState} from "react";
-import {auth} from "../../firebase";
+import {useContext, useState} from "react";
+import {auth, db} from "../../firebase";
 import Spinner from "../../common/components/Spinner/Spinner";
 
 const SignUpForm = () => {
@@ -13,12 +13,21 @@ const SignUpForm = () => {
         ev.preventDefault();
         setIsLoading(true)
 
+        let userID = '';
         auth.createUserWithEmailAndPassword(email, password)
             .then((authUser) => {
                 setIsLoading(false);
+                //userID = authUser.uid;
+                userID = authUser.user.uid;
                 return authUser.user.updateProfile({
                     displayName: username
                 });
+            })
+            .then(() => {
+                db.collection('users')
+                    .doc(userID)
+                    .set({})
+                    .then(() => console.log('success'))
             })
             .catch(error => alert(error.message));
 

@@ -8,15 +8,17 @@ const MyProfile = () => {
     const [image, setImage] = useState(null);
     const [progress, setProgress] = useState(0);
     const [isUploadOpen, setIsUploadOpen] = useState(false);
+    const [profilePic, setProfilePic] = useState('');
     const {currentUser} = useContext(AppCtx)
+    const userID = currentUser ? currentUser.uid : undefined
 
-    /*useEffect(() => {
+    useEffect(() => {
         //setIsLoading(true);
         const unsubscribe = db.collection('users')
             .doc(userID)
             .onSnapshot((snapshot => {
                 //setIsLoading(false);
-                if (userID) {
+                if (userID && snapshot.data()) {
                     const {profilePic} = snapshot.data();
                     console.log(currentUser)
                     setProfilePic(profilePic)
@@ -27,7 +29,7 @@ const MyProfile = () => {
             unsubscribe()
         }
 
-    }, [userID]);*/
+    }, [userID]);
 
 
     const onChangeHandler = (ev) => {
@@ -68,9 +70,11 @@ const MyProfile = () => {
                     .then(url => {
                         console.log(url)
                         // get the image url and create new post in the DB
-                        currentUser.updateProfile({
-                            photoURL: url
-                        })
+                        db.collection('users')
+                            .doc(currentUser.uid)
+                            .update({
+                                profilePic: url
+                            })
                             .then(() => {
                                 setIsUploadOpen(false);
                             })
@@ -100,7 +104,7 @@ const MyProfile = () => {
                             <Avatar
                                 className="my-profile-avatar"
                                 alt=""
-                                src={currentUser.photoURL}
+                                src={profilePic}
                             >
                             </Avatar>
                             {

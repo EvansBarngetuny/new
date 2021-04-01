@@ -4,9 +4,31 @@ import ModalContainer from "../Modals/ModalContainer/ModalContainer";
 import CreateNewPost from "../CreateNewPost/CreateNewPost";
 import {useContext, useEffect, useState} from "react";
 import AppCtx from "../../context/AppCtx";
+import {db} from "../../firebase";
 
 const Dashboard = () => {
+    const [profilePic, setProfilePic] = useState('');
     const {currentUser} = useContext(AppCtx)
+    const userID = currentUser ? currentUser.uid : undefined
+
+    useEffect(() => {
+        //setIsLoading(true);
+        const unsubscribe = db.collection('users')
+            .doc(userID)
+            .onSnapshot((snapshot => {
+                //setIsLoading(false);
+                if (userID && snapshot.data()) {
+                    const {profilePic} = snapshot.data();
+                    console.log(currentUser)
+                    setProfilePic(profilePic)
+                }
+            }));
+
+        return () => {
+            unsubscribe()
+        }
+
+    }, [userID]);
 
     return (
         <aside className="side-dashboard">
@@ -15,7 +37,7 @@ const Dashboard = () => {
                 <Avatar
                     className="dashboard-avatar"
                     alt=""
-                    src={currentUser.photoURL}
+                    src={profilePic}
                 >
                 </Avatar>
 

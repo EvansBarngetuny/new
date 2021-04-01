@@ -3,6 +3,7 @@ import AppCtx from "../../context/AppCtx";
 import {Link} from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import {db, storage} from "../../firebase";
+import FilteredNewsfeed from "../NewsFeed/FilteredNewsFeed";
 
 const MyProfile = () => {
     const [image, setImage] = useState(null);
@@ -127,9 +128,9 @@ const MyProfile = () => {
                         </section>
 
                         <section className="my-profile-favourite-posts">
-                            <h3>Here are your last 5 publication</h3>
-                            <Link to="/my-publications">See all publications</Link>
-
+                            <h3>Your latest publications</h3>
+                            <FilteredNewsfeed />
+                            <p><Link to="/my-publications">See all publications</Link></p>
                         </section>
 
                         <section className="my-profile-favourite-posts">

@@ -18,6 +18,7 @@ import {
 } from "../../utils/data";
 
 const Post = ({post, postID}) => {
+    const [profilePic, setProfilePic] = useState('')
     const [isLiked, setIsLiked] = useState(false)
     const [isFavourite, setIsFavourite] = useState(false)
     const [likesCount, setLikesCount] = useState(0)
@@ -63,6 +64,21 @@ const Post = ({post, postID}) => {
 
     }, []);
 
+    useEffect(() => {
+        const unsubscribe = db.collection('users')
+            .doc(post.ownerID)
+            .onSnapshot((snapshot => {
+                if (snapshot.data()) {
+                    setProfilePic(snapshot.data().profilePic)
+                }
+            }));
+
+        return () => {
+            unsubscribe()
+        }
+
+    }, []);
+
     const onEditComment = editComment.bind(null, postID);
     const onEditPost = editPost.bind(null, postID);
     const onDeleteComment = deleteComment.bind(null, postID);
@@ -71,7 +87,7 @@ const Post = ({post, postID}) => {
         <section className="post-container">
             <PostHeader
                 postedBy={post.postedBy}
-                profilePic={post.profilePic}
+                profilePic={profilePic}
                 onDelete={() => deletePost(postID)}
                 isOwner={currentUser && currentUser.uid === post.ownerID}
             />

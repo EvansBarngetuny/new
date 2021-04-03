@@ -4,18 +4,18 @@ import PostContent from "./PostContent/PostContent";
 import PostCommentsSection from "./PostCommentsSection/PostCommentsSection";
 import PostAddComment from "./PostAddComment/PostAddComment";
 import {useContext, useEffect, useState} from "react";
-import {auth, db} from "../../firebase";
+import {db} from "../../firebase";
 import AppCtx from "../../context/AppCtx";
 import PostLikeSection from "./PostLikeSection/PostLikeSection";
 import LikeCounter from "../../common/components/LikeCounter/LikeCounter";
 import {
-    clearSubCollection,
-    deleteDocument,
-    deleteDocumentInSubCollection,
-    updateDocument,
-    updateDocumentInSubCollection
-} from "../../utils/api";
-import admin from "firebase";
+    addToFavourites,
+    deleteComment, deletePost,
+    editComment, editPost,
+    likePost,
+    removeFromFavourites,
+    unlikePost
+} from "../../utils/data";
 
 const Post = ({post, postID}) => {
     const [isLiked, setIsLiked] = useState(false)
@@ -28,28 +28,16 @@ const Post = ({post, postID}) => {
         const unsubscribe = db.collection('posts')
             .doc(postID)
             .onSnapshot(snapshot => {
-                const postLikes = snapshot.data().likes;
-                if (currentUser) {
-                    setIsLiked(postLikes.includes(currentUser.uid));
+                if (snapshot.data()) {
+                    const postLikes = snapshot.data().likes;
+                    const postFavourites = snapshot.data().inFavourites;
+                    if (currentUser) {
+                        setIsFavourite(postFavourites.includes(currentUser.uid));
+                        setIsLiked(postLikes.includes(currentUser.uid));
+                    }
+                    setLikesCount(postLikes.length);
                 }
-                setLikesCount(postLikes.length);
-            })
-
-        return () => {
-            unsubscribe()
-        }
-
-    }, [])
-
-    useEffect(() => {
-        const unsubscribe = db.collection('posts')
-            .doc(postID)
-            .onSnapshot(snapshot => {
-                const postLikes = snapshot.data().inFavourites;
-                if (currentUser) {
-                    setIsFavourite(postLikes.includes(currentUser.uid));
-                }
-            })
+            });
 
         return () => {
             unsubscribe()
@@ -73,78 +61,18 @@ const Post = ({post, postID}) => {
             unsubscribe()
         }
 
-    }, [postID]);
+    }, []);
 
-    const deletePost = () => {
-        deleteDocument('posts', postID)
-            .catch(err => console.log(err.message));
-
-        //need to manually iterate through the sub-collection 'comments'
-        //and delete every item in order to remove the entire collection
-        //otherwise it remains there even after the post is deleted
-        clearSubCollection('posts', postID, 'comments');
-    }
-
-    const editPost = (newCaption, toggleEditPost) => {
-        updateDocument('posts', postID, {content: newCaption})
-            .then(() => toggleEditPost())
-            .catch(err => console.log(err))
-    }
-
-    const editComment = (newCaption, toggleEditPost, commentID) => {
-        const data = {content: newCaption};
-        updateDocumentInSubCollection('posts', postID, 'comments', commentID, data)
-            .then(() => toggleEditPost())
-            .catch(err => console.log(err))
-    }
-
-    const deleteComment = (commentID) => {
-        deleteDocumentInSubCollection('posts', postID, 'comments', commentID)
-            .catch(err => console.log(err));
-    }
-
-    const addToFavourites = () => {
-        const data = {
-            inFavourites: admin.firestore.FieldValue.arrayUnion(currentUser.uid)
-        };
-        updateDocument('posts', postID, data)
-            .then(() => console.log('added to favourites'))
-            .catch(err => console.log(err.message));
-    }
-
-    const removeFromFavourites = () => {
-        const data = {
-            inFavourites: admin.firestore.FieldValue.arrayRemove(currentUser.uid)
-        };
-        updateDocument('posts', postID, data)
-            .then(() => console.log('removed from favourites'))
-            .catch(err => console.log(err.message));
-    }
-
-    const likePost = () => {
-        const data = {
-            likes: admin.firestore.FieldValue.arrayUnion(currentUser.uid)
-        };
-        updateDocument('posts', postID, data)
-            .then(() => console.log('liked'))
-            .catch(err => console.log(err.message));
-    }
-
-    const unlikePost = () => {
-        const data = {
-            likes: admin.firestore.FieldValue.arrayRemove(currentUser.uid)
-        };
-        updateDocument('posts', postID, data)
-            .then(() => console.log('unliked'))
-            .catch(err => console.log(err.message));
-    }
+    const onEditComment = editComment.bind(null, postID);
+    const onEditPost = editPost.bind(null, postID);
+    const onDeleteComment = deleteComment.bind(null, postID);
 
     return (
         <section className="post-container">
             <PostHeader
                 postedBy={post.postedBy}
                 profilePic={post.profilePic}
-                onDelete={deletePost}
+                onDelete={() => deletePost(postID)}
                 isOwner={currentUser && currentUser.uid === post.ownerID}
             />
 
@@ -155,12 +83,12 @@ const Post = ({post, postID}) => {
                     ? (
                         <PostLikeSection
                             isLiked={isLiked}
-                            onUnLike={unlikePost}
-                            onLike={likePost}
+                            onUnLike={() => unlikePost(postID, currentUser.uid)}
+                            onLike={() => likePost(postID, currentUser.uid)}
                             likesCount={likesCount}
                             isFavourite={isFavourite}
-                            onAddToFavourites={addToFavourites}
-                            onRemoveFromFavourites={removeFromFavourites}
+                            onAddToFavourites={() => addToFavourites(postID, currentUser.uid)}
+                            onRemoveFromFavourites={() => removeFromFavourites(postID, currentUser.uid)}
                         />
                     )
                     : (<LikeCounter likesCount={likesCount} text="react"/>)
@@ -169,14 +97,14 @@ const Post = ({post, postID}) => {
             <PostContent
                 postedBy={post.postedBy}
                 content={post.content}
-                onSave={editPost}
+                onSave={onEditPost}
                 isOwner={currentUser && currentUser.uid === post.ownerID}
             />
 
             <PostCommentsSection
                 comments={comments}
-                onSave={editComment}
-                onDelete={deleteComment}
+                onSave={onEditComment}
+                onDelete={onDeleteComment}
                 currentUser={currentUser}
             />
 

@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import {db, storage} from "../../firebase";
 import FilteredNewsfeed from "../NewsFeed/FilteredNewsFeed";
+import {getPostsByOwner, getUserFavouritePosts} from "../../utils/data";
 
 const MyProfile = () => {
     const [image, setImage] = useState(null);
@@ -129,13 +130,18 @@ const MyProfile = () => {
 
                         <section className="my-profile-favourite-posts">
                             <h3>Your latest publications</h3>
-                            <FilteredNewsfeed />
+                            <FilteredNewsfeed
+                                fetchData={() => getPostsByOwner(currentUser.uid, 6)}
+                            />
                             <p><Link to="/my-publications">See all publications</Link></p>
                         </section>
 
                         <section className="my-profile-favourite-posts">
-                            <h3>Here are your last 5 saved posts</h3>
-                            <Link to="/my-favourites">See all favourites</Link>
+                            <h3>Here are your last saved posts</h3>
+                            <FilteredNewsfeed
+                                fetchData={() => getUserFavouritePosts(currentUser.uid, 6)}
+                            />
+                            <p><Link to="/my-favourites">See all favourites</Link></p>
                         </section>
 
                         <style jsx={true}>{`

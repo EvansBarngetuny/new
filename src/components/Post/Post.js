@@ -90,6 +90,7 @@ const Post = ({post, postID}) => {
                 profilePic={profilePic}
                 onDelete={() => deletePost(postID)}
                 isOwner={currentUser && currentUser.uid === post.ownerID}
+                userID={post.ownerID}
             />
 
             <PostImage imageURL={post.imageURL}/>

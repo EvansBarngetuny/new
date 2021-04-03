@@ -1,11 +1,13 @@
 import Avatar from '@material-ui/core/Avatar';
+import {Link} from "react-router-dom";
 
 const PostHeader = (
     {
         postedBy,
         profilePic,
         onDelete,
-        isOwner
+        isOwner,
+        userID
     }
 ) => {
     return (
@@ -17,7 +19,7 @@ const PostHeader = (
             >
                 {postedBy[0].toUpperCase()}
             </Avatar>
-            <h3 className="post-header-username">{postedBy}</h3>
+            <h3 className="post-header-username"><Link to={`/users/${userID}`} >{postedBy}</Link></h3>
 
             {
                 isOwner && (

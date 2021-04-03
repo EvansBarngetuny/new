@@ -9,19 +9,24 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import MyPublications from "./components/MyPublications/MyPublications";
 import MyFavourites from "./components/MyFavourites/MyFavourites";
 import MyProfile from "./components/Profiles/MyProfile";
+import UserProfile from "./components/Profiles/UserProfile";
 
 function App() {
     const [currentUser, setCurrentUser] = useState(null);
+    const [authUserID, setAuthUserID] = useState(null);
     const ctx = {
         currentUser,
+        authUserID,
     }
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((authUser) => {
             if (authUser) {
                 setCurrentUser(authUser);
+                setAuthUserID(authUser.uid);
             } else {
                 setCurrentUser(null);
+                setAuthUserID(null);
             }
         });
 
@@ -47,6 +52,7 @@ function App() {
                     <Route path="/my-publications" component={MyPublications}/>
                     <Route path="/my-favourites" component={MyFavourites}/>
                     <Route path="/my-profile" component={MyProfile}/>
+                    <Route path="/users/:id" component={UserProfile}/>
                     <Route path="/test">
                         <div style={{textAlign: "center"}}>
                             <h1>This is a test page</h1>

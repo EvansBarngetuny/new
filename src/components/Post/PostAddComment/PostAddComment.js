@@ -2,6 +2,7 @@ import {Button, Input} from "@material-ui/core";
 import {useState} from "react";
 import {db} from "../../../firebase";
 import firebase from "firebase";
+import {addDocumentToSubCollection} from "../../../utils/api";
 
 const PostAddComment = ({postID, postedBy, ownerID}) => {
     const [comment, setComment] = useState('');
@@ -13,15 +14,14 @@ const PostAddComment = ({postID, postedBy, ownerID}) => {
             return
         }
 
-        db.collection("posts")
-            .doc(postID)
-            .collection("comments")
-            .add({
-                content: comment,
-                postedBy: postedBy,
-                ownerID: ownerID,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            })
+        const data = {
+            content: comment,
+            postedBy: postedBy,
+            ownerID: ownerID,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        };
+
+        addDocumentToSubCollection('posts', postID, 'comments', data)
             .catch(err => console.log(err));
 
         setComment('');

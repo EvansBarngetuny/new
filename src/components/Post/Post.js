@@ -7,8 +7,15 @@ import {useContext, useEffect, useState} from "react";
 import {auth, db} from "../../firebase";
 import AppCtx from "../../context/AppCtx";
 import PostLikeSection from "./PostLikeSection/PostLikeSection";
-import admin from "firebase";
 import LikeCounter from "../../common/components/LikeCounter/LikeCounter";
+import {
+    clearSubCollection,
+    deleteDocument,
+    deleteDocumentInSubCollection,
+    updateDocument,
+    updateDocumentInSubCollection
+} from "../../utils/api";
+import admin from "firebase";
 
 const Post = ({post, postID}) => {
     const [isLiked, setIsLiked] = useState(false)
@@ -17,20 +24,6 @@ const Post = ({post, postID}) => {
     const [comments, setComments] = useState([]);
     const {currentUser} = useContext(AppCtx);
 
-    /*useEffect(() => {
-        admin
-            .auth()
-            .getUser(post.ownerID)
-            .then((userRecord) => {
-                // See the UserRecord reference doc for the contents of userRecord.
-                console.log(userRecord)
-                console.log(`Successfully fetched user data:  ${userRecord.toJSON()}`);
-            })
-            .catch((error) => {
-                console.log('Error fetching user data:', error);
-            });
-
-    })*/
     useEffect(() => {
         const unsubscribe = db.collection('posts')
             .doc(postID)
@@ -83,90 +76,67 @@ const Post = ({post, postID}) => {
     }, [postID]);
 
     const deletePost = () => {
-        db.collection('posts')
-            .doc(postID)
-            .delete()
-            .catch(err => console.log(err));
+        deleteDocument('posts', postID)
+            .catch(err => console.log(err.message));
 
         //need to manually iterate through the sub-collection 'comments'
         //and delete every item in order to remove the entire collection
-        //otherwise it remains there despite even after the post is deleted
-        clearCollection()
-
-        function clearCollection() {
-            const ref = db.collection('posts')
-                .doc(postID)
-                .collection('comments');
-
-            ref.onSnapshot((snapshot) => {
-                snapshot.docs.forEach((doc) => {
-                    ref.doc(doc.id).delete()
-                })
-            })
-        }
+        //otherwise it remains there even after the post is deleted
+        clearSubCollection('posts', postID, 'comments');
     }
 
     const editPost = (newCaption, toggleEditPost) => {
-        db.collection('posts')
-            .doc(postID)
-            .update({content: newCaption})
+        updateDocument('posts', postID, {content: newCaption})
             .then(() => toggleEditPost())
             .catch(err => console.log(err))
     }
 
     const editComment = (newCaption, toggleEditPost, commentID) => {
-        db.collection('posts')
-            .doc(postID)
-            .collection('comments')
-            .doc(commentID)
-            .update({content: newCaption})
+        const data = {content: newCaption};
+        updateDocumentInSubCollection('posts', postID, 'comments', commentID, data)
             .then(() => toggleEditPost())
             .catch(err => console.log(err))
     }
 
     const deleteComment = (commentID) => {
-        db.collection('posts')
-            .doc(postID)
-            .collection('comments')
-            .doc(commentID)
-            .delete()
+        deleteDocumentInSubCollection('posts', postID, 'comments', commentID)
             .catch(err => console.log(err));
     }
 
     const addToFavourites = () => {
-        db.collection('posts')
-            .doc(postID)
-            .update({
-                inFavourites: admin.firestore.FieldValue.arrayUnion(currentUser.uid)
-            })
-            .then(() => console.log('liked'))
+        const data = {
+            inFavourites: admin.firestore.FieldValue.arrayUnion(currentUser.uid)
+        };
+        updateDocument('posts', postID, data)
+            .then(() => console.log('added to favourites'))
+            .catch(err => console.log(err.message));
     }
 
     const removeFromFavourites = () => {
-        db.collection('posts')
-            .doc(postID)
-            .update({
-                inFavourites: admin.firestore.FieldValue.arrayRemove(currentUser.uid)
-            })
-            .then(() => console.log('liked'))
+        const data = {
+            inFavourites: admin.firestore.FieldValue.arrayRemove(currentUser.uid)
+        };
+        updateDocument('posts', postID, data)
+            .then(() => console.log('removed from favourites'))
+            .catch(err => console.log(err.message));
     }
 
     const likePost = () => {
-        db.collection('posts')
-            .doc(postID)
-            .update({
-                likes: admin.firestore.FieldValue.arrayUnion(currentUser.uid)
-            })
+        const data = {
+            likes: admin.firestore.FieldValue.arrayUnion(currentUser.uid)
+        };
+        updateDocument('posts', postID, data)
             .then(() => console.log('liked'))
+            .catch(err => console.log(err.message));
     }
 
     const unlikePost = () => {
-        db.collection('posts')
-            .doc(postID)
-            .update({
-                likes: admin.firestore.FieldValue.arrayRemove(currentUser.uid)
-            })
+        const data = {
+            likes: admin.firestore.FieldValue.arrayRemove(currentUser.uid)
+        };
+        updateDocument('posts', postID, data)
             .then(() => console.log('unliked'))
+            .catch(err => console.log(err.message));
     }
 
     return (

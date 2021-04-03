@@ -49,3 +49,10 @@ export function deleteDocumentInSubCollection(rootCollection, rootDocId, subColl
         .doc(targetDocId)
         .delete();
 }
+
+export function getFilteredOrderedAndLimitedCollection(collectionPath, fieldPath, opStr, value, orderBy, direction, limit) {
+    return db.collection(collectionPath)
+        .where(fieldPath, opStr, value)
+        .orderBy(orderBy, direction)
+        .limit(limit);
+}

@@ -1,5 +1,5 @@
 import {Button, Input} from "@material-ui/core";
-import {useContext, useState} from "react";
+import {useState} from "react";
 import {auth, db} from "../../firebase";
 import Spinner from "../../common/components/Spinner/Spinner";
 
@@ -7,17 +7,26 @@ const SignUpForm = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [rePass, setRePass] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
     function signUp(ev) {
         ev.preventDefault();
+
+        if (!username.trim() || !email.trim() || !password || !rePass) {
+            return alert('All fields are required!');
+        }
+
+        if (password !== rePass) {
+            return alert('Passwords don\'t match!');
+        }
+
         setIsLoading(true)
 
         let userID = '';
         auth.createUserWithEmailAndPassword(email, password)
             .then((authUser) => {
                 setIsLoading(false);
-                //userID = authUser.uid;
                 userID = authUser.user.uid;
                 return authUser.user.updateProfile({
                     displayName: username
@@ -44,7 +53,7 @@ const SignUpForm = () => {
                         <label htmlFor="">Username*</label>
                         <Input
                             type="text"
-                            placeholder="username"
+                            placeholder="Enter username..."
                             value={username}
                             required
                             onChange={(e) => setUsername(e.target.value)}
@@ -60,14 +69,22 @@ const SignUpForm = () => {
                         <label htmlFor="">Password*</label>
                         <Input
                             type="password"
-                            placeholder="password"
+                            placeholder="Enter password..."
                             value={password}
                             required
                             onChange={(e) => setPassword(e.target.value)}
                         />
+                        <label htmlFor="">Confirm Password*</label>
+                        <Input
+                            type="password"
+                            placeholder="Enter confirm password..."
+                            value={rePass}
+                            required
+                            onChange={(e) => setRePass(e.target.value)}
+                        />
                         <Button type="submit">Sign Up</Button>
 
-                        <style jsx>{`
+                        <style jsx={true}>{`
               .sign-in-form {
                 display: flex;
                 flex-flow: column wrap;

@@ -10,6 +10,11 @@ const LoginForm = () => {
 
     function login(ev) {
         ev.preventDefault();
+
+        if (!email || !password) {
+            return alert('All fields are required!');
+        }
+
         setIsLoading(true)
 
         auth.signInWithEmailAndPassword(email, password)

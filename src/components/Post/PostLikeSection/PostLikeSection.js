@@ -49,7 +49,7 @@ const PostLikeSection = ({
 
             </div>
 
-            <style jsx="true">{`
+            <style jsx={true}>{`
               .post-like-section {
                 display: flex;
                 flex-flow: row wrap;

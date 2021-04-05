@@ -23,7 +23,7 @@ const ModalContainer = (props) => {
 
                 </div>
             < /Modal>
-            <Button onClick={() => setOpen(true)}>{props.btnText}</Button>
+            <Button onClick={() => setOpen(true)}>{props.btnText || ''}</Button>
         </>
     );
 }

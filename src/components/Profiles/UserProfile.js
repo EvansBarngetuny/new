@@ -1,6 +1,6 @@
 import {Link} from "@material-ui/core";
 import {getPostsByOwner} from "../../utils/data";
-import FilteredNewsfeed from "../NewsFeed/FilteredNewsFeed";
+import GridNewsFeed from "../NewsFeed/GridNewsFeed";
 import {useContext} from "react";
 import AppCtx from "../../context/AppCtx";
 import {Redirect} from "react-router-dom";
@@ -19,7 +19,7 @@ const UserProfile = ({match}) => {
             <h1>User profile page</h1>
             <section className="my-profile-favourite-posts">
                 <h3>User's latest publications</h3>
-                <FilteredNewsfeed
+                <GridNewsFeed
                     fetchData={() => getPostsByOwner(userId, 6)}
                 />
                 <p><Link to="/my-publications">See all publications by this user</Link></p>

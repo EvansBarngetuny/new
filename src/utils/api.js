@@ -56,3 +56,9 @@ export function getFilteredOrderedAndLimitedCollection(collectionPath, fieldPath
         .orderBy(orderBy, direction)
         .limit(limit);
 }
+
+export function getDocumentFromCollection(collectionPath, targetDocId) {
+    return db.collection(collectionPath)
+        .doc(targetDocId)
+        .get()
+}

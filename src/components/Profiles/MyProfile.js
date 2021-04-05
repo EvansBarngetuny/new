@@ -131,7 +131,7 @@ const MyProfile = () => {
             </section>
 
             <section className="my-profile-favourite-posts">
-                <h3>Your latest publications</h3>
+                <h3 className="my-profile-favourite-posts-header">Your latest publications</h3>
                 <GridNewsFeed
                     fetchData={() => getPostsByOwner(currentUser.uid, 6)}
                 />
@@ -139,7 +139,7 @@ const MyProfile = () => {
             </section>
 
             <section className="my-profile-favourite-posts">
-                <h3>Here are your last saved posts</h3>
+                <h3 className="my-profile-favourite-posts-header">Your last saved posts</h3>
                 <GridNewsFeed
                     fetchData={() => getUserFavouritePosts(currentUser.uid, 6)}
                 />
@@ -181,6 +181,10 @@ const MyProfile = () => {
                 height: 100px;
                 width: 100px;
                 margin: 0 20px 20px 20px;
+              }
+              
+              .my-profile-favourite-posts-header {
+                border-bottom: 1px solid lightgray;
               }
 
             `}

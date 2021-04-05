@@ -19,7 +19,7 @@ const PostCommentsSection = (props) => {
                 })
             }
 
-            <style jsx>{`
+            <style jsx={true}>{`
               .post-comment-section {
                 margin: 15px 0 20px 0;
               }

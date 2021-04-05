@@ -1,7 +1,7 @@
 import {
     clearSubCollection,
     deleteDocument,
-    deleteDocumentInSubCollection,
+    deleteDocumentInSubCollection, getDocumentFromCollection,
     getFilteredOrderedAndLimitedCollection,
     updateDocument,
     updateDocumentInSubCollection
@@ -63,6 +63,10 @@ export function removeFromFavourites(postID, userID) {
     };
     updateDocument(DATA.COLLECTIONS.POSTS, postID, data)
         .catch(err => console.log(err.message));
+}
+
+export function getPostById(postID) {
+    return getDocumentFromCollection(DATA.COLLECTIONS.POSTS, postID);
 }
 
 export function getPostsByOwner(ownerId, optionalLimit) {

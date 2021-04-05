@@ -41,7 +41,7 @@ const LoginForm = () => {
                         <label htmlFor="">Password*</label>
                         <Input
                             type="password"
-                            placeholder="password"
+                            placeholder="Enter password..."
                             value={password}
                             required
                             onChange={(e) => setPassword(e.target.value)}

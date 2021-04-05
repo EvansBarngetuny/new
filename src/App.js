@@ -10,6 +10,8 @@ import MyPublications from "./components/MyPublications/MyPublications";
 import MyFavourites from "./components/MyFavourites/MyFavourites";
 import MyProfile from "./components/Profiles/MyProfile";
 import UserProfile from "./components/Profiles/UserProfile";
+import GenericGuestPage from "./components/GenericGuestPage/GenericGuestPage";
+import SinglePostPage from "./components/Post/SinglePostPage";
 
 function App() {
     const [currentUser, setCurrentUser] = useState(null);
@@ -38,7 +40,6 @@ function App() {
     return (
         <div className="app-wrapper">
 
-
             <AppCtxProvider value={ctx}>
 
                 <Header/>
@@ -53,11 +54,8 @@ function App() {
                     <Route path="/my-favourites" component={MyFavourites}/>
                     <Route path="/my-profile" component={MyProfile}/>
                     <Route path="/users/:id" component={UserProfile}/>
-                    <Route path="/test">
-                        <div style={{textAlign: "center"}}>
-                            <h1>This is a test page</h1>
-                        </div>
-                    </Route>
+                    <Route path="/posts/:id" component={SinglePostPage}/>
+                    <Route path="/test" component={GenericGuestPage}/>
                 </Switch>
 
             </AppCtxProvider>

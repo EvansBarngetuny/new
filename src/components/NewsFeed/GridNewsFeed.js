@@ -3,7 +3,7 @@ import Spinner from "../../common/components/Spinner/Spinner";
 import GridPost from "../Post/GridPost";
 import {parseDataOnSnapshot} from "../../utils/data";
 
-const FilteredNewsfeed = ({fetchData}) => {
+const GridNewsFeed = ({fetchData}) => {
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -13,6 +13,11 @@ const FilteredNewsfeed = ({fetchData}) => {
 
     }, [fetchData]);
 
+    if (posts.length === 0) {
+        return (
+            <h4>Currently there are no posts...</h4>
+        )
+    }
 
     return (
         <div className="filtered-newsfeed-container">
@@ -23,7 +28,7 @@ const FilteredNewsfeed = ({fetchData}) => {
                 posts.map(p => <GridPost key={p.id} postID={p.id} post={p.post}/>)
             }
 
-            <style jsx="true">{`
+            <style jsx={true}>{`
               .filtered-newsfeed-container {
                 display: flex;
                 flex-flow: row wrap;
@@ -36,4 +41,4 @@ const FilteredNewsfeed = ({fetchData}) => {
     );
 }
 
-export default FilteredNewsfeed;
+export default GridNewsFeed;

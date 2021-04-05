@@ -112,6 +112,7 @@ const Post = ({post, postID}) => {
             }
 
             <PostContent
+                userID={post.ownerID}
                 postedBy={post.postedBy}
                 content={post.content}
                 onSave={onEditPost}
@@ -135,7 +136,7 @@ const Post = ({post, postID}) => {
                 )
             }
 
-            <style jsx="true">{`
+            <style jsx={true}>{`
               .post-container {
                 background: white;
                 max-width: 600px;

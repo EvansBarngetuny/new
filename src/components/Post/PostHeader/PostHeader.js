@@ -26,7 +26,7 @@ const PostHeader = (
                     <>
                         <button onClick={onDelete} className="post-header-btn delete" title="Delete this post">
                             <img
-                            src="delete-icon.svg"
+                            src="/delete-icon.svg"
                             alt="delete-icon"
                             height="15"
                             width="15"
@@ -36,7 +36,7 @@ const PostHeader = (
                 )
             }
 
-            <style jsx>{`
+            <style jsx={true}>{`
               .post-header {
                 display: flex;
                 align-items: center;
@@ -54,6 +54,11 @@ const PostHeader = (
               }
               .post-header-username {
                 margin-left: 10px;
+              }
+              
+              .post-header a {
+                text-decoration: none;
+                color: black;
               }
             `}
             </style>

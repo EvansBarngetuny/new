@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {Button} from "@material-ui/core";
+import {Link} from "react-router-dom";
 
 const PostContent = (props) => {
     const [newContent, setNewContent] = useState(props.content);
@@ -12,7 +13,9 @@ const PostContent = (props) => {
     return (
         <article className="post-content">
             <p className="post-content-text">
-                <strong>{props.postedBy}</strong> {props.content}
+                <Link to={`/users/${props.userID}`} >
+                    <strong>{props.postedBy}</strong> {props.content}
+                </Link>
             </p>
 
             {
@@ -77,6 +80,11 @@ const PostContent = (props) => {
               .post-content-text {
                 font-weight: normal;
                 margin: 10px 10px;
+              }
+
+              .post-content-text a {
+                text-decoration: none;
+                color: #000000;
               }
 
               .post-content-textarea {

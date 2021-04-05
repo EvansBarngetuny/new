@@ -12,7 +12,7 @@ const GridPost = ({post, postID}) => {
 
     return (
         <section className="grid-post-container">
-            <GridPostImage imageURL={post.imageURL}/>
+            <GridPostImage imageURL={post.imageURL} postID={postID}/>
             {
                 isOwner && (
                     <button onClick={() => deletePost(postID)}
@@ -28,13 +28,14 @@ const GridPost = ({post, postID}) => {
             }
 
             <PostContent
+                userID={post.ownerID}
                 postedBy={post.postedBy}
                 content={post.content}
                 onSave={onEditPost}
                 isOwner={currentUser && currentUser.uid === post.ownerID}
             />
 
-            <style jsx="true">{`
+            <style jsx={true}>{`
               .grid-post-container {
                 position: relative;
                 width: 260px;
@@ -55,6 +56,11 @@ const GridPost = ({post, postID}) => {
                 cursor: pointer;
                 padding: 1px 3px;
                 outline: none;
+              }
+
+              .grid-post-del-btn:hover {
+                border: 1px solid gray;
+                border-radius: 3px;
               }
 
             `}

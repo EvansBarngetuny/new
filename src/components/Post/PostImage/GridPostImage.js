@@ -1,9 +1,13 @@
-const GridPostImage = ({imageURL}) => {
+import {Link} from "react-router-dom";
+
+const GridPostImage = ({imageURL, postID}) => {
     return (
         <article className="grid-post-image">
-            <img src={imageURL} alt="post-img"/>
+            <Link to={`/posts/${postID}`} >
+                <img src={imageURL} alt="post-img"/>
+            </Link>
 
-            <style jsx>{`
+            <style jsx={true}>{`
               .grid-post-image img {
                 width: 100%;
                 height: 175px;

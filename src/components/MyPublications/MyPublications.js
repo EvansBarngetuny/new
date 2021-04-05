@@ -4,6 +4,7 @@ import {db} from "../../firebase";
 import Post from "../Post/Post";
 import AppCtx from "../../context/AppCtx";
 import Spinner from "../../common/components/Spinner/Spinner";
+import GenericGuestPage from "../GenericGuestPage/GenericGuestPage";
 
 const MyPublications = () => {
     const [posts, setPosts] = useState([]);
@@ -33,19 +34,22 @@ const MyPublications = () => {
 
     }, [userID]);
 
+    if (!currentUser) {
+        return GenericGuestPage();
+    }
 
     return (
         <div className="my-publications-container">
             <h1>This is a list of all the posts you've published</h1>
 
             {
-                isLoading && <Spinner />
+                isLoading && <Spinner/>
             }
 
             {
-                currentUser
-                    ? posts.length > 0 ?(posts.map(p => <Post key={p.id} postID={p.id} post={p.post}/>)) : (<h1>No publications yet</h1>)
-                    : (<Redirect to="/"/>)
+                posts.length > 0
+                    ? (posts.map(p => <Post key={p.id} postID={p.id} post={p.post}/>))
+                    : (<h1>No publications yet</h1>)
             }
 
             <style jsx="true">{`

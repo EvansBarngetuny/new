@@ -11,6 +11,7 @@ import admin from "firebase";
 const DATA = {
     COLLECTIONS: {
         POSTS: 'posts',
+        USERS: 'users',
     },
     SUB_COLLECTIONS: {
         COMMENTS: 'comments',
@@ -136,6 +137,17 @@ export function deleteComment(postID, commentID) {
         commentID
     )
         .catch(err => console.log(err));
+}
+
+export function editDescription(userID, newDescription, toggleEditDescription) {
+    const data = {description: newDescription};
+    updateDocument(
+        DATA.COLLECTIONS.USERS,
+        userID,
+        data
+    )
+        .then(() => toggleEditDescription())
+        .catch(err => console.log(err))
 }
 
 export function parseDataOnSnapshot(fetchData, setIsLoading, setPosts) {

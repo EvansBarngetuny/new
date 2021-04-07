@@ -43,6 +43,7 @@ const UserSearchBar = () => {
                 border: 1px solid #e3e3e3;
                 border-radius: 50px;
                 padding: 5px 25px;
+                background: #FCF6F5FF;
               }
               
               .search-bar-input {

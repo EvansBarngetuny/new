@@ -24,7 +24,6 @@ const MyPublications = () => {
 
             `}
             </style>
-
         </div>
     );
 }

@@ -64,7 +64,7 @@ const Dashboard = () => {
 
             <style jsx>{`
               .side-dashboard {
-                background: white;
+                background: #FDFDEB;
                 width: 250px;
                 height: 500px;
                 border-right: 1px solid lightgray;

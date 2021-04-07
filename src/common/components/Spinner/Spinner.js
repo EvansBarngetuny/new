@@ -5,7 +5,7 @@ export const Spinner = (props) => {
 
     return (
             <div className="spinner">
-                <Loader type="ThreeDots" color="#2BAD60" height="100" width="100"/>
+                <Loader type="ThreeDots" color="#D9B48FFF" height="100" width="100"/>
 
                 <style jsx>{`
                   .spinner {

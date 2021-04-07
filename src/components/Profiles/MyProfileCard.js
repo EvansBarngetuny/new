@@ -79,7 +79,7 @@ const MyProfileCard = (props) => {
     return (
         <section className="my-profile-card-section">
             <article className="profile-avatar-container">
-                <p><strong>{props.username}</strong></p>
+                <p className="my-profile-username"><strong>{props.username}</strong></p>
                 <Avatar
                     className="my-profile-avatar"
                     alt={props.profilePic || ""}
@@ -104,7 +104,7 @@ const MyProfileCard = (props) => {
             </article>
 
             <article className="profile-description-container">
-                <h4>Description</h4>
+                <h4 className="my-profile-description-title">Description</h4>
                 <p className="profile-description-text">{props.description}</p>
                 {
                     isEditDescOpen && (
@@ -130,6 +130,8 @@ const MyProfileCard = (props) => {
 
             <style jsx="true">{`
               .my-profile-card-section {
+                max-width: 400px;
+                margin: 0 auto;
                 display: flex;
                 flex-flow: column wrap;
                 justify-content: center;
@@ -137,6 +139,7 @@ const MyProfileCard = (props) => {
                 border: 1px solid lightgray;
                 border-radius: 5px;
                 padding: 10px 20px;
+                background: #FFF9D7;
               }
 
               .my-profile-card-section {
@@ -149,8 +152,8 @@ const MyProfileCard = (props) => {
               }
 
               .my-profile-avatar {
-                height: 100px;
-                width: 100px;
+                height: 130px;
+                width: 130px;
                 margin: 0 auto 20px auto;
               }
 
@@ -164,6 +167,12 @@ const MyProfileCard = (props) => {
                 border-radius: 5px;
                 margin-top: 0;
                 padding: 20px;
+                background: #FCF6F5FF;
+              }
+
+              .my-profile-description-title,
+              .my-profile-username {
+                border-bottom: 1px solid #9d9d9d;
               }
 
             `}

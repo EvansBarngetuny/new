@@ -6,7 +6,7 @@ const Header = () => {
 
     return (
         <header className="app-header">
-            <nav className="app-header-nav">
+            <nav className="app-header-nav header-content-wrapper">
 
                 <HeaderNavigationLogo/>
                 <UserSearchBar />

@@ -8,7 +8,7 @@ const Homepage = () => {
     const {currentUser} = useContext(AppCtx);
 
     return (
-        <main className={'homepage-container' + (currentUser ? ' logged-user' : '')}>
+        <div className={'homepage-container' + (currentUser ? ' logged-user' : '')}>
 
             {
                 !currentUser && (<GenericGuestPage />)
@@ -23,7 +23,7 @@ const Homepage = () => {
               
             `}
             </style>
-        </main>
+        </div>
     );
 }
 

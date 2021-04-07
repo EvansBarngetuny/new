@@ -67,7 +67,7 @@ const MyProfile = () => {
 
             <style jsx={true}>{`
               .my-profile-page-container {
-                background: white;
+                background: #FDFDEB;
                 border-left: 1px solid lightgray;
                 border-right: 1px solid lightgray;
                 border-bottom: 1px solid lightgray;
@@ -77,6 +77,7 @@ const MyProfile = () => {
               
               .my-profile-header {
                 margin-top: 0;
+                border-bottom: 1px solid lightgray;
               }
               
               .my-profile-favourite-posts-header {

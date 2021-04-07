@@ -1,11 +1,11 @@
-import {Button, Link} from "@material-ui/core";
-import {editDescription, getPostsByOwner} from "../../utils/data";
+import {Link} from "react-router-dom";
+import {getPostsByOwner} from "../../utils/data";
 import GridNewsFeed from "../NewsFeed/GridNewsFeed";
 import {useContext, useEffect, useState} from "react";
 import AppCtx from "../../context/AppCtx";
 import {Redirect} from "react-router-dom";
 import {db} from "../../firebase";
-import Avatar from "@material-ui/core/Avatar";
+import UserProfileCard from "./UserProfileCard/UserProfileCard";
 
 const UserProfile = ({match}) => {
     const [username, setUsername] = useState('');
@@ -38,25 +38,19 @@ const UserProfile = ({match}) => {
     }, [userID]);
 
     if (isSameUser) {
-        return <Redirect to="/my-profile" />
+        return <Redirect to="/my-profile"/>
     }
 
     return (
         <div className="user-profile-container">
             <h1>{username ? username : "User"}'s profile page</h1>
-            <section className="user-card-container">
-                <p><strong>{username ? username : "user"}</strong></p>
-                <Avatar
-                    className="user-profile-avatar"
-                    alt={profilePic || ""}
-                    src={profilePic || ""}
-                >
-                </Avatar>
-                <article className="profile-description-container">
-                    <h4>Description</h4>
-                    <p className="profile-description-text">{description}</p>
-                </article>
-            </section>
+
+            <UserProfileCard
+                username={username}
+                profilePic={profilePic}
+                description={description}
+            />
+
             <section className="my-profile-favourite-posts">
                 <h3>User's latest publications</h3>
                 <GridNewsFeed
@@ -65,7 +59,7 @@ const UserProfile = ({match}) => {
                 <p><Link to="/my-publications">See all publications by this user</Link></p>
             </section>
 
-            <style jsx={true}>{`
+            <style jsx="true">{`
               .user-profile-container {
                 margin-left: 16rem;
                 background: white;
@@ -73,12 +67,6 @@ const UserProfile = ({match}) => {
                 padding: 15px;
               }
               
-              .user-card-container {
-                border: 1px solid lightgray;
-                border-radius: 5px;
-                padding: 15px;
-              }
-
             `}
             </style>
         </div>

@@ -39,11 +39,10 @@ function App() {
     }, [currentUser]);
 
     return (
-        <div className="app-wrapper">
+        <AppCtxProvider value={ctx}>
+            <Header/>
 
-            <AppCtxProvider value={ctx}>
-
-                <Header/>
+            <main className="app-wrapper">
 
                 {
                     currentUser && (<Dashboard/>)
@@ -60,9 +59,8 @@ function App() {
                     <Route path="/test" component={GenericGuestPage}/>
                 </Switch>
 
-            </AppCtxProvider>
-
-        </div>
+            </main>
+        </AppCtxProvider>
     );
 }
 

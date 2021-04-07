@@ -11,16 +11,15 @@ const MyProfile = () => {
     const [profilePic, setProfilePic] = useState('');
     const [description, setDescription] = useState('');
 
-    const {currentUser} = useContext(AppCtx)
-    const userID = currentUser ? currentUser.uid : undefined
+    const {currentUser, authUserID} = useContext(AppCtx)
 
     useEffect(() => {
         //setIsLoading(true);
         const unsubscribe = db.collection('users')
-            .doc(userID)
+            .doc(authUserID || '-1')
             .onSnapshot((snapshot => {
                 //setIsLoading(false);
-                if (userID && snapshot.data()) {
+                if (authUserID && snapshot.data()) {
                     const {profilePic} = snapshot.data();
                     const {description} = snapshot.data();
                     setProfilePic(profilePic)
@@ -32,7 +31,7 @@ const MyProfile = () => {
             unsubscribe()
         }
 
-    }, [userID]);
+    }, [authUserID]);
 
 
     if (!currentUser) {
@@ -47,13 +46,13 @@ const MyProfile = () => {
                 username={currentUser.displayName}
                 profilePic={profilePic}
                 description={description}
-                userID={userID}
+                userID={authUserID}
             />
 
             <section className="my-profile-favourite-posts">
                 <h3 className="my-profile-favourite-posts-header">Your latest publications</h3>
                 <GridNewsFeed
-                    fetchData={() => getPostsByOwner(currentUser.uid, 6)}
+                    fetchData={() => getPostsByOwner(authUserID, 6)}
                 />
                 <p><Link to="/my-publications">See all publications</Link></p>
             </section>
@@ -61,7 +60,7 @@ const MyProfile = () => {
             <section className="my-profile-favourite-posts">
                 <h3 className="my-profile-favourite-posts-header">Your last saved posts</h3>
                 <GridNewsFeed
-                    fetchData={() => getUserFavouritePosts(currentUser.uid, 6)}
+                    fetchData={() => getUserFavouritePosts(authUserID, 6)}
                 />
                 <p><Link to="/my-favourites">See all favourites</Link></p>
             </section>

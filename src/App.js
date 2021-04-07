@@ -12,10 +12,11 @@ import MyProfile from "./components/Profiles/MyProfile";
 import UserProfile from "./components/Profiles/UserProfile";
 import GenericGuestPage from "./components/GenericGuestPage/GenericGuestPage";
 import SinglePostPage from "./components/Post/SinglePostPage";
+import UserSearchPage from "./UserSearch/UserSearchPage";
 
 function App() {
     const [currentUser, setCurrentUser] = useState(null);
-    const [authUserID, setAuthUserID] = useState(null);
+    const [authUserID, setAuthUserID] = useState('');
     const ctx = {
         currentUser,
         authUserID,
@@ -28,7 +29,7 @@ function App() {
                 setAuthUserID(authUser.uid);
             } else {
                 setCurrentUser(null);
-                setAuthUserID(null);
+                setAuthUserID('');
             }
         });
 
@@ -55,6 +56,7 @@ function App() {
                     <Route path="/my-profile" component={MyProfile}/>
                     <Route path="/users/:id" component={UserProfile}/>
                     <Route path="/posts/:id" component={SinglePostPage}/>
+                    <Route path="/search" component={UserSearchPage}/>
                     <Route path="/test" component={GenericGuestPage}/>
                 </Switch>
 

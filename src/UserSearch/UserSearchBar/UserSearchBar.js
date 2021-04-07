@@ -26,7 +26,7 @@ const UserSearchBar = () => {
                 <Input
                     className="search-bar-input"
                     type="text"
-                    placeholder="Enter a username..."
+                    placeholder="Enter an username..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                 />

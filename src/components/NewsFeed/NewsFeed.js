@@ -20,9 +20,21 @@ const Newsfeed = ({fetchData}) => {
             {
                 isLoading && <Spinner />
             }
+
             {
-                posts.map(p => <Post key={p.id} postID={p.id} post={p.post}/>)
+                posts.length > 0
+                    ? (posts.map(p => <Post key={p.id} postID={p.id} post={p.post}/>))
+                    : (<div className="no-posts-container"><h1>No publications yet</h1></div>)
+
             }
+
+            <style jsx="true">{`
+              .no-posts-container {
+                text-align: center;
+              }
+
+            `}
+            </style>
         </div>
     );
 }

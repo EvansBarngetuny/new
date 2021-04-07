@@ -1,15 +1,19 @@
 import Avatar from "@material-ui/core/Avatar";
 import {Button} from "@material-ui/core";
 import {editDescription} from "../../utils/data";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {db, storage} from "../../firebase";
 
-const MyProfileCard = ({username, description, profilePic, userID}) => {
-    const [updatedDescription, setUpdatedDescription] = useState(description);
+const MyProfileCard = (props) => {
+    const [updatedDescription, setUpdatedDescription] = useState('');
     const [image, setImage] = useState(null);
     const [progress, setProgress] = useState(0);
     const [isUploadPicOpen, setIsUploadPicOpen] = useState(false);
     const [isEditDescOpen, setIsEditDescOpen] = useState(false);
+
+    useEffect(() => {
+        setUpdatedDescription(props.description);
+    }, [props.description]);
 
     const onChangeHandler = (ev) => {
         if (ev.target.files[0]) {
@@ -49,7 +53,7 @@ const MyProfileCard = ({username, description, profilePic, userID}) => {
                     .then(url => {
                         // get the image url and create new post in the DB
                         db.collection('users')
-                            .doc(userID)
+                            .doc(props.userID)
                             .update({
                                 profilePic: url
                             })
@@ -75,11 +79,11 @@ const MyProfileCard = ({username, description, profilePic, userID}) => {
     return (
         <section className="my-profile-card-section">
             <article className="profile-avatar-container">
-                <p><strong>{username}</strong></p>
+                <p><strong>{props.username}</strong></p>
                 <Avatar
                     className="my-profile-avatar"
-                    alt=""
-                    src={profilePic}
+                    alt={props.profilePic || ""}
+                    src={props.profilePic || ""}
                 >
                 </Avatar>
                 {
@@ -101,7 +105,7 @@ const MyProfileCard = ({username, description, profilePic, userID}) => {
 
             <article className="profile-description-container">
                 <h4>Description</h4>
-                <p className="profile-description-text">{description}</p>
+                <p className="profile-description-text">{props.description}</p>
                 {
                     isEditDescOpen && (
                         <article className="edit-description-section">
@@ -110,7 +114,9 @@ const MyProfileCard = ({username, description, profilePic, userID}) => {
                                 onChange={(e) => setUpdatedDescription(e.target.value)}
                             />
                             <button
-                                onClick={() => editDescription(userID, updatedDescription, toggleEditSection)}>Update
+                                onClick={() => editDescription(props.userID, updatedDescription, toggleEditSection)}
+                            >
+                                Update
                             </button>
                         </article>
                     )
@@ -122,7 +128,7 @@ const MyProfileCard = ({username, description, profilePic, userID}) => {
                 </Button>
             </article>
 
-            <style jsx={true}>{`
+            <style jsx="true">{`
               .my-profile-card-section {
                 display: flex;
                 flex-flow: column wrap;

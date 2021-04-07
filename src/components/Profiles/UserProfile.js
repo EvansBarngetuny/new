@@ -1,14 +1,41 @@
-import {Link} from "@material-ui/core";
-import {getPostsByOwner} from "../../utils/data";
+import {Button, Link} from "@material-ui/core";
+import {editDescription, getPostsByOwner} from "../../utils/data";
 import GridNewsFeed from "../NewsFeed/GridNewsFeed";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import AppCtx from "../../context/AppCtx";
 import {Redirect} from "react-router-dom";
+import {db} from "../../firebase";
+import Avatar from "@material-ui/core/Avatar";
 
 const UserProfile = ({match}) => {
-    const userId = match.params.id;
+    const [username, setUsername] = useState('');
+    const [profilePic, setProfilePic] = useState('');
+    const [description, setDescription] = useState('');
+    const userID = match.params.id;
     const {authUserID} = useContext(AppCtx);
-    let isSameUser = userId === authUserID;
+    let isSameUser = userID === authUserID;
+
+    useEffect(() => {
+        //setIsLoading(true);
+        const unsubscribe = db.collection('users')
+            .doc(userID)
+            .onSnapshot((snapshot => {
+                //setIsLoading(false);
+                if (userID && snapshot.data()) {
+                    const {profilePic} = snapshot.data();
+                    const {description} = snapshot.data();
+                    const {username} = snapshot.data();
+                    setProfilePic(profilePic)
+                    setDescription(description);
+                    setUsername(username);
+                }
+            }));
+
+        return () => {
+            unsubscribe()
+        }
+
+    }, [userID]);
 
     if (isSameUser) {
         return <Redirect to="/my-profile" />
@@ -16,11 +43,24 @@ const UserProfile = ({match}) => {
 
     return (
         <div className="user-profile-container">
-            <h1>User profile page</h1>
+            <h1>{username ? username : "User"}'s profile page</h1>
+            <section className="user-card-container">
+                <p><strong>{username ? username : "user"}</strong></p>
+                <Avatar
+                    className="user-profile-avatar"
+                    alt={profilePic || ""}
+                    src={profilePic || ""}
+                >
+                </Avatar>
+                <article className="profile-description-container">
+                    <h4>Description</h4>
+                    <p className="profile-description-text">{description}</p>
+                </article>
+            </section>
             <section className="my-profile-favourite-posts">
                 <h3>User's latest publications</h3>
                 <GridNewsFeed
-                    fetchData={() => getPostsByOwner(userId, 6)}
+                    fetchData={() => getPostsByOwner(userID, 6)}
                 />
                 <p><Link to="/my-publications">See all publications by this user</Link></p>
             </section>
@@ -28,6 +68,15 @@ const UserProfile = ({match}) => {
             <style jsx={true}>{`
               .user-profile-container {
                 margin-left: 16rem;
+                background: white;
+                border: 1px solid lightgray;
+                padding: 15px;
+              }
+              
+              .user-card-container {
+                border: 1px solid lightgray;
+                border-radius: 5px;
+                padding: 15px;
               }
 
             `}

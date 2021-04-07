@@ -19,7 +19,6 @@ const Dashboard = () => {
                 //setIsLoading(false);
                 if (userID && snapshot.data()) {
                     const {profilePic} = snapshot.data();
-                    console.log(currentUser)
                     setProfilePic(profilePic)
                 }
             }));
@@ -115,6 +114,11 @@ const Dashboard = () => {
                 font-size: 14px;
                 font-weight: 500;
                 padding: 6px 8px;
+                border-radius: 3px;
+              }
+
+              .side-dashboard a:hover {
+                background: #f5f5f5;
               }
 
             `}

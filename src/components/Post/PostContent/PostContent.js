@@ -14,8 +14,9 @@ const PostContent = (props) => {
         <article className="post-content">
             <p className="post-content-text">
                 <Link to={`/users/${props.userID}`} >
-                    <strong>{props.postedBy}</strong> {props.content}
+                    <strong>{props.postedBy} </strong>
                 </Link>
+                {props.content}
             </p>
 
             {

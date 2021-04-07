@@ -1,5 +1,6 @@
 import HeaderNavigationLogo from "./HeaderNavigationLogo/HeaderNavigationLogo";
-import HeaderNavigationUl from "./HeaderNavigationUl/HeaderNavigationUl";
+import HeaderNavigation from "./HeaderNavigation/HeaderNavigation";
+import UserSearchBar from "../../UserSearch/UserSearchBar/UserSearchBar";
 
 const Header = () => {
 
@@ -8,8 +9,8 @@ const Header = () => {
             <nav className="app-header-nav">
 
                 <HeaderNavigationLogo/>
-
-                <HeaderNavigationUl />
+                <UserSearchBar />
+                <HeaderNavigation />
 
             </nav>
 

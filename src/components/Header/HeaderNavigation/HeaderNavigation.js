@@ -6,7 +6,7 @@ import AppCtx from "../../../context/AppCtx";
 import SignUpForm from "../../Forms/SignUpForm";
 import LoginForm from "../../Forms/LoginForm";
 
-function HeaderNavigationUl() {
+function HeaderNavigation() {
     const {currentUser} = useContext(AppCtx);
 
     const onLogout = () => {
@@ -26,19 +26,19 @@ function HeaderNavigationUl() {
                     : (<>
                             <li>
                                 <ModalContainer btnText="Sign Up">
-                                    <SignUpForm />
+                                    <SignUpForm/>
                                 </ModalContainer>
                             </li>
                             <li>
                                 <ModalContainer btnText="Login">
-                                    <LoginForm />
+                                    <LoginForm/>
                                 </ModalContainer>
                             </li>
                         </>
                     )
             }
 
-            <style jsx="true" >{`
+            <style jsx="true">{`
               .app-header-nav-ul {
                 display: flex;
                 flex-flow: row wrap;
@@ -47,6 +47,7 @@ function HeaderNavigationUl() {
               }
 
               .app-header-nav-ul {
+                padding: 0;
                 list-style: none;
               }
 
@@ -60,4 +61,4 @@ function HeaderNavigationUl() {
     );
 }
 
-export default HeaderNavigationUl;
+export default HeaderNavigation;

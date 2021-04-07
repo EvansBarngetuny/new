@@ -35,7 +35,7 @@ const SignUpForm = () => {
             .then(() => {
                 db.collection('users')
                     .doc(userID)
-                    .set({})
+                    .set({username: username})
                     .then(() => console.log('success'))
             })
             .catch(error => alert(error.message));

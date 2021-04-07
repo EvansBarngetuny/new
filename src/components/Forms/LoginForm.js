@@ -1,25 +1,35 @@
 import {Button, Input} from "@material-ui/core";
 import {useState} from "react";
-import {auth} from "../../firebase";
 import Spinner from "../../common/components/Spinner/Spinner";
+import {loginUser} from "../../utils/data";
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     function login(ev) {
         ev.preventDefault();
 
         if (!email || !password) {
-            return alert('All fields are required!');
+            setNotificationMessage('All fields are required');
+            return;
         }
 
         setIsLoading(true)
 
-        auth.signInWithEmailAndPassword(email, password)
+        loginUser(email, password)
             .then(() => setIsLoading(false))
-            .catch(err => alert(err.message))
+            .catch(err => {
+                setIsLoading(false);
+                if (err.code === 'auth/user-not-found' ||
+                    err.code === 'auth/wrong-password') {
+                    setNotificationMessage('Wrong email or password')
+                } else {
+                    console.error(err.message);
+                }
+            });
     }
 
     return (
@@ -30,6 +40,7 @@ const LoginForm = () => {
                     : <form onSubmit={login} className="login-form">
                         <img src="/react-a-gram-logo.webp" className="nav-logo-image" alt="logo"/>
                         <h5>Please enter your credentials to login</h5>
+                        <span className="login-form-notification">{notificationMessage}</span>
                         <label htmlFor="">Email*</label>
                         <Input
                             type="text"
@@ -65,6 +76,10 @@ const LoginForm = () => {
                           .login-form label,
                           .login-form button {
                             margin-top: 20px;
+                          }
+                          
+                          .login-form-notification  {
+                            color: red;
                           }
                         `}
                         </style>

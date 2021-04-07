@@ -9,6 +9,7 @@ const SignUpForm = () => {
     const [password, setPassword] = useState('');
     const [rePass, setRePass] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [notificationMessage, setNotificationMessage] = useState('');
 
     function signUp(ev) {
         ev.preventDefault();
@@ -38,7 +39,14 @@ const SignUpForm = () => {
                     .set({username: username})
                     .then(() => console.log('success'))
             })
-            .catch(error => alert(error.message));
+            .catch(error => {
+                setIsLoading(false);
+                if (error.code === 'auth/email-already-in-use') {
+                    setNotificationMessage('This email address is already in use by another user');
+                } else {
+                    console.error(error.message);
+                }
+            });
 
     }
 
@@ -46,10 +54,11 @@ const SignUpForm = () => {
         <div>
             {
                 isLoading
-                ? <Spinner />
-                : <form onSubmit={signUp} className="sign-in-form">
+                    ? <Spinner/>
+                    : <form onSubmit={signUp} className="sign-in-form">
                         <img src="/react-a-gram-logo.webp" className="nav-logo-image" alt="logo"/>
                         <h5>To create an account, please, fill in all fields</h5>
+                        <span className="signup-form-notification">{notificationMessage}</span>
                         <label htmlFor="">Username*</label>
                         <Input
                             type="text"
@@ -85,24 +94,28 @@ const SignUpForm = () => {
                         <Button type="submit">Sign Up</Button>
 
                         <style jsx={true}>{`
-              .sign-in-form {
-                display: flex;
-                flex-flow: column wrap;
-                margin: 10px auto;
-                align-items: center;
-                justify-content: center;
-                max-width: 400px;
-              }
+                          .sign-in-form {
+                            display: flex;
+                            flex-flow: column wrap;
+                            margin: 10px auto;
+                            align-items: center;
+                            justify-content: center;
+                            max-width: 400px;
+                          }
 
-              .sign-in-form input {
-                margin: 5px 0 0 0;
-              }
+                          .sign-in-form input {
+                            margin: 5px 0 0 0;
+                          }
 
-              .sign-in-form label,
-              .sign-in-form button {
-                margin-top: 20px;
-              }
-            `}
+                          .sign-in-form label,
+                          .sign-in-form button {
+                            margin-top: 20px;
+                          }
+                          
+                          .signup-form-notification  {
+                            color: red;
+                          }
+                        `}
                         </style>
                     </form>
             }

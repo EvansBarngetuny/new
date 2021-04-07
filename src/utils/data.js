@@ -1,12 +1,13 @@
 import {
     clearSubCollection,
     deleteDocument,
-    deleteDocumentInSubCollection, getDocumentFromCollection,
+    deleteDocumentInSubCollection, getDocumentFromCollection, getDocumentsFromCollectionOrdered,
     getFilteredOrderedAndLimitedCollection,
     updateDocument,
     updateDocumentInSubCollection
 } from "./api";
 import admin from "firebase";
+import {auth} from "../firebase";
 
 const DATA = {
     COLLECTIONS: {
@@ -66,6 +67,13 @@ export function removeFromFavourites(postID, userID) {
         .catch(err => console.log(err.message));
 }
 
+export function getAllPosts() {
+    return getDocumentsFromCollectionOrdered(
+        DATA.COLLECTIONS.POSTS,
+        DATA.FIELDS.TIMESTAMP,
+        DIRECTION.DESCENDING,
+    );
+}
 export function getPostById(postID) {
     return getDocumentFromCollection(DATA.COLLECTIONS.POSTS, postID);
 }
@@ -164,4 +172,12 @@ export function parseDataOnSnapshot(fetchData, setIsLoading, setPosts) {
     return () => {
         unsubscribe()
     }
+}
+
+export function registerNewUser(email, password) {
+
+}
+
+export function loginUser(email, password) {
+   return auth.signInWithEmailAndPassword(email, password);
 }

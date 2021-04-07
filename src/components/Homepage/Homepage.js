@@ -1,7 +1,8 @@
-import CreateNewPostGuest from "../CreateNewPost/CreateNewPostGuest";
 import Newsfeed from "../NewsFeed/NewsFeed";
 import AppCtx from "../../context/AppCtx";
 import {useContext} from "react";
+import {getAllPosts} from "../../utils/data";
+import GenericGuestPage from "../GenericGuestPage/GenericGuestPage";
 
 const Homepage = () => {
     const {currentUser} = useContext(AppCtx);
@@ -10,10 +11,10 @@ const Homepage = () => {
         <main className={'homepage-container' + (currentUser ? ' logged-user' : '')}>
 
             {
-                !currentUser && (<CreateNewPostGuest />)
+                !currentUser && (<GenericGuestPage />)
             }
 
-            <Newsfeed />
+            <Newsfeed fetchData={getAllPosts}/>
 
             <style jsx={true}>{`
               .homepage-container.logged-user {

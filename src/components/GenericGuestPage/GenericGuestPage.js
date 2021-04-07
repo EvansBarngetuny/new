@@ -1,15 +1,17 @@
 import ModalContainer from "../Modals/ModalContainer/ModalContainer";
 import SignUpForm from "../Forms/SignUpForm";
 import LoginForm from "../Forms/LoginForm";
+import LogoContainer from "../../common/components/LogoContainer/LogoContainer";
 
 const GenericGuestPage = (props) => {
     return (
         <section className="generic-guest-page-container">
-            <article className="generic-guest-page-logo-wrapper">
-                <img src="/react-a-gram-logo.webp" alt="logo"/>
-            </article>
+            <LogoContainer
+                src="/react-a-gram-logo.webp"
+                alt="logo"
+            />
             <article>
-                <h4>You need to be logged in to see this page</h4>
+                <h4>You need to be logged in to see the full content of this page</h4>
                 <p>
                     To see all publications, create new posts,
                     like and comment you need to be a registered user.
@@ -28,7 +30,7 @@ const GenericGuestPage = (props) => {
                 </ModalContainer>
             </article>
 
-            <style jsx={true}>{`
+            <style jsx="true">{`
               .generic-guest-page-container {
                 text-align: center;
                 background: white;
@@ -40,12 +42,6 @@ const GenericGuestPage = (props) => {
                 box-shadow: 0 0 5px 0.5px #0000003b;
               }
 
-              .generic-guest-page-logo-wrapper img {
-                display: block;
-                margin: 0 auto;
-                max-width: 200px;
-                object-fit: contain;
-              }
             `}
             </style>
         </section>

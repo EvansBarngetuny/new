@@ -2,29 +2,17 @@ import Post from "../Post/Post";
 import {useEffect, useState} from "react";
 import {db} from "../../firebase";
 import Spinner from "../../common/components/Spinner/Spinner";
+import {parseDataOnSnapshot} from "../../utils/data";
 
-const Newsfeed = () => {
+const Newsfeed = ({fetchData}) => {
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         // listens for a change in the db and adds the new entries to the state each time it's fired
-        setIsLoading(true)
-        const unsubscribe = db.collection('posts')
-            .orderBy('timestamp', 'desc')
-            .onSnapshot(snapshot => {
-                setIsLoading(false);
-                setPosts(snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    post: doc.data()
-                })));
-            });
+        parseDataOnSnapshot(fetchData, setIsLoading, setPosts);
 
-        return () => {
-            unsubscribe()
-        }
-
-    }, []);
+    }, [fetchData]);
 
 
     return (

@@ -62,3 +62,8 @@ export function getDocumentFromCollection(collectionPath, targetDocId) {
         .doc(targetDocId)
         .get()
 }
+
+export function getDocumentsFromCollectionOrdered(collectionPath, orderBy, orderDirection) {
+    return db.collection(collectionPath)
+        .orderBy(orderBy, orderDirection);
+}

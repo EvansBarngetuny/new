@@ -16,13 +16,6 @@ const Homepage = () => {
 
             <Newsfeed fetchData={getAllPosts}/>
 
-            <style jsx={true}>{`
-              .homepage-container.logged-user {
-                margin-left: 16rem;
-              }
-              
-            `}
-            </style>
         </div>
     );
 }

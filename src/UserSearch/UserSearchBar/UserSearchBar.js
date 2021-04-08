@@ -22,11 +22,12 @@ const UserSearchBar = () => {
 
     return (
         <article className="search-bar-container">
+            <img className="search-bar-icon" src="/search-icon.svg" alt="search"/>
             <form onSubmit={onSubmitSearchHandler} action="">
                 <Input
                     className="search-bar-input"
                     type="text"
-                    placeholder="Enter an username..."
+                    placeholder="Enter username..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -40,16 +41,26 @@ const UserSearchBar = () => {
 
             <style jsx="true">{`
               .search-bar-container {
+                position: relative;
                 border: 1px solid #e3e3e3;
                 border-radius: 50px;
-                padding: 5px 25px;
+                padding: 5px 20px 5px 50px;
                 background: #FCF6F5FF;
               }
-              
+
+              .search-bar-icon {
+                position: absolute;
+                left: 18px;
+                width: 20px;
+                height: 20px;
+                top: 15px;
+              }
+
               .search-bar-input {
+                padding-left: 5px;
                 margin-right: 5px;
               }
-              
+
               .search-bar-button {
                 margin-left: 5px;
               }

@@ -12,7 +12,7 @@ const UserProfile = ({match}) => {
     const [profilePic, setProfilePic] = useState('');
     const [description, setDescription] = useState('');
     const userID = match.params.id;
-    const {authUserID} = useContext(AppCtx);
+    const {currentUser, authUserID} = useContext(AppCtx);
     let isSameUser = userID === authUserID;
 
     useEffect(() => {
@@ -42,7 +42,7 @@ const UserProfile = ({match}) => {
     }
 
     return (
-        <div className="user-profile-container">
+        <div className={"user-profile-container" + (currentUser ? ' logged-user' : '')}>
             <h1>{username ? username : "User"}'s profile page</h1>
 
             <UserProfileCard
@@ -52,7 +52,7 @@ const UserProfile = ({match}) => {
             />
 
             <section className="my-profile-favourite-posts">
-                <h3>User's latest publications</h3>
+                <h3>{username ? username : "User"}'s latest publications</h3>
                 <GridNewsFeed
                     fetchData={() => getPostsByOwner(userID, 6)}
                 />

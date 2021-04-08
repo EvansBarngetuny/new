@@ -39,7 +39,7 @@ const MyProfile = () => {
     }
 
     return (
-        <div className="my-profile-page-container">
+        <div className={"my-profile-page-container" + (currentUser ? ' logged-user' : '')}>
             <h1 className="my-profile-header">My profile</h1>
 
             <MyProfileCard
@@ -72,7 +72,6 @@ const MyProfile = () => {
                 border-right: 1px solid lightgray;
                 border-bottom: 1px solid lightgray;
                 padding: 20px;
-                margin-left: 16rem;
               }
               
               .my-profile-header {

@@ -27,6 +27,7 @@ const UserProfileCard = ({username, profilePic, description}) => {
                 border: 1px solid lightgray;
                 border-radius: 5px;
                 padding: 10px 20px;
+                background: #FFF9D7;
               }
 
               .user-profile-avatar {
@@ -37,7 +38,15 @@ const UserProfileCard = ({username, profilePic, description}) => {
 
               .profile-description-title,
               .user-card-username {
-                border-bottom: 1px solid #484848;
+                border-bottom: 1px solid #9d9d9d;
+              }
+
+              .profile-description-text {
+                border: 1px solid lightgray;
+                border-radius: 5px;
+                margin-top: 0;
+                padding: 20px;
+                background: #FCF6F5FF;
               }
 
             `}

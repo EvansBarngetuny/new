@@ -1,11 +1,14 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {db} from "../firebase";
 import {Link} from "react-router-dom";
 import Spinner from "../common/components/Spinner/Spinner";
+import AppCtx from "../context/AppCtx";
+import UserSearchPageResultList from "./UserSearchPageResultList/UserSearchPageResultList";
 
 const UserSearchPage = ({location}) => {
     const [isLoading, setIsLoading] = useState(true);
     const [result, setResult] = useState([]);
+    const {currentUser} = useContext(AppCtx);
     const query = location.search.split('=')[1];
 
     useEffect(() => {
@@ -28,22 +31,30 @@ const UserSearchPage = ({location}) => {
     }, [query]);
 
     return (
-        <div className="search-page-container">
-            <h1>Search Page</h1>
+        <div className={"search-page-container" + (currentUser ? ' logged-user' : '')}>
+            <h1>Search Result</h1>
 
             {
-                isLoading && (<Spinner />)
+                isLoading && (<Spinner/>)
             }
 
             {
                 result.length > 0
-                    ? (result.map(user => <Link key={user.id} to={'/users/' + user.id}>{user.username}</Link>))
-                    : (<h2>No results were found</h2>)
+                    ? (<UserSearchPageResultList result={result} searchQuery={query}/>)
+                    : (<h3>No users matching "{query}" were found</h3>)
             }
 
-            <style jsx={true}>{`
+            <p className="search-page-disclaimer">*only exact matches are being shown</p>
+            <style jsx="true">{`
               .search-page-container {
-                margin-left: 16rem;
+                background: white;
+                padding: 20px;
+                border: 1px solid lightgray;
+                border-radius: 5px;
+                margin-top: 5px;
+              }
+              .search-page-disclaimer {
+                margin: 0;
               }
 
             `}

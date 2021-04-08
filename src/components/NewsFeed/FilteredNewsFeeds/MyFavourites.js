@@ -1,8 +1,8 @@
 import {useContext} from "react";
-import AppCtx from "../../context/AppCtx";
-import GenericGuestPage from "../GenericGuestPage/GenericGuestPage";
-import Newsfeed from "../NewsFeed/NewsFeed";
-import {getUserFavouritePosts} from "../../utils/data";
+import AppCtx from "../../../context/AppCtx";
+import GenericGuestPage from "../../GenericGuestPage/GenericGuestPage";
+import MainNewsFeed from "../MainNewsFeed";
+import {getUserFavouritePosts} from "../../../utils/data";
 
 const MyFavourites = () => {
     const {currentUser, authUserID} = useContext(AppCtx);
@@ -15,7 +15,7 @@ const MyFavourites = () => {
         <div className="my-favourites-container">
             <h1>Here are all the posts you've saved to favourites</h1>
 
-            <Newsfeed fetchData={() => getUserFavouritePosts(authUserID)} />
+            <MainNewsFeed fetchData={() => getUserFavouritePosts(authUserID)} />
 
             <style jsx="true">{`
               .my-favourites-container {

@@ -1,8 +1,8 @@
 import {useContext} from "react";
-import AppCtx from "../../context/AppCtx";
-import GenericGuestPage from "../GenericGuestPage/GenericGuestPage";
-import {getPostsByOwner} from "../../utils/data";
-import Newsfeed from "../NewsFeed/NewsFeed";
+import AppCtx from "../../../context/AppCtx";
+import GenericGuestPage from "../../GenericGuestPage/GenericGuestPage";
+import {getPostsByOwner} from "../../../utils/data";
+import MainNewsFeed from "../MainNewsFeed";
 
 const MyPublications = () => {
     const {currentUser, authUserID} = useContext(AppCtx);
@@ -15,7 +15,7 @@ const MyPublications = () => {
         <div className="my-publications-container">
             <h1>This is a list of all the posts you've published</h1>
 
-            <Newsfeed fetchData={() => getPostsByOwner(authUserID)} />
+            <MainNewsFeed fetchData={() => getPostsByOwner(authUserID)} />
 
             <style jsx="true">{`
               .my-publications-container {

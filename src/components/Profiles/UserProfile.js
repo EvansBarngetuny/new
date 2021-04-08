@@ -43,7 +43,7 @@ const UserProfile = ({match}) => {
 
     return (
         <div className={"user-profile-container" + (currentUser ? ' logged-user' : '')}>
-            <h1>{username ? username : "User"}'s profile page</h1>
+            <h1>User's profile page</h1>
 
             <UserProfileCard
                 username={username}
@@ -52,11 +52,11 @@ const UserProfile = ({match}) => {
             />
 
             <section className="my-profile-favourite-posts">
-                <h3>{username ? username : "User"}'s latest publications</h3>
+                <h3>Latest publications by {username ? username : 'this user'}</h3>
                 <GridNewsFeed
                     fetchData={() => getPostsByOwner(userID, 6)}
                 />
-                <p><Link to="/my-publications">See all publications by this user</Link></p>
+                <p><Link to={"/user-publications/" + userID}>See all publications by {username ? username : 'this user'}</Link></p>
             </section>
 
             <style jsx="true">{`

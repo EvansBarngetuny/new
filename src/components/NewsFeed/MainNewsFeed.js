@@ -4,7 +4,7 @@ import {db} from "../../firebase";
 import Spinner from "../../common/components/Spinner/Spinner";
 import {parseDataOnSnapshot} from "../../utils/data";
 
-const Newsfeed = ({fetchData}) => {
+const MainNewsFeed = ({fetchData}) => {
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -39,4 +39,4 @@ const Newsfeed = ({fetchData}) => {
     );
 }
 
-export default Newsfeed;
+export default MainNewsFeed;

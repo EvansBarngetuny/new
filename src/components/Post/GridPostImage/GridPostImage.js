@@ -7,7 +7,7 @@ const GridPostImage = ({imageURL, postID}) => {
                 <img src={imageURL} alt="post-img"/>
             </Link>
 
-            <style jsx={true}>{`
+            <style jsx="true">{`
               .grid-post-image img {
                 width: 100%;
                 height: 175px;

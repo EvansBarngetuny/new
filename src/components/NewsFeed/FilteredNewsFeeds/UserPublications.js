@@ -2,7 +2,7 @@ import {useContext} from "react";
 import AppCtx from "../../../context/AppCtx";
 import GenericGuestPage from "../../GenericGuestPage/GenericGuestPage";
 import MainNewsFeed from "../MainNewsFeed";
-import {getPostsByOwner, getUserFavouritePosts} from "../../../utils/data";
+import {getPostsByOwner} from "../../../utils/data";
 import MyPublications from "./MyPublications";
 
 const UserPublications = ({match}) => {

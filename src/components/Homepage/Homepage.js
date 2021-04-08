@@ -1,4 +1,4 @@
-import Newsfeed from "../NewsFeed/NewsFeed";
+import MainNewsFeed from "../NewsFeed/MainNewsFeed";
 import AppCtx from "../../context/AppCtx";
 import {useContext} from "react";
 import {getAllPosts} from "../../utils/data";
@@ -14,7 +14,7 @@ const Homepage = () => {
                 !currentUser && (<GenericGuestPage />)
             }
 
-            <Newsfeed fetchData={getAllPosts}/>
+            <MainNewsFeed fetchData={getAllPosts}/>
 
         </div>
     );

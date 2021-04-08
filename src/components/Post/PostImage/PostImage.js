@@ -3,7 +3,7 @@ const PostImage = ({imageURL}) => {
         <article className="post-image">
             <img src={imageURL} alt="post-img"/>
 
-            <style jsx={true}>{`
+            <style jsx="true">{`
               .post-image img {
                 object-fit: contain;
                 width: 100%;

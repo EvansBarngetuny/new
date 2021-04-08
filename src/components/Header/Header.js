@@ -14,7 +14,7 @@ const Header = () => {
 
             </nav>
 
-            <style jsx>{`
+            <style jsx="true">{`
               .app-header {
                 position: -webkit-sticky;
                 position: sticky;

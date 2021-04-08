@@ -1,12 +1,13 @@
 import ModalContainer from "../../Modals/ModalContainer/ModalContainer";
 import {auth} from "../../../firebase";
 import {Button} from "@material-ui/core";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import AppCtx from "../../../context/AppCtx";
 import SignUpForm from "../../Forms/SignUpForm";
 import LoginForm from "../../Forms/LoginForm";
 
 function HeaderNavigation() {
+    const [username, setUsername] = useState('user');
     const {currentUser} = useContext(AppCtx);
 
     const onLogout = () => {
@@ -19,14 +20,14 @@ function HeaderNavigation() {
             {
                 currentUser
                     ? (<>
-                            <li className="header-nav-welcome-msg">Welcome, {currentUser.displayName}</li>
+                            <li className="header-nav-welcome-msg">Welcome, {currentUser.displayName || username}</li>
                             <li><Button onClick={onLogout}>Logout</Button></li>
                         </>
                     )
                     : (<>
                             <li>
                                 <ModalContainer btnText="Sign Up">
-                                    <SignUpForm/>
+                                    <SignUpForm onSuccessfulSignUp={setUsername}/>
                                 </ModalContainer>
                             </li>
                             <li>

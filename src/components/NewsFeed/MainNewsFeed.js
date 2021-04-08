@@ -1,6 +1,5 @@
 import Post from "../Post/Post";
 import {useEffect, useState} from "react";
-import {db} from "../../firebase";
 import Spinner from "../../common/components/Spinner/Spinner";
 import {parseDataOnSnapshot} from "../../utils/data";
 

@@ -42,6 +42,8 @@ const UserProfileCard = ({username, profilePic, description}) => {
               }
 
               .profile-description-text {
+                min-height: 20px;
+                min-width: 160px;
                 border: 1px solid lightgray;
                 border-radius: 5px;
                 margin-top: 0;

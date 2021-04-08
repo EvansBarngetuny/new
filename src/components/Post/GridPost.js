@@ -1,7 +1,7 @@
 import PostContent from "./PostContent/PostContent";
 import {useContext} from "react";
 import AppCtx from "../../context/AppCtx";
-import GridPostImage from "./PostImage/GridPostImage";
+import GridPostImage from "./GridPostImage/GridPostImage";
 import {deletePost, editPost} from "../../utils/data";
 
 const GridPost = ({post, postID}) => {

@@ -136,7 +136,7 @@ const Post = ({post, postID}) => {
                 )
             }
 
-            <style jsx={true}>{`
+            <style jsx='true'>{`
               .post-container {
                 background: #FDFDEB;
                 max-width: 600px;

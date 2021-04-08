@@ -8,16 +8,19 @@ import {db} from "../../firebase";
 
 const Dashboard = () => {
     const [profilePic, setProfilePic] = useState('');
-    const {currentUser} = useContext(AppCtx)
-    const userID = currentUser ? currentUser.uid : undefined
+    const {authUserID} = useContext(AppCtx)
 
     useEffect(() => {
         //setIsLoading(true);
+        if (!authUserID) {
+            return;
+        }
+
         const unsubscribe = db.collection('users')
-            .doc(userID)
+            .doc(authUserID)
             .onSnapshot((snapshot => {
                 //setIsLoading(false);
-                if (userID && snapshot.data()) {
+                if (authUserID && snapshot.data()) {
                     const {profilePic} = snapshot.data();
                     setProfilePic(profilePic)
                 }
@@ -27,7 +30,7 @@ const Dashboard = () => {
             unsubscribe()
         }
 
-    }, [userID]);
+    }, [authUserID]);
 
     return (
         <aside className="side-dashboard">
@@ -62,7 +65,7 @@ const Dashboard = () => {
                 </ul>
             </article>
 
-            <style jsx>{`
+            <style jsx="true">{`
               .side-dashboard {
                 background: #FDFDEB;
                 width: 250px;

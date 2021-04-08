@@ -6,9 +6,9 @@ const UserSearchPageResultList = ({result, searchQuery}) => {
             <p>Users that match your search parameters "{searchQuery}"</p>
             {
                 result.map(user => (
-                    <li>
+                    <li key={user.id}>
                         <img className="user-icon" src="/user-icon.svg" alt="user"/>
-                        <Link key={user.id} to={'/users/' + user.id}>{user.username}</Link>
+                        <Link to={'/users/' + user.id}>{user.username}</Link>
                     </li>
                 ))
             }

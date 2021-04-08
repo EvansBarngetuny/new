@@ -7,7 +7,7 @@ import {
     updateDocumentInSubCollection
 } from "./api";
 import admin from "firebase";
-import {auth} from "../firebase";
+import {auth, db} from "../firebase";
 
 const DATA = {
     COLLECTIONS: {
@@ -74,6 +74,7 @@ export function getAllPosts() {
         DIRECTION.DESCENDING,
     );
 }
+
 export function getPostById(postID) {
     return getDocumentFromCollection(DATA.COLLECTIONS.POSTS, postID);
 }
@@ -101,6 +102,7 @@ export function getUserFavouritePosts(userId, optionalLimit) {
         optionalLimit
     )
 }
+
 export function deletePost(postID) {
     deleteDocument(DATA.COLLECTIONS.POSTS, postID)
         .catch(err => console.log(err.message));
@@ -114,6 +116,7 @@ export function deletePost(postID) {
         DATA.SUB_COLLECTIONS.COMMENTS,
     );
 }
+
 export function editPost(postID, newCaption, toggleEditPost) {
     const data = {content: newCaption};
     updateDocument(
@@ -174,10 +177,16 @@ export function parseDataOnSnapshot(fetchData, setIsLoading, setPosts) {
     }
 }
 
-export function registerNewUser(email, password) {
+export function createNewEntryInUsersDB(userID, data) {
+    return db.collection('users')
+        .doc(userID)
+        .set(data);
+}
 
+export function registerNewUser(email, password) {
+    return auth.createUserWithEmailAndPassword(email, password);
 }
 
 export function loginUser(email, password) {
-   return auth.signInWithEmailAndPassword(email, password);
+    return auth.signInWithEmailAndPassword(email, password);
 }

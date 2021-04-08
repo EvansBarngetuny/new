@@ -31,9 +31,11 @@ const SinglePostPage = ({match}) => {
             <style jsx={true}>{`
               .single-post-page-container {
                 margin-left: 16rem;
+                position: relative;
               }
 
               .single-post-page-btn-wrapper {
+                position: absolute;
                 margin-top: 5px;
                 text-align: center;
                 width: 100px;

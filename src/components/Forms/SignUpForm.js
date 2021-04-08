@@ -1,9 +1,9 @@
 import {Button, Input} from "@material-ui/core";
 import {useState} from "react";
-import {auth, db} from "../../firebase";
 import Spinner from "../../common/components/Spinner/Spinner";
+import {createNewEntryInUsersDB, registerNewUser} from "../../utils/data";
 
-const SignUpForm = () => {
+const SignUpForm = ({onSuccessfulSignUp}) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -25,18 +25,17 @@ const SignUpForm = () => {
         setIsLoading(true)
 
         let userID = '';
-        auth.createUserWithEmailAndPassword(email, password)
+        registerNewUser(email, password)
             .then((authUser) => {
                 setIsLoading(false);
                 userID = authUser.user.uid;
+                onSuccessfulSignUp(userID);
                 return authUser.user.updateProfile({
                     displayName: username
                 });
             })
             .then(() => {
-                db.collection('users')
-                    .doc(userID)
-                    .set({username: username})
+                createNewEntryInUsersDB(userID, {username: username})
                     .then(() => console.log('success'))
             })
             .catch(error => {
@@ -47,7 +46,6 @@ const SignUpForm = () => {
                     console.error(error.message);
                 }
             });
-
     }
 
     return (
@@ -86,14 +84,14 @@ const SignUpForm = () => {
                         <label htmlFor="">Confirm Password*</label>
                         <Input
                             type="password"
-                            placeholder="Enter confirm password..."
+                            placeholder="Repeat password..."
                             value={rePass}
                             required
                             onChange={(e) => setRePass(e.target.value)}
                         />
                         <Button type="submit">Sign Up</Button>
 
-                        <style jsx={true}>{`
+                        <style jsx="true">{`
                           .sign-in-form {
                             display: flex;
                             flex-flow: column wrap;

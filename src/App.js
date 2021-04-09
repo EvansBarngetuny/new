@@ -14,30 +14,37 @@ import GenericGuestPage from "./components/GenericGuestPage/GenericGuestPage";
 import SinglePostPage from "./components/Post/SinglePostPage";
 import UserSearchPage from "./UserSearch/UserSearchPage";
 import UserPublications from "./components/NewsFeed/FilteredNewsFeeds/UserPublications";
+import MyLikedPosts from "./components/NewsFeed/FilteredNewsFeeds/MyLikedPosts";
 
 function App() {
-    const [currentUser, setCurrentUser] = useState(null);
+    const [authUser, setAuthUser] = useState(null);
     const [authUserID, setAuthUserID] = useState('');
+    const [authUserName, setAuthUserName] = useState('');
+
     const ctx = {
-        currentUser,
+        authUser,
         authUserID,
+        authUserName,
+        setAuthUserName
     }
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((authUser) => {
             if (authUser) {
-                setCurrentUser(authUser);
+                setAuthUser(authUser);
                 setAuthUserID(authUser.uid);
+                setAuthUserName(authUser.displayName);
             } else {
-                setCurrentUser(null);
+                setAuthUser(null);
                 setAuthUserID('');
+                setAuthUserName('');
             }
         });
 
         return () => {
             unsubscribe()
         };
-    }, [currentUser]);
+    }, [authUser]);
 
     return (
         <AppCtxProvider value={ctx}>
@@ -46,7 +53,7 @@ function App() {
             <main className="app-wrapper">
 
                 {
-                    currentUser && (<Dashboard/>)
+                    authUser && (<Dashboard/>)
                 }
 
                 <Switch>
@@ -57,6 +64,7 @@ function App() {
                     <Route path="/users/:id" component={UserProfile}/>
                     <Route path="/user-publications/:id" component={UserPublications}/>
                     <Route path="/posts/:id" component={SinglePostPage}/>
+                    <Route path="/my-liked-posts" component={MyLikedPosts}/>
                     <Route path="/search" component={UserSearchPage}/>
                     <Route path="/test" component={GenericGuestPage}/>
                 </Switch>

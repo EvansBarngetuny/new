@@ -5,9 +5,9 @@ import GridPostImage from "./GridPostImage/GridPostImage";
 import {deletePost, editPost} from "../../utils/data";
 
 const GridPost = ({post, postID}) => {
-    const {currentUser} = useContext(AppCtx);
+    const {authUser} = useContext(AppCtx);
 
-    const isOwner = currentUser && currentUser.uid === post.ownerID;
+    const isOwner = authUser && authUser.uid === post.ownerID;
     const postContent = post.content.length <= 38
         ? post.content
         : post.content.substring(0, 38) + '...';
@@ -43,13 +43,13 @@ const GridPost = ({post, postID}) => {
                 postedBy={post.postedBy}
                 content={postContent}
                 onSave={onEditPost}
-                isOwner={currentUser && currentUser.uid === post.ownerID}
+                isOwner={authUser && authUser.uid === post.ownerID}
             />
 
-            <style jsx={true}>{`
+            <style jsx="true">{`
               .grid-post-container {
                 position: relative;
-                width: 260px;
+                width: 275px;
                 border-right: 1px solid lightgray;
                 border-left: 1px solid lightgray;
                 border-bottom: 1px solid lightgray;

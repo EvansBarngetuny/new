@@ -42,10 +42,10 @@ const UserSearchBar = () => {
             <style jsx="true">{`
               .search-bar-container {
                 position: relative;
-                border: 1px solid #e3e3e3;
+                border: 1px solid lightgray;
                 border-radius: 50px;
                 padding: 5px 20px 5px 50px;
-                background: #FCF6F5FF;
+                background: #F4F4F4;
               }
 
               .search-bar-icon {

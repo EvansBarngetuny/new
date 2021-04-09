@@ -12,7 +12,7 @@ const CreateNewPostHandler = () => {
     const [isLoading, setIsLoading] = useState(false);
     const ctx = useContext(AppCtx);
 
-    const {currentUser} = useContext(AppCtx);
+    const {authUser, closeModal} = useContext(AppCtx);
 
     const onChangeHandler = (ev) => {
         if (ev.target.files[0]) {
@@ -55,8 +55,8 @@ const CreateNewPostHandler = () => {
                             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                             content: caption,
                             imageURL: url,
-                            postedBy: currentUser.displayName,
-                            ownerID: currentUser.uid,
+                            postedBy: authUser.displayName,
+                            ownerID: authUser.uid,
                             likes: [],
                             inFavourites: []
                         })
@@ -96,9 +96,9 @@ const CreateNewPostHandler = () => {
                                value={caption} onChange={ev => setCaption(ev.target.value)}
                         />
                         <Button onClick={handleUpload}>Upload</Button>
-                        <Button onClick={() => alert('Unimplemented feature')}>Cancel</Button>
+                        <Button onClick={closeModal}>Cancel</Button>
 
-                        <style jsx>{`
+                        <style jsx="true">{`
                           .image-uploader-container input {
                             margin: 8px auto;
                             padding: 5px;

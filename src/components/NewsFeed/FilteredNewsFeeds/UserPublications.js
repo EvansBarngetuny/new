@@ -1,15 +1,23 @@
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import AppCtx from "../../../context/AppCtx";
 import GenericGuestPage from "../../GenericGuestPage/GenericGuestPage";
 import MainNewsFeed from "../MainNewsFeed";
-import {getPostsByOwner} from "../../../utils/data";
+import {getPostsByOwner, getUserDetails} from "../../../utils/data";
 import MyPublications from "./MyPublications";
 
 const UserPublications = ({match}) => {
+    const [username, setUsername] = useState('');
+    const {authUser, authUserID} = useContext(AppCtx);
     const userID = match.params.id;
-    const {currentUser, authUserID} = useContext(AppCtx);
 
-    if (!currentUser) {
+    useEffect(() => {
+        const unsubscribe = getUserDetails(userID)
+            .onSnapshot(snapshot => {
+                setUsername(snapshot.data().username);
+            })
+    },[userID])
+
+    if (!authUser) {
         return GenericGuestPage();
     }
 
@@ -18,14 +26,20 @@ const UserPublications = ({match}) => {
     }
 
     return (
-        <div className="my-favourites-container">
-            <h1>Here are all the posts by this user</h1>
+        <div className="user-publications-container">
+            <h1 className="user-publication-header">
+                All publications by {username ? <em>{username}</em> : 'this user'}
+            </h1>
 
             <MainNewsFeed fetchData={() => getPostsByOwner(userID)} />
 
             <style jsx="true">{`
-              .my-favourites-container {
+              .user-publications-container {
                 margin-left: 16rem;
+              }
+              .user-publication-header {
+                border-bottom: 1px solid lightgray;
+                color: #393939;
               }
               
             `}

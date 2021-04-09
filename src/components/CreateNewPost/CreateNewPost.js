@@ -7,7 +7,7 @@ const CreateNewPost = () => {
 
             <CreateNewPostHandler />
 
-            <style jsx>{`
+            <style jsx="true">{`
               .image-uploader-container {
                 box-sizing: border-box;
                 display: flex;

@@ -12,14 +12,14 @@ const PostCommentsSection = (props) => {
                             content={c.comment.content}
                             onSave={props.onSave}
                             onDelete={props.onDelete}
-                            isOwner={props.currentUser && props.currentUser.uid === c.comment.ownerID}
+                            isOwner={props.authUser && props.authUser.uid === c.comment.ownerID}
                             commentID={c.id}
                         />
                     );
                 })
             }
 
-            <style jsx={true}>{`
+            <style jsx="true">{`
               .post-comment-section {
                 margin: 15px 0 20px 0;
               }

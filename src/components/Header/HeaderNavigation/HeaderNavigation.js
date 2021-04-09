@@ -7,8 +7,8 @@ import SignUpForm from "../../Forms/SignUpForm";
 import LoginForm from "../../Forms/LoginForm";
 
 function HeaderNavigation() {
-    const [username, setUsername] = useState('user');
-    const {currentUser} = useContext(AppCtx);
+    const {authUser, authUserName, setAuthUserName} = useContext(AppCtx);
+    const [username, setUsername] = useState(authUserName);
 
     const onLogout = () => {
         auth.signOut()
@@ -18,9 +18,9 @@ function HeaderNavigation() {
     return (
         <ul className="app-header-nav-ul">
             {
-                currentUser
+                authUser
                     ? (<>
-                            <li className="header-nav-welcome-msg">Welcome, {currentUser.displayName || username}</li>
+                            <li className="header-nav-welcome-msg">Welcome, {authUser.displayName || username}</li>
                             <li><Button onClick={onLogout}>Logout</Button></li>
                         </>
                     )

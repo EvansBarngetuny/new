@@ -2,8 +2,12 @@ import ModalContainer from "../Modals/ModalContainer/ModalContainer";
 import SignUpForm from "../Forms/SignUpForm";
 import LoginForm from "../Forms/LoginForm";
 import LogoContainer from "../../common/components/LogoContainer/LogoContainer";
+import {useContext} from "react";
+import AppCtx from "../../context/AppCtx";
 
 const GenericGuestPage = (props) => {
+    const {setAuthUserName} = useContext(AppCtx);
+
     return (
         <section className="generic-guest-page-container">
             <LogoContainer
@@ -22,7 +26,7 @@ const GenericGuestPage = (props) => {
             </article>
             <article>
                 <ModalContainer btnText="Sign Up">
-                    <SignUpForm/>
+                    <SignUpForm onSuccessfulSignUp={setAuthUserName}/>
                 </ModalContainer>
 
                 <ModalContainer btnText="Login">

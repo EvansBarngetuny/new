@@ -1,5 +1,5 @@
 import Avatar from "@material-ui/core/Avatar";
-import {Button} from "@material-ui/core";
+import {Button, Input} from "@material-ui/core";
 import {editDescription} from "../../utils/data";
 import {useEffect, useState} from "react";
 import {db, storage} from "../../firebase";
@@ -88,11 +88,15 @@ const MyProfileCard = (props) => {
                 </Avatar>
                 {
                     isUploadPicOpen && (
-                        <article className="image-uploader-section">
-                            <label htmlFor="progressBar">Progress:</label>
-                            <progress id="progressBar" value={progress} max="100"/>
-                            <input type="file" onChange={onChangeHandler}/>
-                            <button onClick={handleUpload}>Upload</button>
+                        <article className="my-profile-image-uploader-container">
+                            <label htmlFor="my-profile-progressBar">Progress:</label>
+                            <progress id="my-profile-progressBar" value={progress} max="100"/>
+                            <label htmlFor="my-profile-file-upload">Please select an image to upload</label>
+                            <label htmlFor="my-profile-file-upload" className="my-profile-custom-file-upload">SELECT AN
+                                                                                                              IMAGE</label>
+                            <span>{image ? image.name : ''}</span>
+                            <Input id="my-profile-file-upload" type="file" onChange={onChangeHandler}/>
+                            <Button onClick={handleUpload}>Upload</Button>
                         </article>
                     )
                 }
@@ -110,14 +114,15 @@ const MyProfileCard = (props) => {
                     isEditDescOpen && (
                         <article className="edit-description-section">
                             <textarea
+                                className="edit-description-textarea"
                                 value={updatedDescription}
                                 onChange={(e) => setUpdatedDescription(e.target.value)}
                             />
-                            <button
+                            <Button
                                 onClick={() => editDescription(props.userID, updatedDescription, toggleEditSection)}
                             >
                                 Update
-                            </button>
+                            </Button>
                         </article>
                     )
                 }
@@ -139,14 +144,14 @@ const MyProfileCard = (props) => {
                 border: 1px solid lightgray;
                 border-radius: 5px;
                 padding: 10px 20px;
-                background: #FFF9D7;
+                background: white;
               }
 
               .my-profile-card-section {
                 text-align: center;
               }
 
-              .image-uploader-section {
+              .my-profile-image-uploader-container {
                 display: flex;
                 flex-flow: column wrap;
               }
@@ -164,15 +169,49 @@ const MyProfileCard = (props) => {
 
               .profile-description-text {
                 border: 1px solid lightgray;
+                min-height: 20px;
+                min-width: 180px;
                 border-radius: 5px;
                 margin-top: 0;
                 padding: 20px;
-                background: #FCF6F5FF;
+                background: #F0F0F0;
               }
 
               .my-profile-description-title,
               .my-profile-username {
                 border-bottom: 1px solid #9d9d9d;
+              }
+              
+              .my-profile-image-uploader-container label {
+                margin: 15px 0 5px 0;
+              }
+                          
+              #my-profile-progressBar {
+                width: 100%;
+              }
+
+              #my-profile-file-upload {
+                display: none;
+              }
+
+              .my-profile-custom-file-upload {
+                padding: 6px 12px;
+              }
+
+              .my-profile-custom-file-upload:hover {
+                background: #f3f3f3;
+                cursor: pointer;
+              }
+              
+              .edit-description-textarea {
+                font-family: Roboto, sans-serif;
+                font-style: italic;
+                font-size: 15px;
+                min-height: 50px;
+                width: 96%;
+                margin: 0 auto;
+                border: 1px solid lightgray;
+                border-radius: 5px;
               }
 
             `}

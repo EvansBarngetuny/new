@@ -23,7 +23,7 @@ const Post = ({post, postID}) => {
     const [isFavourite, setIsFavourite] = useState(false)
     const [likesCount, setLikesCount] = useState(0)
     const [comments, setComments] = useState([]);
-    const {currentUser} = useContext(AppCtx);
+    const {authUser} = useContext(AppCtx);
 
     useEffect(() => {
         const unsubscribe = db.collection('posts')
@@ -32,9 +32,9 @@ const Post = ({post, postID}) => {
                 if (snapshot.data()) {
                     const postLikes = snapshot.data().likes;
                     const postFavourites = snapshot.data().inFavourites;
-                    if (currentUser) {
-                        setIsFavourite(postFavourites.includes(currentUser.uid));
-                        setIsLiked(postLikes.includes(currentUser.uid));
+                    if (authUser) {
+                        setIsFavourite(postFavourites.includes(authUser.uid));
+                        setIsLiked(postLikes.includes(authUser.uid));
                     }
                     setLikesCount(postLikes.length);
                 }
@@ -89,23 +89,23 @@ const Post = ({post, postID}) => {
                 postedBy={post.postedBy}
                 profilePic={profilePic}
                 onDelete={() => deletePost(postID)}
-                isOwner={currentUser && currentUser.uid === post.ownerID}
+                isOwner={authUser && authUser.uid === post.ownerID}
                 userID={post.ownerID}
             />
 
             <PostImage imageURL={post.imageURL}/>
 
             {
-                currentUser
+                authUser
                     ? (
                         <PostLikeSection
                             isLiked={isLiked}
-                            onUnLike={() => unlikePost(postID, currentUser.uid)}
-                            onLike={() => likePost(postID, currentUser.uid)}
+                            onUnLike={() => unlikePost(postID, authUser.uid)}
+                            onLike={() => likePost(postID, authUser.uid)}
                             likesCount={likesCount}
                             isFavourite={isFavourite}
-                            onAddToFavourites={() => addToFavourites(postID, currentUser.uid)}
-                            onRemoveFromFavourites={() => removeFromFavourites(postID, currentUser.uid)}
+                            onAddToFavourites={() => addToFavourites(postID, authUser.uid)}
+                            onRemoveFromFavourites={() => removeFromFavourites(postID, authUser.uid)}
                         />
                     )
                     : (<LikeCounter likesCount={likesCount} text="react"/>)
@@ -116,21 +116,21 @@ const Post = ({post, postID}) => {
                 postedBy={post.postedBy}
                 content={post.content}
                 onSave={onEditPost}
-                isOwner={currentUser && currentUser.uid === post.ownerID}
+                isOwner={authUser && authUser.uid === post.ownerID}
             />
 
             <PostCommentsSection
                 comments={comments}
                 onSave={onEditComment}
                 onDelete={onDeleteComment}
-                currentUser={currentUser}
+                authUser={authUser}
             />
 
             {
-                currentUser && (
+                authUser && (
                     <PostAddComment
-                        postedBy={currentUser.displayName}
-                        ownerID={currentUser.uid}
+                        postedBy={authUser.displayName}
+                        ownerID={authUser.uid}
                         postID={postID}
                     />
                 )
@@ -138,7 +138,7 @@ const Post = ({post, postID}) => {
 
             <style jsx="true">{`
               .post-container {
-                background: #FDFDEB;
+                background: white;
                 max-width: 600px;
                 margin: 1px auto 40px auto;
                 border: 1px solid lightgrey;

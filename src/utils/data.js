@@ -19,6 +19,7 @@ const DATA = {
     },
     FIELDS: {
         OWNER_ID: 'ownerID',
+        LIKES: 'likes',
         TIMESTAMP: 'timestamp',
         IN_FAVOURITES: 'inFavourites',
     }
@@ -85,6 +86,18 @@ export function getPostsByOwner(ownerId, optionalLimit) {
         DATA.FIELDS.OWNER_ID,
         OPERATORS.EQUAL,
         ownerId,
+        DATA.FIELDS.TIMESTAMP,
+        DIRECTION.DESCENDING,
+        optionalLimit
+    );
+}
+
+export function getLikedPostsByUser(userID, optionalLimit) {
+    return getFilteredOrderedAndLimitedCollection(
+        DATA.COLLECTIONS.POSTS,
+        DATA.FIELDS.LIKES,
+        OPERATORS.ARRAY_CONTAINS,
+        userID,
         DATA.FIELDS.TIMESTAMP,
         DIRECTION.DESCENDING,
         optionalLimit
@@ -175,6 +188,11 @@ export function parseDataOnSnapshot(fetchData, setIsLoading, setPosts) {
     return () => {
         unsubscribe()
     }
+}
+
+export function getUserDetails(userID) {
+    return db.collection(DATA.COLLECTIONS.USERS)
+        .doc(userID);
 }
 
 export function createNewEntryInUsersDB(userID, data) {

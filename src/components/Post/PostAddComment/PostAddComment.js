@@ -40,9 +40,9 @@ const PostAddComment = ({postID, postedBy, ownerID}) => {
                 <Button type="submit" className="post-add-comments-btn">Add comment</Button>
             </form>
 
-            <style jsx={true}>{`
+            <style jsx="true">{`
               .post-add-comments-container {
-                background: #F7F0ED;
+                background: #F2F2F2;
                 display: flex;
                 align-items: center;
                 flex-flow: row wrap;

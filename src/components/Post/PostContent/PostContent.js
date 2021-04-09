@@ -94,7 +94,7 @@ const PostContent = (props) => {
                 font-style: italic;
                 font-size: 15px;
                 height: max-content;
-                width: 97%;
+                width: 96%;
                 margin: 10px 10px 5px 5px;
                 padding-left: 5px;
                 border: 1px solid lightgray;
@@ -112,7 +112,7 @@ const PostContent = (props) => {
               .post-content-btn {
                 position: absolute;
                 top: 0;
-                right: 15px;
+                right: 10px;
                 background: transparent;
                 border: none;
                 outline: none;

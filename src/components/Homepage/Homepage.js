@@ -5,13 +5,13 @@ import {getAllPosts} from "../../utils/data";
 import GenericGuestPage from "../GenericGuestPage/GenericGuestPage";
 
 const Homepage = () => {
-    const {currentUser} = useContext(AppCtx);
+    const {authUser} = useContext(AppCtx);
 
     return (
-        <div className={'homepage-container' + (currentUser ? ' logged-user' : '')}>
+        <div className={'homepage-container' + (authUser ? ' logged-user' : '')}>
 
             {
-                !currentUser && (<GenericGuestPage />)
+                !authUser && (<GenericGuestPage />)
             }
 
             <MainNewsFeed fetchData={getAllPosts}/>

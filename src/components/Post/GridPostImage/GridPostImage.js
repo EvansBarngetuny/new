@@ -10,7 +10,7 @@ const GridPostImage = ({imageURL, postID}) => {
             <style jsx="true">{`
               .grid-post-image img {
                 width: 100%;
-                height: 175px;
+                height: 190px;
                 object-fit: fill;
                 display: block;
                 margin: 0 auto 15px auto;

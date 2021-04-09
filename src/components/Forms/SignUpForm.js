@@ -15,11 +15,11 @@ const SignUpForm = ({onSuccessfulSignUp}) => {
         ev.preventDefault();
 
         if (!username.trim() || !email.trim() || !password || !rePass) {
-            return alert('All fields are required!');
+            return setNotificationMessage('All fields are required!');
         }
 
         if (password !== rePass) {
-            return alert('Passwords don\'t match!');
+            return setNotificationMessage('Passwords don\'t match!');
         }
 
         setIsLoading(true)
@@ -29,14 +29,13 @@ const SignUpForm = ({onSuccessfulSignUp}) => {
             .then((authUser) => {
                 setIsLoading(false);
                 userID = authUser.user.uid;
-                onSuccessfulSignUp(userID);
                 return authUser.user.updateProfile({
                     displayName: username
                 });
             })
             .then(() => {
                 createNewEntryInUsersDB(userID, {username: username})
-                    .then(() => console.log('success'))
+                    .then(() => onSuccessfulSignUp(username))
             })
             .catch(error => {
                 setIsLoading(false);
@@ -109,8 +108,8 @@ const SignUpForm = ({onSuccessfulSignUp}) => {
                           .sign-in-form button {
                             margin-top: 20px;
                           }
-                          
-                          .signup-form-notification  {
+
+                          .signup-form-notification {
                             color: red;
                           }
                         `}

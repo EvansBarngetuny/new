@@ -1,9 +1,9 @@
 import {useContext, useEffect, useState} from "react";
 import AppCtx from "../../context/AppCtx";
 import {Link} from "react-router-dom";
-import {db, storage} from "../../firebase";
+import {db} from "../../firebase";
 import GridNewsFeed from "../NewsFeed/GridNewsFeed";
-import {getPostsByOwner, getUserFavouritePosts} from "../../utils/data";
+import {getLikedPostsByUser, getPostsByOwner, getUserFavouritePosts} from "../../utils/data";
 import GenericGuestPage from "../GenericGuestPage/GenericGuestPage";
 import MyProfileCard from "./MyProfileCard";
 
@@ -11,7 +11,7 @@ const MyProfile = () => {
     const [profilePic, setProfilePic] = useState('');
     const [description, setDescription] = useState('');
 
-    const {currentUser, authUserID} = useContext(AppCtx)
+    const {authUser, authUserID} = useContext(AppCtx)
 
     useEffect(() => {
         //setIsLoading(true);
@@ -34,16 +34,16 @@ const MyProfile = () => {
     }, [authUserID]);
 
 
-    if (!currentUser) {
+    if (!authUser) {
         return GenericGuestPage();
     }
 
     return (
-        <div className={"my-profile-page-container" + (currentUser ? ' logged-user' : '')}>
+        <div className={"my-profile-page-container" + (authUser ? ' logged-user' : '')}>
             <h1 className="my-profile-header">My profile</h1>
 
             <MyProfileCard
-                username={currentUser.displayName}
+                username={authUser.displayName}
                 profilePic={profilePic}
                 description={description}
                 userID={authUserID}
@@ -58,29 +58,47 @@ const MyProfile = () => {
             </section>
 
             <section className="my-profile-favourite-posts">
-                <h3 className="my-profile-favourite-posts-header">Your last saved posts</h3>
+                <h3 className="my-profile-favourite-posts-header">Last posts you've added to favourites</h3>
                 <GridNewsFeed
                     fetchData={() => getUserFavouritePosts(authUserID, 6)}
                 />
                 <p><Link to="/my-favourites">See all favourites</Link></p>
             </section>
 
-            <style jsx={true}>{`
+            <section className="my-profile-favourite-posts">
+                <h3 className="my-profile-favourite-posts-header">Last post you've liked</h3>
+                <GridNewsFeed
+                    fetchData={() => getLikedPostsByUser(authUserID, 6)}
+                />
+                <p><Link to="/my-liked-posts">See all liked posts</Link></p>
+            </section>
+
+            <style jsx="true">{`
               .my-profile-page-container {
-                background: #FDFDEB;
+                background: #F4F4F4;
                 border-left: 1px solid lightgray;
                 border-right: 1px solid lightgray;
                 border-bottom: 1px solid lightgray;
                 padding: 20px;
               }
-              
+
               .my-profile-header {
+                color: #434343;
                 margin-top: 0;
                 border-bottom: 1px solid lightgray;
               }
-              
+
               .my-profile-favourite-posts-header {
                 border-bottom: 1px solid lightgray;
+              }
+
+              .my-profile-favourite-posts a {
+                text-decoration: none;
+                color: #1c1c1c;
+              }
+
+              .my-profile-favourite-posts a:hover {
+                text-decoration: underline;
               }
 
             `}

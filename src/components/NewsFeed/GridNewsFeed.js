@@ -24,6 +24,7 @@ const GridNewsFeed = ({fetchData}) => {
             {
                 isLoading && <Spinner />
             }
+
             {
                 posts.map(p => <GridPost key={p.id} postID={p.id} post={p.post}/>)
             }

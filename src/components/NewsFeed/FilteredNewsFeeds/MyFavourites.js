@@ -5,21 +5,27 @@ import MainNewsFeed from "../MainNewsFeed";
 import {getUserFavouritePosts} from "../../../utils/data";
 
 const MyFavourites = () => {
-    const {currentUser, authUserID} = useContext(AppCtx);
+    const {authUser, authUserID} = useContext(AppCtx);
 
-    if (!currentUser) {
+    if (!authUser) {
         return GenericGuestPage();
     }
 
     return (
         <div className="my-favourites-container">
-            <h1>Here are all the posts you've saved to favourites</h1>
+            <h1 className="my-favourites-header">My favourites</h1>
 
             <MainNewsFeed fetchData={() => getUserFavouritePosts(authUserID)} />
 
             <style jsx="true">{`
               .my-favourites-container {
                 margin-left: 16rem;
+              }
+              
+              .my-favourites-header {
+                margin-left: 10px;
+                border-bottom: 1px solid lightgray;
+                color: #434343;
               }
               
             `}

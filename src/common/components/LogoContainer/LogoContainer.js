@@ -1,7 +1,11 @@
+import {Link} from "react-router-dom";
+
 const LogoContainer = ({src = '', alt = ''}) => {
     return (
         <article className="logo-container-wrapper">
-            <img src={src} alt={alt} />
+            <Link to="/">
+                <img src={src} alt={alt} />
+            </Link>
 
             <style jsx="true">{`
               .logo-container-wrapper img {

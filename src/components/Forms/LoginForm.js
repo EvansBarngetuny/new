@@ -2,8 +2,10 @@ import {Button, Input} from "@material-ui/core";
 import {useState} from "react";
 import Spinner from "../../common/components/Spinner/Spinner";
 import {loginUser} from "../../utils/data";
+import {useHistory} from "react-router-dom";
 
 const LoginForm = () => {
+    const history = useHistory();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +22,10 @@ const LoginForm = () => {
         setIsLoading(true)
 
         loginUser(email, password)
-            .then(() => setIsLoading(false))
+            .then(() => {
+                setIsLoading(false);
+                history.push('/');
+            })
             .catch(err => {
                 setIsLoading(false);
                 if (err.code === 'auth/user-not-found' ||
@@ -59,7 +64,7 @@ const LoginForm = () => {
                         />
                         <Button type="submit">Login</Button>
 
-                        <style jsx>{`
+                        <style jsx="true">{`
                           .login-form {
                             display: flex;
                             flex-flow: column wrap;

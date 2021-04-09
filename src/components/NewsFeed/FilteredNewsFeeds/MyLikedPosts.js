@@ -1,10 +1,10 @@
 import {useContext} from "react";
 import AppCtx from "../../../context/AppCtx";
 import GenericGuestPage from "../../GenericGuestPage/GenericGuestPage";
-import {getPostsByOwner} from "../../../utils/data";
+import {getLikedPostsByUser} from "../../../utils/data";
 import MainNewsFeed from "../MainNewsFeed";
 
-const MyPublications = () => {
+const MyLikedPosts = (props) => {
     const {authUser, authUserID} = useContext(AppCtx);
 
     if (!authUser) {
@@ -12,26 +12,25 @@ const MyPublications = () => {
     }
 
     return (
-        <div className="my-publications-container">
-            <h1 className="my-publications-header">My publications</h1>
+        <div className="my-liked-posts-container">
+            <h1 className="my-liked-posts-header">My liked posts</h1>
 
-            <MainNewsFeed fetchData={() => getPostsByOwner(authUserID)}/>
+            <MainNewsFeed fetchData={() => getLikedPostsByUser(authUserID)}/>
 
             <style jsx="true">{`
-              .my-publications-container {
+              .my-liked-posts-container {
                 margin-left: 16rem;
               }
 
-              .my-publications-header {
+              .my-liked-posts-header {
                 margin-left: 10px;
                 border-bottom: 1px solid lightgray;
                 color: #434343;
               }
-
             `}
             </style>
         </div>
     );
 }
 
-export default MyPublications;
+export default MyLikedPosts;

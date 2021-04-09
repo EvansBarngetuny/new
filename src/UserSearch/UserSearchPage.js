@@ -7,7 +7,7 @@ import UserSearchPageResultList from "./UserSearchPageResultList/UserSearchPageR
 const UserSearchPage = ({location}) => {
     const [isLoading, setIsLoading] = useState(true);
     const [result, setResult] = useState([]);
-    const {currentUser} = useContext(AppCtx);
+    const {authUser} = useContext(AppCtx);
     const query = location.search.split('=')[1];
 
     useEffect(() => {
@@ -30,7 +30,7 @@ const UserSearchPage = ({location}) => {
     }, [query]);
 
     return (
-        <div className={"search-page-container" + (currentUser ? ' logged-user' : '')}>
+        <div className={"search-page-container" + (authUser ? ' logged-user' : '')}>
             <h1>Search Result</h1>
 
             {
@@ -44,6 +44,7 @@ const UserSearchPage = ({location}) => {
             }
 
             <p className="search-page-disclaimer">*only exact matches are being shown</p>
+
             <style jsx="true">{`
               .search-page-container {
                 background: white;

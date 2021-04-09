@@ -62,12 +62,15 @@ const Dashboard = () => {
                     <li>
                         <NavLink className="dashboard-body-link" to="/my-favourites">MY FAVOURITES</NavLink>
                     </li>
+                    <li>
+                        <NavLink className="dashboard-body-link" to="/my-liked-posts">POST YOU'VE LIKED</NavLink>
+                    </li>
                 </ul>
             </article>
 
             <style jsx="true">{`
               .side-dashboard {
-                background: #FDFDEB;
+                background: white;
                 width: 250px;
                 height: 500px;
                 border-right: 1px solid lightgray;

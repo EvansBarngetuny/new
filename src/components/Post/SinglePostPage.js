@@ -10,11 +10,15 @@ const SinglePostPage = ({match}) => {
     const postID = match.params.id;
 
     useEffect(() => {
-        getPostById(postID)
-            .then(res => {
-                setPost(res.data())
+        const unsubscribe = getPostById(postID)
+            .onSnapshot(snapshot => {
+                setPost(snapshot.data())
                 setIsLoading(false)
             })
+
+        return () => {
+            unsubscribe();
+        }
     }, []);
 
     return (
@@ -28,7 +32,7 @@ const SinglePostPage = ({match}) => {
                     : (<Post postID={postID} post={post}/>)
             }
 
-            <style jsx={true}>{`
+            <style jsx="true">{`
               .single-post-page-container {
                 margin-left: 16rem;
                 position: relative;

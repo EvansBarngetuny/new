@@ -59,8 +59,7 @@ export function getFilteredOrderedAndLimitedCollection(collectionPath, fieldPath
 
 export function getDocumentFromCollection(collectionPath, targetDocId) {
     return db.collection(collectionPath)
-        .doc(targetDocId)
-        .get()
+        .doc(targetDocId);
 }
 
 export function getDocumentsFromCollectionOrdered(collectionPath, orderBy, orderDirection) {

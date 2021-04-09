@@ -28,11 +28,11 @@ const GridNewsFeed = ({fetchData}) => {
                 posts.map(p => <GridPost key={p.id} postID={p.id} post={p.post}/>)
             }
 
-            <style jsx={true}>{`
+            <style jsx="true">{`
               .filtered-newsfeed-container {
                 display: flex;
                 flex-flow: row wrap;
-                align-items: end;
+                align-items: stretch;
               }
 
             `}

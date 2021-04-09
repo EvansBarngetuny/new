@@ -7,7 +7,7 @@ export const Spinner = (props) => {
             <div className="spinner">
                 <Loader type="ThreeDots" color="#D9B48FFF" height="100" width="100"/>
 
-                <style jsx>{`
+                <style jsx="true">{`
                   .spinner {
                     width: 100%;
                     height: 100%;

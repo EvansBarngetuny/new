@@ -13,7 +13,7 @@ const PostContent = (props) => {
     return (
         <article className="post-content">
             <p className="post-content-text">
-                <Link to={`/users/${props.userID}`} >
+                <Link to={`/users/${props.userID}`}>
                     <strong>{props.postedBy} </strong>
                 </Link>
                 {props.content}
@@ -73,7 +73,7 @@ const PostContent = (props) => {
                 )
             }
 
-            <style jsx>{`
+            <style jsx="true">{`
               .post-content {
                 position: relative;
               }
@@ -81,6 +81,7 @@ const PostContent = (props) => {
               .post-content-text {
                 font-weight: normal;
                 margin: 10px 10px;
+                padding-right: 25px;
               }
 
               .post-content-text a {
@@ -117,6 +118,11 @@ const PostContent = (props) => {
                 outline: none;
                 cursor: pointer;
                 padding: 1px 3px;
+              }
+              
+              .post-content-btn:hover {
+                border: 1px solid gray;
+                border-radius: 3px;
               }
 
               .post-content-edit-button {

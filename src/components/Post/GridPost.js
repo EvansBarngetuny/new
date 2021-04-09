@@ -6,16 +6,27 @@ import {deletePost, editPost} from "../../utils/data";
 
 const GridPost = ({post, postID}) => {
     const {currentUser} = useContext(AppCtx);
+
     const isOwner = currentUser && currentUser.uid === post.ownerID;
+    const postContent = post.content.length <= 38
+        ? post.content
+        : post.content.substring(0, 38) + '...';
 
     const onEditPost = editPost.bind(null, postID);
+
+    const onDeletePostHandler = () => {
+        const confirmed = window.confirm('Are you  sure you want to delete this post?');
+        if (confirmed) {
+            deletePost(postID);
+        }
+    }
 
     return (
         <section className="grid-post-container">
             <GridPostImage imageURL={post.imageURL} postID={postID}/>
             {
                 isOwner && (
-                    <button onClick={() => deletePost(postID)}
+                    <button onClick={onDeletePostHandler}
                             className="grid-post-del-btn delete" title="Delete this post">
                         <img
                             src="/delete-icon.svg"
@@ -30,7 +41,7 @@ const GridPost = ({post, postID}) => {
             <PostContent
                 userID={post.ownerID}
                 postedBy={post.postedBy}
-                content={post.content}
+                content={postContent}
                 onSave={onEditPost}
                 isOwner={currentUser && currentUser.uid === post.ownerID}
             />

@@ -10,6 +10,13 @@ const PostHeader = (
         userID
     }
 ) => {
+
+    const onDeletePostHandler = () => {
+        const confirmed = window.confirm('Are you  sure you want to delete this post?');
+        if (confirmed) {
+            onDelete();
+        }
+    }
     return (
         <article className="post-header">
             <Avatar
@@ -24,7 +31,7 @@ const PostHeader = (
             {
                 isOwner && (
                     <>
-                        <button onClick={onDelete} className="post-header-btn delete" title="Delete this post">
+                        <button onClick={onDeletePostHandler} className="post-header-btn delete" title="Delete this post">
                             <img
                             src="/delete-icon.svg"
                             alt="delete-icon"
@@ -36,7 +43,7 @@ const PostHeader = (
                 )
             }
 
-            <style jsx={true}>{`
+            <style jsx="true">{`
               .post-header {
                 display: flex;
                 align-items: center;
@@ -52,6 +59,12 @@ const PostHeader = (
                 padding: 1px 3px;
                 outline: none;
               }
+              
+              .post-header-btn:hover {
+                border: 1px solid gray;
+                border-radius: 3px;
+              }
+              
               .post-header-username {
                 margin-left: 10px;
               }

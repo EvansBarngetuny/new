@@ -14,6 +14,7 @@ import UserSearchPage from "./components/UserSearch/UserSearchPage";
 import UserPublications from "./components/NewsFeed/FilteredNewsFeeds/UserPublications";
 import MyLikedPosts from "./components/NewsFeed/FilteredNewsFeeds/MyLikedPosts";
 import ErrorPage from "./components/CustomErrorBoundary/ErrorPage/ErrorPage";
+import NotFound from "./components/NotFound/NotFound";
 
 const App = () => {
     const [authUser, setAuthUser] = useState(null);
@@ -65,6 +66,7 @@ const App = () => {
                     <Route path="/user-publications/:id" component={UserPublications}/>
                     <Route path="/posts/:id" component={SinglePostPage}/>
                     <Route path="/search" component={UserSearchPage}/>
+                    <Route component={NotFound}/>
                 </Switch>
 
                 <style jsx="true">{`

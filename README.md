@@ -1,5 +1,9 @@
 # React-a-gram social media app
 
+The app is hosted on Firebase and can be found on this link:
+
+https://my-social-media-app-ca073.web.app/
+
 ## Summary
 
 A simple photo sharing social media web application based on Instagram - built with React where Firebase is used for hosting, server side and DB. The app supports user authentication, file upload, create new posts, like, comment, edit and add posts to favourites all in realtime. New posts are being created by uploading a photo and optionally adding a caption to it, it can be added or edited later. Comments to the posts can be added again only by registered users and edited or deleted at any time. The app also offers an user search functionality as well as user profile picture and profile description update functionality.

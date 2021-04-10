@@ -4,12 +4,13 @@
 
 A simple photo sharing social media web application based on Instagram - built with React where Firebase is used for hosting, server side and DB. The app supports user authentication, file upload, create new posts, like, comment, edit and add posts to favourites all in realtime. New posts are being created by uploading a photo and optionally adding a caption to it, it can be added or edited later. Comments to the posts can be added again only by registered users and edited or deleted at any time. The app also offers an user search functionality as well as user profile picture and profile description update functionality.
 
-It consists of few pages: Home, My Profile, My Publications, My Favourites, {user} profile page, Single-post page, Search page and also a fixed Dashboard (will pop up upon successful login) serving as a navigation panel.
+It consists of few pages: Home, My Profile, My Publications, My Favourites, My Liked Posts, {user} profile page, Single-post page, Search page and also a fixed Dashboard (will pop up upon successful login) serving as a navigation panel.
 
 * Home page - a newsfeed comprised by the posts of all users in chronological order - from the most recent to the oldest. Visible to everyone. Only registered users can like, comment and add posts to favourites. 
-* My Profile - access to my profile, where the user's description and profile pic can be updated, also displays user's latest posts and the collection of favourite posts. Visible to registered users only.
+* My Profile - access to my profile, where the user's description and profile pic can be updated, also displays user's latest posts, user's liked posts and the collection of favourite posts. Visible to registered users only.
 * My Publications - a filtered newsfeed displaying only the current user's publications. Visible to registered users only.
 * My Favourites - a filtered newsfeed displaying only the current user's favourite publications collection. Visible to registered users only.
+* My Liked Posts - a filtered newsfeed displaying all the posts the current user has liked. Visible to registered users only.
 * {user} profile page - contains information about the selected user such as profile pic, description and user's latest posts. Visible to everyone.
 * Single-post page - Visible to everyone. Only registered users can like, comment and add the current post to favourites.
 * Search page - the page, the search user functuonality and the results are accessible to everyone.

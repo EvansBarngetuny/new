@@ -1,6 +1,6 @@
 import HeaderNavigationLogo from "./HeaderNavigationLogo/HeaderNavigationLogo";
 import HeaderNavigation from "./HeaderNavigation/HeaderNavigation";
-import UserSearchBar from "../../UserSearch/UserSearchBar/UserSearchBar";
+import UserSearchBar from "../UserSearch/UserSearchBar/UserSearchBar";
 
 const Header = () => {
 

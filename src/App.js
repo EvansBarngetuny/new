@@ -10,7 +10,7 @@ import MyFavourites from "./components/NewsFeed/FilteredNewsFeeds/MyFavourites";
 import MyProfile from "./components/Profiles/MyProfile";
 import UserProfile from "./components/Profiles/UserProfile";
 import SinglePostPage from "./components/NewsFeed/FilteredNewsFeeds/SinglePostPage";
-import UserSearchPage from "./UserSearch/UserSearchPage";
+import UserSearchPage from "./components/UserSearch/UserSearchPage";
 import UserPublications from "./components/NewsFeed/FilteredNewsFeeds/UserPublications";
 import MyLikedPosts from "./components/NewsFeed/FilteredNewsFeeds/MyLikedPosts";
 

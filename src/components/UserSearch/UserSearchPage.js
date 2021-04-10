@@ -1,7 +1,7 @@
 import {useContext, useEffect, useState} from "react";
-import {db} from "../firebase";
-import Spinner from "../common/components/Spinner/Spinner";
-import AppCtx from "../context/AppCtx";
+import {db} from "../../firebase";
+import Spinner from "../../common/components/Spinner/Spinner";
+import AppCtx from "../../context/AppCtx";
 import UserSearchPageResultList from "./UserSearchPageResultList/UserSearchPageResultList";
 
 const UserSearchPage = ({location}) => {

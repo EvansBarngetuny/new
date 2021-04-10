@@ -23,7 +23,7 @@ const Post = ({post, postID}) => {
     const [isFavourite, setIsFavourite] = useState(false)
     const [likesCount, setLikesCount] = useState(0)
     const [comments, setComments] = useState([]);
-    const {authUser} = useContext(AppCtx);
+    const {authUser, authUserID} = useContext(AppCtx);
 
     useEffect(() => {
         const unsubscribe = db.collection('posts')
@@ -33,8 +33,8 @@ const Post = ({post, postID}) => {
                     const postLikes = snapshot.data().likes;
                     const postFavourites = snapshot.data().inFavourites;
                     if (authUser) {
-                        setIsFavourite(postFavourites.includes(authUser.uid));
-                        setIsLiked(postLikes.includes(authUser.uid));
+                        setIsFavourite(postFavourites.includes(authUserID));
+                        setIsLiked(postLikes.includes(authUserID));
                     }
                     setLikesCount(postLikes.length);
                 }
@@ -44,7 +44,7 @@ const Post = ({post, postID}) => {
             unsubscribe()
         }
 
-    }, [authUser])
+    }, [authUser, authUserID])
 
     useEffect(() => {
         const unsubscribe = db.collection('posts')

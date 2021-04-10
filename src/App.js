@@ -13,6 +13,7 @@ import SinglePostPage from "./components/NewsFeed/FilteredNewsFeeds/SinglePostPa
 import UserSearchPage from "./components/UserSearch/UserSearchPage";
 import UserPublications from "./components/NewsFeed/FilteredNewsFeeds/UserPublications";
 import MyLikedPosts from "./components/NewsFeed/FilteredNewsFeeds/MyLikedPosts";
+import ErrorPage from "./components/CustomErrorBoundary/ErrorPage/ErrorPage";
 
 const App = () => {
     const [authUser, setAuthUser] = useState(null);
@@ -70,7 +71,7 @@ const App = () => {
                   .app-wrapper {
                     max-width: 1150px;
                     width: 100%;
-                    margin: 0 auto;
+                    margin: 10px auto;
                     position: relative;
                   }
 

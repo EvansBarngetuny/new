@@ -19,12 +19,16 @@ const SignUpForm = ({onSuccessfulSignUp}) => {
             return setNotificationMessage('All fields are required');
         }
 
+        if (username.length < 3) {
+            return setNotificationMessage('Username must be at least 3 characters long');
+        }
+
         if (isUsernameTaken) {
             return setNotificationMessage('Choose another username, please');
         }
 
         if (password.length < 6) {
-            return setNotificationMessage('Password must be at least 6 characters');
+            return setNotificationMessage('Password must be at least 6 characters long');
         }
 
         if (password !== rePass) {

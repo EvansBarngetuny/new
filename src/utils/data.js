@@ -13,6 +13,7 @@ const DATA = {
     COLLECTIONS: {
         POSTS: 'posts',
         USERS: 'users',
+        ERRORS: 'errors'
     },
     SUB_COLLECTIONS: {
         COMMENTS: 'comments',
@@ -196,7 +197,7 @@ export function getUserDetails(userID) {
 }
 
 export function createNewEntryInUsersDB(userID, data) {
-    return db.collection('users')
+    return db.collection(DATA.COLLECTIONS.USERS)
         .doc(userID)
         .set(data);
 }
@@ -207,4 +208,9 @@ export function registerNewUser(email, password) {
 
 export function loginUser(email, password) {
     return auth.signInWithEmailAndPassword(email, password);
+}
+
+export function logErrorToDB(error, errorInfo) {
+    return db.collection(DATA.COLLECTIONS.ERRORS)
+        .add({error, errorInfo});
 }

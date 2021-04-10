@@ -8,6 +8,7 @@ const PostCommentsSection = (props) => {
                     return(
                         <PostContent
                             key={c.id}
+                            userID={c.comment.ownerID}
                             postedBy={c.comment.postedBy}
                             content={c.comment.content}
                             onSave={props.onSave}

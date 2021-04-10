@@ -16,14 +16,14 @@ class Homepage extends Component {
             <div className={'homepage-container' + (this.context.authUser ? ' logged-user' : '')}>
 
                 {
-                    !this.context.authUser && (<GenericGuestPage />)
+                    !this.context.authUser && (<GenericGuestPage/>)
                 }
 
                 <MainNewsFeed fetchData={getAllPosts}/>
 
             </div>
         );
-}
+    }
 }
 
 export default Homepage;

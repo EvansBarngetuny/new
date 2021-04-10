@@ -44,7 +44,7 @@ const Post = ({post, postID}) => {
             unsubscribe()
         }
 
-    }, [])
+    }, [authUser])
 
     useEffect(() => {
         const unsubscribe = db.collection('posts')

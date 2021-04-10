@@ -1,23 +1,29 @@
 import MainNewsFeed from "../NewsFeed/MainNewsFeed";
 import AppCtx from "../../context/AppCtx";
-import {useContext} from "react";
+import {Component} from "react";
 import {getAllPosts} from "../../utils/data";
 import GenericGuestPage from "../GenericGuestPage/GenericGuestPage";
 
-const Homepage = () => {
-    const {authUser} = useContext(AppCtx);
+class Homepage extends Component {
+    static contextType = AppCtx;
 
-    return (
-        <div className={'homepage-container' + (authUser ? ' logged-user' : '')}>
+    constructor(props) {
+        super(props);
+    }
 
-            {
-                !authUser && (<GenericGuestPage />)
-            }
+    render() {
+        return (
+            <div className={'homepage-container' + (this.context.authUser ? ' logged-user' : '')}>
 
-            <MainNewsFeed fetchData={getAllPosts}/>
+                {
+                    !this.context.authUser && (<GenericGuestPage />)
+                }
 
-        </div>
-    );
+                <MainNewsFeed fetchData={getAllPosts}/>
+
+            </div>
+        );
+}
 }
 
 export default Homepage;

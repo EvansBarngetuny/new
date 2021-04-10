@@ -1,10 +1,9 @@
 import {Link} from "react-router-dom";
-import {getPostsByOwner} from "../../utils/data";
+import {getPostsByOwner, getUserByID} from "../../utils/data";
 import GridNewsFeed from "../NewsFeed/GridNewsFeed";
 import {useContext, useEffect, useState} from "react";
 import AppCtx from "../../context/AppCtx";
 import {Redirect} from "react-router-dom";
-import {db} from "../../firebase";
 import UserProfileCard from "./UserProfileCard/UserProfileCard";
 import Spinner from "../../common/components/Spinner/Spinner";
 
@@ -19,8 +18,7 @@ const UserProfile = ({match}) => {
 
     useEffect(() => {
         setIsLoading(true);
-        const unsubscribe = db.collection('users')
-            .doc(userID)
+        const unsubscribe = getUserByID(userID)
             .onSnapshot((snapshot => {
                 setIsLoading(false);
                 if (userID && snapshot.data()) {
@@ -45,7 +43,7 @@ const UserProfile = ({match}) => {
 
     return (
         <div className={"user-profile-container" + (authUser ? ' logged-user' : '')}>
-            <h1 className="user-profile-header">Profile page {username}</h1>
+            <h1 className="user-profile-header">Profile page <em>{username}</em></h1>
 
             {
                 isLoading && <Spinner/>
@@ -59,18 +57,17 @@ const UserProfile = ({match}) => {
 
             <section className="my-profile-favourite-posts">
                 <h3 className="user-profile-latest-publications">Latest publications
-                                                                 by {username ? username : 'this user'}</h3>
+                                                                 by {username ? <em>{username}</em> : 'this user'}</h3>
                 <GridNewsFeed
                     fetchData={() => getPostsByOwner(userID, 6)}
                 />
 
                 <p><Link to={"/user-publications/" + userID}>See all publications
-                                                             by {username ? username : 'this user'}</Link></p>
+                                                             by {username ? <em>{username}</em> : 'this user'}</Link></p>
             </section>
 
             <style jsx="true">{`
               .user-profile-container {
-                margin-left: 16rem;
                 background: #F4F4F4;
                 border: 1px solid lightgray;
                 padding: 15px;

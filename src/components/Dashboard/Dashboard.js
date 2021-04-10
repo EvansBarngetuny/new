@@ -63,7 +63,7 @@ const Dashboard = () => {
                         <NavLink className="dashboard-body-link" to="/my-favourites">MY FAVOURITES</NavLink>
                     </li>
                     <li>
-                        <NavLink className="dashboard-body-link" to="/my-liked-posts">POST YOU'VE LIKED</NavLink>
+                        <NavLink className="dashboard-body-link" to="/my-liked-posts">POST I'VE LIKED</NavLink>
                     </li>
                 </ul>
             </article>

@@ -175,20 +175,9 @@ export function editDescription(userID, newDescription, toggleEditDescription) {
         .catch(err => console.log(err))
 }
 
-export function parseDataOnSnapshot(fetchData, setIsLoading, setPosts) {
-    setIsLoading(true)
-    const unsubscribe = fetchData()
-        .onSnapshot(snapshot => {
-            setIsLoading(false);
-            setPosts(snapshot.docs.map(doc => ({
-                id: doc.id,
-                post: doc.data()
-            })));
-        });
 
-    return () => {
-        unsubscribe()
-    }
+export function getUserByID(userID) {
+    return getDocumentFromCollection(DATA.COLLECTIONS.USERS, userID)
 }
 
 export function getUsersByUsername(username) {

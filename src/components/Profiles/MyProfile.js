@@ -5,20 +5,23 @@ import {db} from "../../firebase";
 import GridNewsFeed from "../NewsFeed/GridNewsFeed";
 import {getLikedPostsByUser, getPostsByOwner, getUserFavouritePosts} from "../../utils/data";
 import GenericGuestPage from "../GenericGuestPage/GenericGuestPage";
-import MyProfileCard from "./MyProfileCard";
+import MyProfileCard from "./MyProfileCard/MyProfileCard";
+import Spinner from "../../common/components/Spinner/Spinner";
 
 const MyProfile = () => {
     const [profilePic, setProfilePic] = useState('');
     const [description, setDescription] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
 
     const {authUser, authUserID} = useContext(AppCtx)
 
     useEffect(() => {
-        //setIsLoading(true);
+        setIsLoading(true);
         const unsubscribe = db.collection('users')
             .doc(authUserID || '-1')
             .onSnapshot((snapshot => {
-                //setIsLoading(false);
+                setIsLoading(false);
                 if (authUserID && snapshot.data()) {
                     const {profilePic} = snapshot.data();
                     const {description} = snapshot.data();
@@ -41,6 +44,10 @@ const MyProfile = () => {
     return (
         <div className={"my-profile-page-container" + (authUser ? ' logged-user' : '')}>
             <h1 className="my-profile-header">My profile</h1>
+
+            {
+                isLoading && <Spinner/>
+            }
 
             <MyProfileCard
                 username={authUser.displayName}

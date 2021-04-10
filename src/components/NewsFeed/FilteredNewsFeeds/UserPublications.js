@@ -15,7 +15,12 @@ const UserPublications = ({match}) => {
             .onSnapshot(snapshot => {
                 setUsername(snapshot.data().username);
             })
-    },[userID])
+
+        return () => {
+            unsubscribe();
+        }
+
+    }, [userID])
 
     if (!authUser) {
         return GenericGuestPage();
@@ -31,17 +36,19 @@ const UserPublications = ({match}) => {
                 All publications by {username ? <em>{username}</em> : 'this user'}
             </h1>
 
-            <MainNewsFeed fetchData={() => getPostsByOwner(userID)} />
+            <MainNewsFeed fetchData={() => getPostsByOwner(userID)}/>
 
             <style jsx="true">{`
               .user-publications-container {
                 margin-left: 16rem;
               }
+
               .user-publication-header {
+                margin-left: 10px;
                 border-bottom: 1px solid lightgray;
                 color: #393939;
               }
-              
+
             `}
             </style>
         </div>

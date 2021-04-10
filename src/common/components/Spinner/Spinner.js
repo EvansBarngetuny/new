@@ -1,11 +1,11 @@
 import React from "react";
 import Loader from "react-loader-spinner";
 
-export const Spinner = (props) => {
+export const Spinner = () => {
 
     return (
             <div className="spinner">
-                <Loader type="ThreeDots" color="#D9B48FFF" height="100" width="100"/>
+                <Loader type="ThreeDots" color="#6bba6d" height="100" width="100"/>
 
                 <style jsx="true">{`
                   .spinner {

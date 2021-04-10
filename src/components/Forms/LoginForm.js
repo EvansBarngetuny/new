@@ -26,13 +26,17 @@ const LoginForm = () => {
                 setIsLoading(false);
                 history.push('/');
             })
-            .catch(err => {
+            .catch(error => {
                 setIsLoading(false);
-                if (err.code === 'auth/user-not-found' ||
-                    err.code === 'auth/wrong-password') {
+                if (error.code === 'auth/user-not-found' ||
+                    error.code === 'auth/wrong-password') {
                     setNotificationMessage('Wrong email or password')
-                } else {
-                    console.error(err.message);
+                } else if (error.code === 'auth/invalid-email') {
+                    setNotificationMessage('This email address is invalid');
+                } else if (error.code === 'auth/internal-error') {
+                    setNotificationMessage('The server encountered an unexpected error while trying to process the request. Please try again later');
+                }else {
+                    console.error(error.message);
                 }
             });
     }

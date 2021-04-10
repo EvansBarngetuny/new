@@ -53,7 +53,7 @@ const UserProfileCard = ({username, profilePic, description}) => {
                 border-radius: 5px;
                 margin-top: 0;
                 padding: 20px;
-                background: #FCF6F5FF;
+                background: #F0F0F0;
               }
 
             `}

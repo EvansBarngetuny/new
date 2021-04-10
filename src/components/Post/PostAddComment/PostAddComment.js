@@ -1,6 +1,5 @@
 import {Button, Input} from "@material-ui/core";
 import {useState} from "react";
-import {db} from "../../../firebase";
 import firebase from "firebase";
 import {addDocumentToSubCollection} from "../../../utils/api";
 

@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react";
 import Spinner from "../../common/components/Spinner/Spinner";
 import GridPost from "../Post/GridPost";
-import {parseDataOnSnapshot} from "../../utils/data";
 
 const GridNewsFeed = ({fetchData}) => {
     const [posts, setPosts] = useState([]);
@@ -9,7 +8,19 @@ const GridNewsFeed = ({fetchData}) => {
 
     useEffect(() => {
         // listens for a change in the db and adds the new entries to the state each time it's fired
-        parseDataOnSnapshot(fetchData, setIsLoading, setPosts);
+        setIsLoading(true)
+        const unsubscribe = fetchData()
+            .onSnapshot(snapshot => {
+                setIsLoading(false);
+                setPosts(snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    post: doc.data()
+                })));
+            });
+
+        return () => {
+            unsubscribe()
+        }
 
     }, [fetchData]);
 

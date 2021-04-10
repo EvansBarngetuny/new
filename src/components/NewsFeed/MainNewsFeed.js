@@ -1,19 +1,34 @@
 import Post from "../Post/Post";
-import {useContext, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import Spinner from "../../common/components/Spinner/Spinner";
-import {parseDataOnSnapshot} from "../../utils/data";
-import AppCtx from "../../context/AppCtx";
+import {Button} from "@material-ui/core";
 
 const MainNewsFeed = ({fetchData, noPostsMsg}) => {
-    const {authUser} = useContext(AppCtx);
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isRefresh, setIsRefresh] = useState(false);
+
+    const onClickHandler = () => {
+        setIsRefresh(!isRefresh);
+    }
 
     useEffect(() => {
         // listens for a change in the db and adds the new entries to the state each time it's fired
-        parseDataOnSnapshot(fetchData, setIsLoading, setPosts);
+        setIsLoading(true)
+        const unsubscribe = fetchData()
+            .onSnapshot(snapshot => {
+                setIsLoading(false);
+                setPosts(snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    post: doc.data()
+                })));
+            });
 
-    }, [authUser]);
+        return () => {
+            unsubscribe()
+        }
+
+    }, [isRefresh]);
 
 
     return (
@@ -28,6 +43,9 @@ const MainNewsFeed = ({fetchData, noPostsMsg}) => {
                     : (
                         <div className="no-posts-container">
                             <h2 className="no-posts-header">{noPostsMsg ? noPostsMsg : 'No posts yet...'}</h2>
+                            {
+                                !isLoading && <Button onClick={onClickHandler}>&#10227; REFRESH</Button>
+                            }
                         </div>
                     )
 

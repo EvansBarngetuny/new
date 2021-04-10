@@ -1,4 +1,3 @@
-import './App.css';
 import {Route, Switch} from 'react-router-dom';
 import Header from "./components/Header/Header";
 import {useEffect, useState} from "react";
@@ -10,13 +9,12 @@ import MyPublications from "./components/NewsFeed/FilteredNewsFeeds/MyPublicatio
 import MyFavourites from "./components/NewsFeed/FilteredNewsFeeds/MyFavourites";
 import MyProfile from "./components/Profiles/MyProfile";
 import UserProfile from "./components/Profiles/UserProfile";
-import GenericGuestPage from "./components/GenericGuestPage/GenericGuestPage";
-import SinglePostPage from "./components/Post/SinglePostPage";
+import SinglePostPage from "./components/NewsFeed/FilteredNewsFeeds/SinglePostPage";
 import UserSearchPage from "./UserSearch/UserSearchPage";
 import UserPublications from "./components/NewsFeed/FilteredNewsFeeds/UserPublications";
 import MyLikedPosts from "./components/NewsFeed/FilteredNewsFeeds/MyLikedPosts";
 
-function App() {
+const App = () => {
     const [authUser, setAuthUser] = useState(null);
     const [authUserID, setAuthUserID] = useState('');
     const [authUserName, setAuthUserName] = useState('');
@@ -61,13 +59,33 @@ function App() {
                     <Route path="/my-publications" component={MyPublications}/>
                     <Route path="/my-favourites" component={MyFavourites}/>
                     <Route path="/my-profile" component={MyProfile}/>
+                    <Route path="/my-liked-posts" component={MyLikedPosts}/>
                     <Route path="/users/:id" component={UserProfile}/>
                     <Route path="/user-publications/:id" component={UserPublications}/>
                     <Route path="/posts/:id" component={SinglePostPage}/>
-                    <Route path="/my-liked-posts" component={MyLikedPosts}/>
                     <Route path="/search" component={UserSearchPage}/>
-                    <Route path="/test" component={GenericGuestPage}/>
                 </Switch>
+
+                <style jsx="true">{`
+                  .app-wrapper {
+                    max-width: 1150px;
+                    width: 100%;
+                    margin: 0 auto;
+                    position: relative;
+                  }
+
+                  .header-content-wrapper {
+                    max-width: 1250px;
+                    width: 100%;
+                    margin: 0 auto;
+                  }
+
+                  .logged-user {
+                    margin-left: 16rem;
+                  }
+
+                `}
+                </style>
 
             </main>
         </AppCtxProvider>

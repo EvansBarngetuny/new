@@ -10,7 +10,7 @@ const GoBackButton = () => {
 
     return (
         <Button type="button" onClick={goBack}>
-            &#8617; Go back
+            &#60; Go back
         </Button>
     );
 }

@@ -1,8 +1,8 @@
 import Avatar from "@material-ui/core/Avatar";
 import {Button, Input} from "@material-ui/core";
-import {editDescription} from "../../utils/data";
+import {editDescription} from "../../../utils/data";
 import {useEffect, useState} from "react";
-import {db, storage} from "../../firebase";
+import {db, storage} from "../../../firebase";
 
 const MyProfileCard = (props) => {
     const [updatedDescription, setUpdatedDescription] = useState('');

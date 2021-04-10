@@ -1,18 +1,12 @@
-import PostContent from "./PostContent/PostContent";
 import {useContext} from "react";
 import AppCtx from "../../context/AppCtx";
 import GridPostImage from "./GridPostImage/GridPostImage";
-import {deletePost, editPost} from "../../utils/data";
+import {deletePost} from "../../utils/data";
+import GridPostContent from "./GridPostContent/GridPostContent";
 
 const GridPost = ({post, postID}) => {
     const {authUser} = useContext(AppCtx);
-
     const isOwner = authUser && authUser.uid === post.ownerID;
-    const postContent = post.content.length <= 38
-        ? post.content
-        : post.content.substring(0, 38) + '...';
-
-    const onEditPost = editPost.bind(null, postID);
 
     const onDeletePostHandler = () => {
         const confirmed = window.confirm('Are you  sure you want to delete this post?');
@@ -38,12 +32,10 @@ const GridPost = ({post, postID}) => {
                 )
             }
 
-            <PostContent
+            <GridPostContent
                 userID={post.ownerID}
                 postedBy={post.postedBy}
-                content={postContent}
-                onSave={onEditPost}
-                isOwner={authUser && authUser.uid === post.ownerID}
+                content={post.content}
             />
 
             <style jsx="true">{`

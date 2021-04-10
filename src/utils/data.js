@@ -1,7 +1,7 @@
 import {
     clearSubCollection,
     deleteDocument,
-    deleteDocumentInSubCollection, getDocumentFromCollection, getDocumentsFromCollectionOrdered,
+    deleteDocumentInSubCollection, getDocumentFromCollection, getDocumentsFromCollectionOrdered, getFilteredCollection,
     getFilteredOrderedAndLimitedCollection,
     updateDocument,
     updateDocumentInSubCollection
@@ -22,6 +22,7 @@ const DATA = {
         LIKES: 'likes',
         TIMESTAMP: 'timestamp',
         IN_FAVOURITES: 'inFavourites',
+        USERNAME: 'username'
     }
 }
 
@@ -188,6 +189,16 @@ export function parseDataOnSnapshot(fetchData, setIsLoading, setPosts) {
     return () => {
         unsubscribe()
     }
+}
+
+export function getUsersByUsername(username) {
+    return getFilteredCollection(
+        DATA.COLLECTIONS.USERS,
+        DATA.FIELDS.USERNAME,
+        OPERATORS.EQUAL,
+        username
+    )
+        .get();
 }
 
 export function getUserDetails(userID) {

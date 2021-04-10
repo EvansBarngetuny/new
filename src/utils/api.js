@@ -50,9 +50,13 @@ export function deleteDocumentInSubCollection(rootCollection, rootDocId, subColl
         .delete();
 }
 
-export function getFilteredOrderedAndLimitedCollection(collectionPath, fieldPath, opStr, value, orderBy, direction, limit) {
+export function getFilteredCollection(collectionPath, fieldPath, opStr, value) {
     return db.collection(collectionPath)
-        .where(fieldPath, opStr, value)
+        .where(fieldPath, opStr, value);
+}
+
+export function getFilteredOrderedAndLimitedCollection(collectionPath, fieldPath, opStr, value, orderBy, direction, limit) {
+    return getFilteredCollection(collectionPath, fieldPath, opStr, value)
         .orderBy(orderBy, direction)
         .limit(limit);
 }

@@ -1,7 +1,7 @@
 import {Button, Input} from "@material-ui/core";
 import {useState} from "react";
 import Spinner from "../../common/components/Spinner/Spinner";
-import {createNewEntryInUsersDB, registerNewUser} from "../../utils/data";
+import {createNewEntryInUsersDB, getUsersByUsername, registerNewUser} from "../../utils/data";
 
 const SignUpForm = ({onSuccessfulSignUp}) => {
     const [username, setUsername] = useState('');
@@ -9,17 +9,26 @@ const SignUpForm = ({onSuccessfulSignUp}) => {
     const [password, setPassword] = useState('');
     const [rePass, setRePass] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [isUsernameTaken, setIsUsernameTaken] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
 
     function signUp(ev) {
         ev.preventDefault();
 
         if (!username.trim() || !email.trim() || !password || !rePass) {
-            return setNotificationMessage('All fields are required!');
+            return setNotificationMessage('All fields are required');
+        }
+
+        if (isUsernameTaken) {
+            return setNotificationMessage('Choose another username, please');
+        }
+
+        if (password.length < 6) {
+            return setNotificationMessage('Password must be at least 6 characters');
         }
 
         if (password !== rePass) {
-            return setNotificationMessage('Passwords don\'t match!');
+            return setNotificationMessage('Passwords don\'t match');
         }
 
         setIsLoading(true)
@@ -41,10 +50,24 @@ const SignUpForm = ({onSuccessfulSignUp}) => {
                 setIsLoading(false);
                 if (error.code === 'auth/email-already-in-use') {
                     setNotificationMessage('This email address is already in use by another user');
+                } else if (error.code === 'auth/invalid-email') {
+                    setNotificationMessage('This email address is invalid');
+                } else if (error.code === 'auth/internal-error') {
+                    setNotificationMessage('The server encountered an unexpected error while trying to process the request. Please try again later');
                 } else {
                     console.error(error.message);
                 }
             });
+    }
+
+    const checkIsUsernameTaken = () => {
+        getUsersByUsername(username)
+            .then(snapshot => {
+                const isTaken = snapshot.docs.length !== 0;
+                setIsUsernameTaken(isTaken);
+                console.log(isTaken)
+            })
+            .catch(err => console.error(err.message));
     }
 
     return (
@@ -63,7 +86,12 @@ const SignUpForm = ({onSuccessfulSignUp}) => {
                             value={username}
                             required
                             onChange={(e) => setUsername(e.target.value)}
+                            onBlur={checkIsUsernameTaken}
                         />
+                        {
+                            isUsernameTaken &&
+                            <span className="field-isTaken-notification">This username is already taken</span>
+                        }
                         <label htmlFor="">Email*</label>
                         <Input
                             type="text"
@@ -109,8 +137,10 @@ const SignUpForm = ({onSuccessfulSignUp}) => {
                             margin-top: 20px;
                           }
 
-                          .signup-form-notification {
+                          .signup-form-notification,
+                          .field-isTaken-notification {
                             color: red;
+                            margin: 5px;
                           }
                         `}
                         </style>
